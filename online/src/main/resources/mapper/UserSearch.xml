@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hotple.online.login.mapper.UserSearchMapper">
+
+    <select id="chkUserEmail" resultType="String" parameterType="com.hotple.online.login.ivo.SearchIdIvo">
+        <![CDATA[ 
+             SELECT /* com.hotple.online.login.mapper.UserSearchMapper - chkUserEmail */
+                    CASE WHEN COUNT(1) = 1 AND MAX(EMAIL) =  #{email}            THEN '1'       /* 1.오류없음 */
+                         WHEN COUNT(1) = 1 AND MAX(EMAIL) <> #{email}            THEN '2'       /* 2.이메일 입력 오류 */
+                         WHEN COUNT(1) = 0                                       THEN '3'       /* 3.사용자명 입력 오류 */
+                    ELSE '0' END       AS CHK_USER_EMAIL                                        /* 이메일 입력 검증 */
+               FROM TB_USER                                                                     /* TB_유저 */
+              WHERE USER_NAME   =   #{userName}                                                 /* 사용자명 */
+                AND USE_YN      =   'Y'                                                         /* 사용여부 */
+        ]]>
+    </select>
+
+    <insert id="saveAuthCode" parameterType="com.hotple.online.login.ivo.SearchIdIvo">
+        <![CDATA[ 
+            INSERT /* com.hotple.online.login.mapper.UserSearchMapper - saveAuthCode */
+              INTO TB_MAIL_AUTH_CODE                                                            /* TB_메일인증코드 */
+                 (
+                   SEQ                                                                          /* 일련번호 */
+                 , EMAIL                                                                        /* 이메일 */
+                 , AUTH_CODE                                                                    /* 인증코드 */
+                 , AUTH_GEN_TIME                                                                /* 인증번호생성시간 */
+                 , USE_YN                                                                       /* 사용여부 */
+                 , AUTH_YN                                                                      /* 인증여부 */
+                 )
+            VALUES
+                 (
+                   TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MISSFF3')                            /* 일련번호 */
+                 , #{email}                                                                     /* 이메일 */
+                 , #{authCode}                                                                  /* 인증코드 */
+                 , TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI')                                 /* 인증번호생성시간 */
+                 , 'Y'                                                                          /* 사용여부 */
+                 , 'N'                                                                          /* 인증여부 */
+                 )
+        ]]>
+    </insert>
+
+    <select id="chkEmailAuth" resultType="com.hotple.online.login.dto.SearchIdDto" parameterType="com.hotple.online.login.ivo.SearchIdIvo">
+        <![CDATA[ 
+             SELECT /* com.hotple.online.login.mapper.UserJoinMapper - chkEmailAuth */
+                   SEQ                                                                          /* 일련번호 */
+                 , EMAIL                                                                        /* 이메일 */
+                 , AUTH_CODE                                                                    /* 인증코드 */
+                 , AUTH_GEN_TIME                                                                /* 인증번호생성시간 */
+                 , AUTH_YN                                                                      /* 인증여부 */
+              FROM TB_MAIL_AUTH_CODE                                                            /* TB_메일인증코드 */
+             WHERE SEQ      =   ( SELECT MAX(A.SEQ)
+                                    FROM TB_MAIL_AUTH_CODE  A                                   /* TB_메일인증코드 */
+                                       , TB_USER            B                                   /* TB_유저 */
+                                   WHERE A.EMAIL            =   B.EMAIL
+                                     AND B.USE_YN           =   'Y'
+                                     AND A.EMAIL            =   #{email}
+                                     AND A.AUTH_GEN_TIME    >= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI') - '3' 
+                                     AND A.USE_YN           =   'Y'
+                                     AND A.AUTH_YN          =   'N' )
+        ]]>
+    </select>
+
+    <update id="updateAuthYn" parameterType="com.hotple.online.login.ivo.SearchIdIvo">
+        <![CDATA[ 
+            UPDATE /* com.hotple.online.login.mapper.UserJoinMapper - updateAuthYn */
+                   TB_MAIL_AUTH_CODE                                                            /* TB_메일인증코드 */
+               SET AUTH_YN  =   #{authYn}                                                       /* 인증여부 */
+                 , USE_YN   =   'N'                                                             /* 사용여부 */
+             WHERE SEQ      =   ( SELECT MAX(A.SEQ)
+                                    FROM TB_MAIL_AUTH_CODE  A                                   /* TB_메일인증코드 */
+                                       , TB_USER            B                                   /* TB_유저 */
+                                   WHERE A.EMAIL            =   B.EMAIL
+                                     AND B.USE_YN           =   'Y'
+                                     AND A.EMAIL            =   #{email}
+                                     AND A.AUTH_GEN_TIME    >= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI') - '4' 
+                                     AND A.USE_YN           =   'Y'
+                                     AND A.AUTH_YN          =   'N' )
+        ]]>
+    </update>
+
+    <select id="showUserId" resultType="com.hotple.online.login.dto.ShowIdDto" parameterType="com.hotple.online.login.ivo.SearchIdIvo">
+        <![CDATA[ 
+             SELECT /* com.hotple.online.login.mapper.UserSearchMapper - showUserId */
+                    USER_ID                                                                     /* 사용자ID */
+                  , USER_NAME                                                                   /* 이메일 */
+                  , PHONE_NUMBER                                                                /* 핸드폰번호 */
+               FROM TB_USER                                                                     /* TB_유저 */
+              WHERE USER_NAME   =   #{userName}                                                 /* 사용자명 */
+                AND EMAIL       =   #{email}                                                    /* 이메일 */
+                AND USE_YN      =   'Y'                                                         /* 사용여부 */
+        ]]>
+    </select>
+    
+</mapper>

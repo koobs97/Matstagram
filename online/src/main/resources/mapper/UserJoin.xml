@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hotple.online.login.mapper.UserJoinMapper">
+    
+    <select id="selectUserId" resultType="String" parameterType="com.hotple.online.login.ivo.UserJoinIvo">
+        <![CDATA[ 
+             SELECT /* com.hotple.online.mapper.UserJoinMapper - selectUserId */
+                    CASE WHEN COUNT(1) = 1 THEN 'Y'                                             /* Y.중복 */
+                         WHEN COUNT(1) = 0 THEN 'N'                                             /* N.중복없음 */
+                    ELSE '0' END       AS ID_DUP_YN                                             /* 중복여부 */
+               FROM TB_USER                                                                     /* TB_유저 */
+              WHERE USER_ID     =   #{userId}                                                   /* 사용자ID */
+                AND USE_YN      =   'Y'                                                         /* 사용여부 */
+        ]]>
+    </select>
+
+    <select id="selectChkUser" resultType="String" parameterType="com.hotple.online.login.ivo.UserJoinIvo">
+        <![CDATA[ 
+             SELECT /* com.hotple.online.mapper.UserJoinMapper - selectChkUser */
+                    CASE WHEN COUNT(1) = 1 THEN 'Y'                                             /* Y.중복 */
+                         WHEN COUNT(1) = 0 THEN 'N'                                             /* N.중복없음 */
+                    ELSE '0' END       AS USER_DUP_YN                                           /* 재가입여부 */
+               FROM TB_USER                                                                     /* TB_유저 */
+              WHERE (
+                         USER_ID     =   #{userId}                                              /* 사용자ID */
+                     AND USER_NAME   =   #{userName}                                            /* 사용자명 */
+                    )
+                 OR (
+                         USER_ID     =   #{userId}                                              /* 사용자ID */
+                     AND EMAIL       =   #{email}                                               /* 이메일*/
+                    )
+        ]]>
+    </select>
+
+    <insert id="joinUser" parameterType="com.hotple.online.login.ivo.UserJoinIvo">
+        <![CDATA[ 
+            INSERT /* com.hotple.online.mapper.UserJoinMapper - joinUser */
+              INTO TB_USER                                                                      /* TB_유저 */
+                 (
+                    USER_ID                                                                     /* 사용자ID */
+                  , USER_NAME                                                                   /* 사용자명 */
+                  , USER_PASSWD                                                                 /* 비밀번호 */
+                  , EMAIL                                                                       /* 이메일 */
+                  , PHONE_NUMBER                                                                /* 핸드폰번호 */
+                  , BIRTH_DATE                                                                  /* 생년월일 */
+                  , GENDER_CODE                                                                 /* 성별코드 */
+                  , USE_YN                                                                      /* 사용여부 */
+                  , LOCKED_YN                                                                   /* 잠김여부 */
+                  , TERMS_AGRE_YN                                                               /* 약관동의여부 */
+                  , PASSWD_CHG_DT                                                               /* 비밀번호 변경일자 */
+                  , PASSWD_HINT                                                                 /* 비밀번호 힌트 */
+                  , PASSWD_HINT_ANSWER                                                          /* 비밀번호 힌트 정답 */
+                  , REG_DTTM                                                                    /* 등록일시 */
+                  , CHG_DTTM                                                                    /* 변경일시 */
+                  )
+             VALUES 
+                  (
+                    #{userId}                                                                   /* 사용자ID */
+                  , #{userName}                                                                 /* 사용자명 */
+                  , #{userPasswd}                                                               /* 비밀번호 */
+                  , #{email}                                                                    /* 이메일 */
+                  , #{phoneNumber}                                                              /* 핸드폰번호 */
+                  , #{birthDate}                                                                /* 생년월일 */
+                  , #{genderCode}                                                               /* 성별코드 */
+                  , 'Y'                                                                         /* 사용여부 */
+                  , 'N'                                                                         /* 잠김여부 */
+                  , #{termsAgreYn}                                                              /* 약관동의여부 */
+                  , TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDD')                                      /* 비밀번호 변경일자 */
+                  , #{passwdHint}                                                               /* 비밀번호 힌트 */
+                  , #{passwdHintAnswer}                                                         /* 비밀번호 힌트 정답 */
+                  , CURRENT_TIMESTAMP                                                           /* 등록일시 */
+                  , CURRENT_TIMESTAMP                                                           /* 변경일시 */
+                  )
+        ]]>
+    </insert>
+</mapper>

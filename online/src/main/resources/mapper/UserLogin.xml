@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hotple.online.login.mapper.UserLoginMapper">
+
+    <select id="selectUser" resultType="String" parameterType="com.hotple.online.login.ivo.UserLoginIvo">
+        <![CDATA[ 
+             SELECT /* com.hotple.online.mapper.UserLoginMapper - selectUser */
+                    CASE WHEN COUNT(1) = 1 THEN '1'
+                         WHEN COUNT(1) = 0 THEN '2'
+                    ELSE '0' END       AS LOGIN_RSLT            /* 1.성공 2.실패 */
+               FROM TB_USER
+              WHERE (
+                        USER_ID        =   #{userId}
+                     OR EMAIL          =   #{userId}
+                  )
+                AND USE_YN          =   'Y'
+                AND USER_PASSWD     =   #{userPasswd}
+                AND PASSWD_CHG_DT   >=  SYSDATE - 90
+        ]]>
+    </select>
+    
+</mapper>
