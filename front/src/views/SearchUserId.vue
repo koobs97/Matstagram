@@ -257,6 +257,7 @@ const onClickChkAuth = async () => {
         state.ivo.authCode = ''
         state.ivo.timeEndYn = 'Y'
 
+        // 유저인증 세팅
         userStoreObj.authentication(state.ivo2.userName, state.ivo2.email, true)
         router.push('/login/showId')
     }
