@@ -77,6 +77,7 @@ import { SearchUserId } from '../vo/ivo/SearchUserId';
 const router        = useRouter()
 const userStoreObj  = userStore()
 
+// state
 const state = reactive({
     ivo: new SearchUserId(),
 
@@ -111,7 +112,10 @@ watch(
 
 // 로그인 페이지로 이동
 const onClickToLogin = () => {
-    router.push('/')
+
+    userStoreObj.delAuthentication()    // 유저인증정보 초기화
+    router.push('/')                    // 로그인페이지로 이동
+
 }
 
 </script>

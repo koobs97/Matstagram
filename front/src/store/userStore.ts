@@ -39,5 +39,10 @@ export const userStore = defineStore("userStore", {
             this.authInfo.email = email;
             this.authInfo.authenticated = authenticated;
         },
+        delAuthentication() {
+            this.authInfo.username = '';
+            this.authInfo.email = '';
+            this.authInfo.authenticated = false;
+        },
     },
 })

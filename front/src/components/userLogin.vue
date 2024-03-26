@@ -48,7 +48,7 @@
 
                                 <el-col :span="24">
                                     <el-button type="info" link @click="onClickSearchId">아이디 찾기</el-button>
-                                    <el-button type="info" link>비밀번호 찾기</el-button>
+                                    <el-button type="info" link @click="onClickSearchPw">비밀번호 찾기</el-button>
                                 </el-col>
 
                             </el-row> 
@@ -144,6 +144,11 @@ const onClickGoJoinPage = () => {
 // 아이디 찾기 페이지 이동
 const onClickSearchId = () => {
     router.push('/login/idSearch')
+}
+
+// 아이디 찾기 페이지 이동
+const onClickSearchPw = () => {
+    router.push('/login/pwSearch')
 }
 
 </script>

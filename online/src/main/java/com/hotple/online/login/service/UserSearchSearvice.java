@@ -49,6 +49,7 @@ public class UserSearchSearvice {
             appendText.append("해당 인증번호는 3분 뒤에 만료됩니다. 3분 내로 입력하여 주시기 바랍니다. \n");
             appendText.append("감사합니다! \n");
 
+            // 메일 전송
             mailService.sendEmail(ivo.getEmail(), title, appendText.toString());
 
             // 인증코드 저장

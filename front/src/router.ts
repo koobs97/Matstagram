@@ -4,9 +4,10 @@ import userLogin from './components/userLogin.vue';
 import indexHome from './indexHome.vue';
 import { userStore } from './store/userStore';
 
-import joinMember from './views/joinMember.vue';
 import SearchUserId from './views/SearchUserId.vue';
+import SearchUserPw from './views/SearchUserPw.vue';
 import ShowUserId from './views/ShowUserId.vue';
+import joinMember from './views/joinMember.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -36,6 +37,10 @@ const router = createRouter({
         {
           path: '/login/idSearch',
           component: SearchUserId,
+        },
+        {
+          path: '/login/pwSearch',
+          component: SearchUserPw,
         },
         {
         path: '/login/showId/',
