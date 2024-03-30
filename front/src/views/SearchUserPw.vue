@@ -5,7 +5,7 @@
         </el-form-item>
 
         <div class="container_header">
-            <el-button color="#626aef" class="top_button" :plain="plainId">아이디 찾기</el-button>
+            <el-button color="#626aef" class="top_button" :plain="plainId" @click="onClickToSearchId">아이디 찾기</el-button>
             <el-button color="#626aef" class="top_button" :plain="plainPasswd">비밀번호 찾기</el-button>
         </div>
 
@@ -49,12 +49,20 @@
     </el-form>
 </template>
 <script lang="ts" setup>
-import { ArrowLeft } from '@element-plus/icons-vue';
-
+import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const plainId       = ref(false)    // 찾기 구분 선택
-const plainPasswd   = ref(true)     // 찾기 구분 선택
+const router        = useRouter()   // router
+
+const plainId       = ref(true)     // 찾기 구분 선택
+const plainPasswd   = ref(false)    // 찾기 구분 선택
+
+// 아이디 찾기 페이지로 이동
+const onClickToSearchId = () => {
+    router.push('/login/idSearch')
+}
+
 
 </script>
 
@@ -76,6 +84,9 @@ const plainPasswd   = ref(true)     // 찾기 구분 선택
     height: 40px;
     width: 380px;
     margin-right: 1px; 
+    margin-left: 1px;
+}
+.el-button+.el-button {
     margin-left: 1px;
 }
 .text-container {

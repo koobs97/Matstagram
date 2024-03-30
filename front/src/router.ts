@@ -36,25 +36,25 @@ const router = createRouter({
         },
         {
           path: '/login/idSearch',
-          component: SearchUserId,
+            component: SearchUserId,
         },
         {
           path: '/login/pwSearch',
           component: SearchUserPw,
         },
         {
-        path: '/login/showId/',
-          component: ShowUserId,
-          beforeEnter: async (to, from, next) => {
+          path: '/login/showId/',
+            component: ShowUserId,
+            beforeEnter: async (to, from, next) => {
 
-            const isAuthenticated = await userStore().isAuthenticated
+              const isAuthenticated = await userStore().isAuthenticated
 
-            if (isAuthenticated != undefined) {     //////////////////////////////////////////// 여기 추후에 변경
-              next();                   // 인증 완료 상태면 계속 진행
-            } else {
-              next('/login/idSearch');  // 인증 완료 되어 있지 않으면 아이디찾기 페이지로 리다이렉트
-            }
-          },
+              if (isAuthenticated != undefined) {     //////////////////////////////////////////// 여기 추후에 변경
+                next();                   // 인증 완료 상태면 계속 진행
+              } else {
+                next('/login/idSearch');  // 인증 완료 되어 있지 않으면 아이디찾기 페이지로 리다이렉트
+              }
+            },
         },
     ]
 })

@@ -6,7 +6,7 @@
 
         <div class="container_header">
             <el-button color="#626aef" class="top_button" :plain="plainId">아이디 찾기</el-button>
-            <el-button color="#626aef" class="top_button" :plain="plainPasswd">비밀번호 찾기</el-button>
+            <el-button color="#626aef" class="top_button" :plain="plainPasswd" @click="onClickToSearchPw">비밀번호 찾기</el-button>
         </div>
 
         <div class="container">
@@ -44,7 +44,7 @@
 
                         <el-col :span="12" style="text-align: left; height: 20px;">
                             <el-form-item style="font-weight: bold;" label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;인증번호">
-                                <el-input v-model="state.ivo.authCode" :disabled="state.isDisabledCertificat" re="authCode" placeholder="인증번호 6자리" />
+                                <el-input v-model="state.ivo.authCode" :disabled="state.isDisabledCertificat" ref="authCode" placeholder="인증번호 6자리" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="6" style="text-align: left; height: 40px; padding-left: 5px; padding-top: 5px;">
@@ -53,7 +53,7 @@
                         <el-col :span="6"/>
 
                         <el-col :span="4"/>
-                        <el-col :span="6" style="text-align: left; height: 20px; align: center;" >
+                        <el-col :span="6" style="text-align: left; height: 20px; text-align: center;" >
                             <el-text type="info" style="font-size: 13px;">혹시 이메일이 오지 않는다면?</el-text>
                         </el-col>
                         <el-col :span="12" style="text-align: left;">
@@ -88,7 +88,7 @@
                                     <p style="font-size: 16px;">핸드폰 번호로 인증</p>
                                 </el-radio>
                                 <br>
-                                <p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;핸드폰 번호로 인증은 유료라 개발하지 않을 것입니다.</p>
+                                <p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;핸드폰 번호로 인증은 유료로 개발 미진행</p>
                             <el-form-item/>
                         </el-col>
                         
@@ -113,13 +113,13 @@
 import { ArrowLeft, ArrowRight, Message, QuestionFilled } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { onBeforeRouteLeave, useRouter } from 'vue-router';
 import { Api } from '../common/common';
 import { userStore } from '../store/userStore';
 import { SearchUserId } from '../vo/ivo/SearchUserId';
 
-const router        = useRouter()
-const userStoreObj  = userStore()
+const router        = useRouter()   // router
+const userStoreObj  = userStore()   // 유저스토어
 
 const plainId       = ref(false)    // 찾기 구분 선택
 const plainPasswd   = ref(true)     // 찾기 구분 선택
@@ -131,16 +131,31 @@ const AuthType  = ref(['1', '2'])   // 인증타입
 
 // state reactive
 const state = reactive({
-    ivo: new SearchUserId(),
+    ivo: new SearchUserId(),    // 화면 ivo
     ivo2: new SearchUserId(),   // 인증완료 시 store에 넘겨줄 ivo
-    time: '00:00',
-    isDisabledCertificat: true,
-    dialogVisible: false,
+    time: '00:00',              // 인증 타이머
+    isDisabledCertificat: true, // 인증번호 입력 활성화여부
 })
 
 // 화면진입 시
 onMounted(() => {
     userName.value.focus()
+})
+
+// 뒤로가기/앞으로가기 시 실행할 작업
+onBeforeRouteLeave(async(to, from, next) => {
+
+    // 인증 전에 페이지 이탈 시 초기화
+    if(state.isDisabledCertificat == false) {
+        state.isDisabledCertificat = true
+        state.time = '00:00'
+        state.ivo.authCode = ''
+        state.ivo.timeEndYn = 'Y'
+
+        await Api.post("/api/search/chkAuthCode", state.ivo)
+    }
+    
+    next(); // 다음 단계로 진행
 })
 
 // 인증시간 세팅
@@ -164,9 +179,8 @@ const onClickSendMail = async () => {
     }
 
     // 이메일 인증번호 발송
-
     let retData = await Api.post("/api/search/searchId", state.ivo)
-
+    
     if(retData.data.chkUserEmail != '1') {
         ElMessage({
             type: 'error',
@@ -183,7 +197,6 @@ const onClickSendMail = async () => {
             message: '인증번호가 발송되었습니다.',
         })
         authCode.value.focus()
-
 
         // 인증시간 계산
         state.isDisabledCertificat = false
@@ -269,15 +282,11 @@ const onClickChkAuth = async () => {
         return
     }
 
+}
 
-    // // 테스트
-    // state.ivo2.userName = '구본상'
-    // state.ivo2.email = 'koobs97@naver.com'
-    // state.ivo2.userName = state.ivo.userName
-    // state.ivo2.email = state.ivo.email
-    // userStoreObj.authentication(state.ivo2.userName, state.ivo2.email, true)
-    // router.push('/login/showId')
-
+// 비밀번호 찾기 페이지로 이동
+const onClickToSearchPw = () => {
+    router.push('/login/pwSearch')
 }
 
 // 로그인 페이지로 이동
