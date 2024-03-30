@@ -15,6 +15,35 @@
                 <el-form label-width="120px" label-position="left">
                     <el-row :gutter="0">
 
+                        <el-col :span="24" style="text-align: left;">
+                            <el-form-item/>
+                                <el-icon style="font-size: 16px;"><Checked /></el-icon>
+                                <el-text style="font-size: 18px; font-weight: bold;">&nbsp;질문/답변으로 비밀번호 찾기</el-text>
+                                <el-divider style="margin-top: 7px;"></el-divider>
+                            <el-form-item/>
+                        </el-col>
+
+                        <el-col :span="12" style="text-align: left; height: 40px;">
+                            <el-form-item style="font-weight: bold;" label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사용자명">
+                                <el-input />
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12"/>
+
+                        <el-col :span="12" style="text-align: left; height: 40px;">
+                            <el-form-item style="font-weight: bold;" label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일주소">
+                                <el-input />
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12"/>
+
+                        <el-col :span="12" style="text-align: left; height: 40px;">
+                            <el-form-item style="font-weight: bold;" label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아이디">
+                                <el-input />
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12"/>
+
                         <!-- todo -->
                     </el-row>
                 </el-form>
@@ -38,7 +67,7 @@
         </div>
 
         <div style="padding-top: 10px; font-size: 15px;">
-            <el-button :icon="ArrowLeft" >이전</el-button>
+            <el-button :icon="ArrowLeft" @click="onClickToLogin">이전</el-button>
             <el-button >다음<el-icon class="el-icon--right"><ArrowRight /></el-icon></el-button>
         </div>
 
@@ -49,7 +78,7 @@
     </el-form>
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, Checked } from '@element-plus/icons-vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -61,6 +90,11 @@ const plainPasswd   = ref(false)    // 찾기 구분 선택
 // 아이디 찾기 페이지로 이동
 const onClickToSearchId = () => {
     router.push('/login/idSearch')
+}
+
+// 로그인 페이지로 이동
+const onClickToLogin = () => {
+    router.push('/')
 }
 
 

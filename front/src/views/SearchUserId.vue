@@ -53,7 +53,7 @@
                         <el-col :span="6"/>
 
                         <el-col :span="4"/>
-                        <el-col :span="6" style="text-align: left; height: 20px; text-align: center;" >
+                        <el-col :span="6" style="text-align: left; height: 20px;" >
                             <el-text type="info" style="font-size: 13px;">혹시 이메일이 오지 않는다면?</el-text>
                         </el-col>
                         <el-col :span="12" style="text-align: left;">
