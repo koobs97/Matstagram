@@ -5,8 +5,8 @@
         </el-form-item>
 
         <div class="container_header">
-            <el-button color="#626aef" class="top_button" :plain="plainId">아이디 찾기</el-button>
-            <el-button color="#626aef" class="top_button" :plain="plainPasswd" @click="onClickToSearchPw">비밀번호 찾기</el-button>
+            <el-button color="#4527A0" class="top_button" :plain="plainId">아이디 찾기</el-button>
+            <el-button color="#4527A0" class="top_button" :plain="plainPasswd" @click="onClickToSearchPw">비밀번호 찾기</el-button>
         </div>
 
         <div class="container">

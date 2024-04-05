@@ -41,7 +41,7 @@
 
                                 <el-col :span="24">
                                     <el-form-item/>
-                                    <el-button color="#626aef" class="login" @click="onClickLogin">로그인</el-button>
+                                    <el-button color="#311B92" class="login" @click="onClickLogin">로그인</el-button>
                                 </el-col>
 
                                 <el-form-item/>
@@ -60,7 +60,7 @@
                 <el-form-item/>
                 <div class="container">
                     <el-card shadow="never" style="width: 20%; height: 60px;">
-                        <el-button type="primary" style="font-weight: bold;" link @click="onClickGoJoinPage">회원가입</el-button>
+                        <el-button type="primary" style="font-weight: bold; color: #9575CD;" link @click="onClickGoJoinPage">회원가입</el-button>
                     </el-card>
                 </div>
             </el-col>

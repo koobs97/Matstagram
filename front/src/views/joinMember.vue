@@ -253,7 +253,7 @@
                 <div class="container">
                     <el-form label-width="120px" style="height: 80%; width: 30%;">
                         <el-form>
-                            <el-button color="#626aef" class="login" @click="onClickJoin" >회원가입</el-button>
+                            <el-button color="#311B92" class="login" @click="onClickJoin" >회원가입</el-button>
                         </el-form>
                     </el-form>
                 </div>
