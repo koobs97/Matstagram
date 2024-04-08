@@ -69,7 +69,7 @@
 <script lang="ts" setup>
 import { DArrowRight, InfoFilled, UserFilled } from '@element-plus/icons-vue';
 import { onMounted, reactive, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { onBeforeRouteLeave, useRouter } from 'vue-router';
 import { Api } from '../common/common';
 import { userStore } from '../store/userStore';
 import { SearchUserId } from '../vo/ivo/SearchUserId';
@@ -80,10 +80,16 @@ const userStoreObj  = userStore()
 // state
 const state = reactive({
     ivo: new SearchUserId(),
-
     userName: '',
     phoneNumber: '',
     userId: '',
+})
+
+// 뒤로가기/앞으로가기 시 실행할 작업
+onBeforeRouteLeave(async(to, from, next) => {
+
+    userStoreObj.delAuthentication()    // 유저인증정보 초기화
+    next();                             // 다음 단계로 진행
 
 })
 
@@ -98,6 +104,7 @@ onMounted( async () => {
     state.userName = retData.data.result.userName
     state.phoneNumber = retData.data.result.phoneNumber
     state.userId = retData.data.result.userId
+
 })
 
 // 전화번호 포맷
@@ -128,24 +135,24 @@ const onClickToLogin = () => {
     background-color: lavender !important;
 }
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container_header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .text-container {
-  position: fixed;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  text-align: center;
+    position: fixed;
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
 </style>

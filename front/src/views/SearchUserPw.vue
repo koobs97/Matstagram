@@ -41,7 +41,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="9" style="text-align: left; height: 40px;">
-                            <el-input />
+                            <el-input ref="userName" />
                         </el-col>
                         <el-col :span="7"/>
 
@@ -51,7 +51,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="9" style="text-align: left; height: 40px;">
-                            <el-input />
+                            <el-input ref="email" />
                         </el-col>
                         <el-col :span="7"/>
 
@@ -61,35 +61,35 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="9" style="text-align: left; height: 40px;">
-                            <el-input />
+                            <el-input ref="userId" />
                         </el-col>
                         <el-col :span="7"/>
                         
                         <el-col :span="24">
-                            <el-button type="info" plain :icon="ChatLineSquare" style="width: 158px;" @click="state.isOpen.Question = true">질문 답변하기</el-button>
+                            <el-button type="info" plain :icon="ChatLineSquare" style="width: 158px;" @click="onClickOpenQuestion">질문 답변하기</el-button>
                         </el-col>
 
+                        <!-- 질문/답변 Dialog -->
                         <el-dialog v-model="state.isOpen.Question" align-center style="width: 500px; height: 280px; border-radius: 8px;">
                             <template #header>
                                 <h4 style="margin-top: 5px; margin-bottom: 5px;">질문에 답변하기</h4>
                             </template>
                             <el-form :model="state">
-                            <el-form-item label="질문">
-                                <el-input autocomplete="off" disabled />
-                            </el-form-item>
-                            <el-form-item label="정답">
-                                <el-input autocomplete="off" />
-                            </el-form-item>
+                                <el-form-item label="질문">
+                                    <el-input autocomplete="off" disabled />
+                                </el-form-item>
+                                <el-form-item label="정답">
+                                    <el-input autocomplete="off" />
+                                </el-form-item>
                             </el-form>
                             <template #footer>
-                            <div class="dialog-footer">
-                                <el-button type="primary" @click="state.isOpen.Question = false" color="#7E57C2">
-                                인증
-                                </el-button>
-                                <el-button @click="state.isOpen.Question = false">취소</el-button>
-                            </div>
+                                <div class="dialog-footer">
+                                    <el-button type="primary" @click="state.isOpen.Question = false" color="#7E57C2">인증</el-button>
+                                    <el-button @click="state.isOpen.Question = false">취소</el-button>
+                                </div>
                             </template>
                         </el-dialog>
+                        <!-- 질문/답변 Dialog -->
 
                     </el-row>
                 </el-form>
@@ -110,20 +110,65 @@
 </template>
 <script lang="ts" setup>
 import { ArrowLeft, ArrowRight, ChatLineSquare, Checked } from '@element-plus/icons-vue';
-import { reactive, ref } from 'vue';
+import { ElMessage } from 'element-plus';
+import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { SearchUserPwVo } from '../vo/SearchUserPwVo';
 
 const router        = useRouter()   // router
 
 const plainId       = ref(true)     // 찾기 구분 선택
 const plainPasswd   = ref(false)    // 찾기 구분 선택
 
+const userName  = ref()             // focus
+const email     = ref()             // focus
+const userId    = ref()             // focus
+
 // state reactive
 const state = reactive({
+    ivo: new SearchUserPwVo(),
     isOpen: {
-        Question: false,
+        Question: false,    // 질문 팝업창
     },
 })
+
+// 화면진입 시
+onMounted( () => {
+    userName.value.focus()
+})
+
+// 질문 답변하기 팝업 open
+const onClickOpenQuestion = () => {
+
+    // 필수입력 체크
+    if(state.ivo.getUserName() == '') {
+        ElMessage({
+            type: 'error',
+            message: '사용자명을 입력하세요.',
+        })
+        userName.value.focus()
+        return
+    }
+    if(state.ivo.getEmail() == '') {
+        ElMessage({
+            type: 'error',
+            message: '이메일을 입력하세요.',
+        })
+        email.value.focus()
+        return
+    }
+    if(state.ivo.getUserId() == '') {
+        ElMessage({
+            type: 'error',
+            message: '아이디를 입력하세요.',
+        })
+        userId.value.focus()
+        return
+    }
+
+    state.isOpen.Question = true
+
+}
 
 // 아이디 찾기 페이지로 이동
 const onClickToSearchId = () => {
@@ -134,7 +179,6 @@ const onClickToSearchId = () => {
 const onClickToLogin = () => {
     router.push('/')
 }
-
 
 </script>
 
@@ -169,4 +213,4 @@ const onClickToLogin = () => {
   text-align: center;
 }
 
-</style>
+</style>../vo/SearchUserPwIvo../vo/SearchUserPwVo

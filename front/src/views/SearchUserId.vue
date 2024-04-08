@@ -16,13 +16,11 @@
                     <el-row :gutter="0">
 
                         <el-col :span="24" style="text-align: left;">
-                            <el-form-item/>
-                                <el-radio v-model="AuthType[0]" label="1" size="large" style="font-weight: bold; width: 16px; height: 16px;">
-                                    <p style="font-size: 16px;">이메일로 인증</p>
-                                </el-radio>
-                                <p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계정의 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.
-                                </p>
-                            <el-form-item/>
+                            <el-icon style="font-size: 13px;"><Message /></el-icon>
+                            <el-text v-model="AuthType[0]" style="font-size: 16px; font-weight: bold;">&nbsp;이메일 인증</el-text>
+                            <el-divider style="margin-top: 7px; margin-bottom: 7px;"></el-divider>
+                            <p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계정의 이메일 주소와 입력한 이메일 주소가 같아야, 인증번호를 받을 수 있습니다.
+                            </p>
                         </el-col>
 
                         <el-col :span="12" style="text-align: left; height: 40px;">
@@ -56,7 +54,7 @@
                         <el-col :span="6" style="text-align: left; height: 20px;" >
                             <el-text type="info" style="font-size: 13px;">혹시 이메일이 오지 않는다면?</el-text>
                         </el-col>
-                        <el-col :span="12" style="text-align: left;">
+                        <el-col :span="12" style="text-align: left; margin-bottom: 7px;">
                             <el-tooltip 
                                 content="<strong>확인해주세요</strong>
                                 <br>1. 입력한 이메일 주소가 맞는지 확인해주세요.
@@ -68,30 +66,6 @@
                             </el-tooltip>
                         </el-col>
 
-                    </el-row>
-                </el-form>
-
-            </el-card>
-        </div>
-
-        <br>
-
-        <div class="container">
-            <el-card shadow="never" style="height: 80%; width: 40%;">
-
-                <el-form label-width="120px" label-position="left">
-                    <el-row :gutter="0">
-
-                        <el-col :span="24" style="text-align: left;">
-                            <el-form-item/>
-                                <el-radio label="1" size="large" style="font-weight: bold; width: 16px; height: 16px;">
-                                    <p style="font-size: 16px;">핸드폰 번호로 인증</p>
-                                </el-radio>
-                                <br>
-                                <p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;핸드폰 번호로 인증은 유료로 개발 미진행</p>
-                            <el-form-item/>
-                        </el-col>
-                        
                     </el-row>
                 </el-form>
 

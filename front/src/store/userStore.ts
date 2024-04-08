@@ -24,7 +24,7 @@ export const userStore = defineStore("userStore", {
             if(state.authInfo.authenticated != false) {
                 return state.authInfo
             }
-            else return false
+            else return undefined
         },
         getAuthenticated: (state) => {
             return state.authInfo
