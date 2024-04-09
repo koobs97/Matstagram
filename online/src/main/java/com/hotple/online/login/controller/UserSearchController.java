@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hotple.online.login.dto.SearchPwDto;
 import com.hotple.online.login.ivo.SearchIdIvo;
+import com.hotple.online.login.ivo.SearchPwIvo;
 import com.hotple.online.login.ovo.SearchIdOvo;
 import com.hotple.online.login.ovo.ShowIdOvo;
 import com.hotple.online.login.service.UserSearchSearvice;
@@ -17,7 +19,7 @@ public class UserSearchController {
 
     @Autowired
     UserSearchSearvice svc;
- 
+
     @PostMapping("/searchId")
     public SearchIdOvo searchId(@RequestBody SearchIdIvo ivo) {
         
@@ -40,6 +42,14 @@ public class UserSearchController {
         ShowIdOvo ovo = svc.showUserId(ivo);
 
         return ovo;
+    }
+
+    @PostMapping("/searchUserPw")
+    public SearchPwDto searchUserPw(@RequestBody SearchPwIvo ivo) {
+        
+        SearchPwDto dto = svc.searchUserPw(ivo);
+
+        return dto;
     }
 
 }

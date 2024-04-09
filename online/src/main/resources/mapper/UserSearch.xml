@@ -22,23 +22,23 @@
         <![CDATA[ 
             INSERT /* com.hotple.online.login.mapper.UserSearchMapper - saveAuthCode */
               INTO TB_MAIL_AUTH_CODE                                                            /* TB_메일인증코드 */
-                 (
+                (
                    SEQ                                                                          /* 일련번호 */
                  , EMAIL                                                                        /* 이메일 */
                  , AUTH_CODE                                                                    /* 인증코드 */
                  , AUTH_GEN_TIME                                                                /* 인증번호생성시간 */
                  , USE_YN                                                                       /* 사용여부 */
                  , AUTH_YN                                                                      /* 인증여부 */
-                 )
+                )
             VALUES
-                 (
+                (
                    TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MISSFF3')                            /* 일련번호 */
                  , #{email}                                                                     /* 이메일 */
                  , #{authCode}                                                                  /* 인증코드 */
                  , TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI')                                 /* 인증번호생성시간 */
                  , 'Y'                                                                          /* 사용여부 */
                  , 'N'                                                                          /* 인증여부 */
-                 )
+                )
         ]]>
     </insert>
 
@@ -51,15 +51,15 @@
                  , AUTH_GEN_TIME                                                                /* 인증번호생성시간 */
                  , AUTH_YN                                                                      /* 인증여부 */
               FROM TB_MAIL_AUTH_CODE                                                            /* TB_메일인증코드 */
-             WHERE SEQ      =   ( SELECT MAX(A.SEQ)
+             WHERE SEQ      =   ( SELECT MAX(A.SEQ)                                             /* 일련번호 */
                                     FROM TB_MAIL_AUTH_CODE  A                                   /* TB_메일인증코드 */
                                        , TB_USER            B                                   /* TB_유저 */
-                                   WHERE A.EMAIL            =   B.EMAIL
-                                     AND B.USE_YN           =   'Y'
-                                     AND A.EMAIL            =   #{email}
+                                   WHERE A.EMAIL            =   B.EMAIL                         /* 이메일 */
+                                     AND B.USE_YN           =   'Y'                             /* 사용여부 */
+                                     AND A.EMAIL            =   #{email}                        /* 이메일 */
                                      AND A.AUTH_GEN_TIME    >= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI') - '3' 
-                                     AND A.USE_YN           =   'Y'
-                                     AND A.AUTH_YN          =   'N' )
+                                     AND A.USE_YN           =   'Y'                             /* 사용여부 */
+                                     AND A.AUTH_YN          =   'N' )                           /* 인증여부 */
         ]]>
     </select>
 
@@ -69,15 +69,15 @@
                    TB_MAIL_AUTH_CODE                                                            /* TB_메일인증코드 */
                SET AUTH_YN  =   #{authYn}                                                       /* 인증여부 */
                  , USE_YN   =   'N'                                                             /* 사용여부 */
-             WHERE SEQ      =   ( SELECT MAX(A.SEQ)
+             WHERE SEQ      =   ( SELECT MAX(A.SEQ)                                             /* 일련번호 */
                                     FROM TB_MAIL_AUTH_CODE  A                                   /* TB_메일인증코드 */
                                        , TB_USER            B                                   /* TB_유저 */
-                                   WHERE A.EMAIL            =   B.EMAIL
-                                     AND B.USE_YN           =   'Y'
-                                     AND A.EMAIL            =   #{email}
+                                   WHERE A.EMAIL            =   B.EMAIL                         /* 이메일 */
+                                     AND B.USE_YN           =   'Y'                             /* 사용여부 */
+                                     AND A.EMAIL            =   #{email}                        /* 이메일 */
                                      AND A.AUTH_GEN_TIME    >= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI') - '4' 
-                                     AND A.USE_YN           =   'Y'
-                                     AND A.AUTH_YN          =   'N' )
+                                     AND A.USE_YN           =   'Y'                             /* 사용여부 */
+                                     AND A.AUTH_YN          =   'N' )                           /* 인증여부 */
         ]]>
     </update>
 
@@ -90,6 +90,18 @@
                FROM TB_USER                                                                     /* TB_유저 */
               WHERE USER_NAME   =   #{userName}                                                 /* 사용자명 */
                 AND EMAIL       =   #{email}                                                    /* 이메일 */
+                AND USE_YN      =   'Y'                                                         /* 사용여부 */
+        ]]>
+    </select>
+
+    <select id="searchUserPw" resultType="com.hotple.online.login.dto.SearchPwDto" parameterType="com.hotple.online.login.ivo.SearchPwIvo">
+        <![CDATA[ 
+             SELECT /* com.hotple.online.login.mapper.UserSearchMapper - searchUserPw */
+                    PASSWD_HINT                                                                 /* 비밀번호힌트 */
+               FROM TB_USER                                                                     /* TB_유저 */
+              WHERE USER_NAME   =   #{userName}                                                 /* 사용자명 */
+                AND EMAIL       =   #{email}                                                    /* 이메일 */
+                AND USER_ID     =   #{userId}                                                   /* 유저ID */
                 AND USE_YN      =   'Y'                                                         /* 사용여부 */
         ]]>
     </select>

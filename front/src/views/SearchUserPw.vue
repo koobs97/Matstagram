@@ -41,7 +41,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="9" style="text-align: left; height: 40px;">
-                            <el-input ref="userName" />
+                            <el-input ref="userName" v-model="state.ivo.userName" />
                         </el-col>
                         <el-col :span="7"/>
 
@@ -51,7 +51,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="9" style="text-align: left; height: 40px;">
-                            <el-input ref="email" />
+                            <el-input ref="email" v-model="state.ivo.email" />
                         </el-col>
                         <el-col :span="7"/>
 
@@ -61,7 +61,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="9" style="text-align: left; height: 40px;">
-                            <el-input ref="userId" />
+                            <el-input ref="userId" v-model="state.ivo.userId" />
                         </el-col>
                         <el-col :span="7"/>
                         
@@ -76,7 +76,7 @@
                             </template>
                             <el-form :model="state">
                                 <el-form-item label="질문">
-                                    <el-input autocomplete="off" disabled />
+                                    <el-input autocomplete="off" v-model="state.ivo.passwdHint" disabled />
                                 </el-form-item>
                                 <el-form-item label="정답">
                                     <el-input autocomplete="off" />
@@ -113,7 +113,8 @@ import { ArrowLeft, ArrowRight, ChatLineSquare, Checked } from '@element-plus/ic
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { SearchUserPwVo } from '../vo/SearchUserPwVo';
+import { Api } from '../common/common';
+import { SearchUserPwIvo } from '../vo/ivo/SearchUserPwIvo';
 
 const router        = useRouter()   // router
 
@@ -126,7 +127,7 @@ const userId    = ref()             // focus
 
 // state reactive
 const state = reactive({
-    ivo: new SearchUserPwVo(),
+    ivo: new SearchUserPwIvo(),
     isOpen: {
         Question: false,    // 질문 팝업창
     },
@@ -138,10 +139,10 @@ onMounted( () => {
 })
 
 // 질문 답변하기 팝업 open
-const onClickOpenQuestion = () => {
+const onClickOpenQuestion = async () => {
 
     // 필수입력 체크
-    if(state.ivo.getUserName() == '') {
+    if(state.ivo.userName == '') {
         ElMessage({
             type: 'error',
             message: '사용자명을 입력하세요.',
@@ -149,7 +150,7 @@ const onClickOpenQuestion = () => {
         userName.value.focus()
         return
     }
-    if(state.ivo.getEmail() == '') {
+    if(state.ivo.email == '') {
         ElMessage({
             type: 'error',
             message: '이메일을 입력하세요.',
@@ -157,7 +158,7 @@ const onClickOpenQuestion = () => {
         email.value.focus()
         return
     }
-    if(state.ivo.getUserId() == '') {
+    if(state.ivo.userId == '') {
         ElMessage({
             type: 'error',
             message: '아이디를 입력하세요.',
@@ -166,7 +167,20 @@ const onClickOpenQuestion = () => {
         return
     }
 
-    state.isOpen.Question = true
+    let retData = await Api.post("/api/search/searchUserPw", state.ivo)
+    console.log(retData)
+
+    if(retData.data == '') {
+        ElMessage({
+            type: 'error',
+            message: '사용자 정보를 확인해주세요.',
+        })
+        return
+    }
+    else {
+        state.isOpen.Question = true
+        state.ivo.passwdHint = retData.data.passwdHint
+    }
 
 }
 
@@ -185,15 +199,15 @@ const onClickToLogin = () => {
 <style scoped>
 
 .container_header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
 }
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .top_button {
     color: "#626aef";
@@ -206,11 +220,11 @@ const onClickToLogin = () => {
     margin-left: 1px;
 }
 .text-container {
-  position: fixed;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  text-align: center;
+    position: fixed;
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
-</style>../vo/SearchUserPwIvo../vo/SearchUserPwVo
+</style>

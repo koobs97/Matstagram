@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.hotple.online.common.service.MailService;
 import com.hotple.online.login.dto.SearchIdDto;
+import com.hotple.online.login.dto.SearchPwDto;
 import com.hotple.online.login.ivo.SearchIdIvo;
+import com.hotple.online.login.ivo.SearchPwIvo;
 import com.hotple.online.login.mapper.UserSearchMapper;
 import com.hotple.online.login.ovo.SearchIdOvo;
 import com.hotple.online.login.ovo.ShowIdOvo;
@@ -137,6 +139,19 @@ public class UserSearchSearvice {
         String randomCode = codeBuilder.toString();
 
         return randomCode;
+    }
+
+    /**
+     * 사용자 질문 조회
+     * @param ivo
+     * @return SearchPwDto
+     */
+    public SearchPwDto searchUserPw(SearchPwIvo ivo) {
+
+        SearchPwDto dto = new SearchPwDto();
+        dto = userSearchMapper.searchUserPw(ivo);
+
+        return dto;
     }
     
 }
