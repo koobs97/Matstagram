@@ -83,9 +83,76 @@
                                 </el-form-item>
                             </el-form>
                             <template #footer>
-                                <div class="dialog-footer">
-                                    <el-button type="primary" @click="state.isOpen.Question = false" color="#7E57C2">인증</el-button>
+                                <div style="text-align: center;">
+                                    <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">인증</el-button>
                                     <el-button @click="state.isOpen.Question = false">취소</el-button>
+                                </div>
+                            </template>
+                        </el-dialog>
+                        <!-- 질문/답변 Dialog -->
+
+                        <!-- 질문/답변 Dialog -->
+                        <el-dialog v-model="state.isOpen.chgPasswd" align-center style="width: 500px; height: 500px; border-radius: 8px;" :title="'비밀번호 변경'">
+                            <div>
+                                    <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 8px">
+                                        <el-row :gutter="0">
+                                            <el-col :span="4"/>
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                                <el-text style="margin-left: 15px;">저희 사이트를 사용해주셔서 감사합니다.</el-text>
+                                            </el-col>
+                                            <el-col :span="4"/>
+
+                                            <el-col :span="4"/>
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                                <el-text style="margin-left: 15px;">비밀번호 생성규칙은 다음과 같습니다.</el-text>
+                                            </el-col>
+                                            <el-col :span="4"/>
+                                        </el-row>
+                                    </el-card>
+                                </div>
+                                <div>
+                                    <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0;">
+                                        <el-row :gutter="0">
+                                            <el-col :span="4"/>
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                                <el-text style="margin-left: 15px; font-weight: bold">1. 8자리 이상</el-text>
+                                            </el-col>
+                                            <el-col :span="4"/>
+
+                                            <el-col :span="4"/>
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                                <el-text style="margin-left: 15px; font-weight: bold">2. 영문/특수기호/숫자 전부 포함</el-text>
+                                            </el-col>
+                                            <el-col :span="4"/>
+
+                                            <el-col :span="4"/>
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                                <el-text style="margin-left: 15px; font-weight: bold">3. ID와 동일하게 사용불가</el-text>
+                                            </el-col>
+                                            <el-col :span="4"/>
+
+                                            <el-col :span="4"/>
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                                <el-text style="margin-left: 15px; font-weight: bold">4. 생년월일/전화번호 포함 불가</el-text>
+                                            </el-col>
+                                            <el-col :span="4"/>
+                                        </el-row>
+                                    </el-card>
+                                </div>
+                                <el-divider><el-button link :icon="Unlock">재설정하기</el-button></el-divider>
+
+                                <el-form :model="state">
+                                    <el-form-item label="비밀변호 변경">
+                                        <el-input autocomplete="off" v-model="state.ivo.passwdHint" />
+                                    </el-form-item>
+                                    <el-form-item label="비밀변호 확인">
+                                        <el-input autocomplete="off" />
+                                    </el-form-item>
+                                </el-form>
+                            <template #footer>
+                                <div style="text-align: center;">
+                                    <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">비밀번호변경</el-button>
+                                    <el-button @click="state.isOpen.Question = false">다음에하기</el-button>
                                 </div>
                             </template>
                         </el-dialog>
@@ -106,14 +173,14 @@
             <el-text class="mx-1">CopyRight © BONSANG. All Rights Reserved.</el-text>
         </div>
 
+        
     </el-form>
+
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, ChatLineSquare, Checked } from '@element-plus/icons-vue';
-import { ElMessage } from 'element-plus';
+import { ArrowLeft, ArrowRight, ChatLineSquare, Checked, Unlock } from '@element-plus/icons-vue';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Api } from '../common/common';
 import { SearchUserPwIvo } from '../vo/ivo/SearchUserPwIvo';
 
 const router        = useRouter()   // router
@@ -130,6 +197,7 @@ const state = reactive({
     ivo: new SearchUserPwIvo(),
     isOpen: {
         Question: false,    // 질문 팝업창
+        chgPasswd: false,   // 비밀번호 변경
     },
 })
 
@@ -142,45 +210,47 @@ onMounted( () => {
 const onClickOpenQuestion = async () => {
 
     // 필수입력 체크
-    if(state.ivo.userName == '') {
-        ElMessage({
-            type: 'error',
-            message: '사용자명을 입력하세요.',
-        })
-        userName.value.focus()
-        return
-    }
-    if(state.ivo.email == '') {
-        ElMessage({
-            type: 'error',
-            message: '이메일을 입력하세요.',
-        })
-        email.value.focus()
-        return
-    }
-    if(state.ivo.userId == '') {
-        ElMessage({
-            type: 'error',
-            message: '아이디를 입력하세요.',
-        })
-        userId.value.focus()
-        return
-    }
+    // if(state.ivo.userName == '') {
+    //     ElMessage({
+    //         type: 'error',
+    //         message: '사용자명을 입력하세요.',
+    //     })
+    //     userName.value.focus()
+    //     return
+    // }
+    // if(state.ivo.email == '') {
+    //     ElMessage({
+    //         type: 'error',
+    //         message: '이메일을 입력하세요.',
+    //     })
+    //     email.value.focus()
+    //     return
+    // }
+    // if(state.ivo.userId == '') {
+    //     ElMessage({
+    //         type: 'error',
+    //         message: '아이디를 입력하세요.',
+    //     })
+    //     userId.value.focus()
+    //     return
+    // }
 
-    let retData = await Api.post("/api/search/searchUserPw", state.ivo)
-    console.log(retData)
+    // let retData = await Api.post("/api/search/searchUserPw", state.ivo)
+    // console.log(retData)
 
-    if(retData.data == '') {
-        ElMessage({
-            type: 'error',
-            message: '사용자 정보를 확인해주세요.',
-        })
-        return
-    }
-    else {
-        state.isOpen.Question = true
-        state.ivo.passwdHint = retData.data.passwdHint
-    }
+    // if(retData.data == '') {
+    //     ElMessage({
+    //         type: 'error',
+    //         message: '사용자 정보를 확인해주세요.',
+    //     })
+    //     return
+    // }
+    // else {
+    //     state.isOpen.Question = true
+    //     state.ivo.passwdHint = retData.data.passwdHint
+    // }
+
+    state.isOpen.Question = true
 
 }
 
@@ -193,6 +263,20 @@ const onClickToSearchId = () => {
 const onClickToLogin = () => {
     router.push('/')
 }
+
+
+
+
+/********************************
+ * 질문 답변 팝업
+ ********************************/
+const onClickAuthPw = () => {
+    state.isOpen.Question = false
+
+    state.isOpen.chgPasswd = true
+}
+
+
 
 </script>
 
@@ -225,6 +309,17 @@ const onClickToLogin = () => {
     left: 0;
     right: 0;
     text-align: center;
+}
+
+.custom-card {
+    --el-card-border-color: var(--el-border-color-light);
+    --el-card-border-radius: 4px;
+    --el-card-padding: 12px;
+    --el-card-bg-color: var(--el-fill-color-blank);
+}
+
+.custom-title .el-dialog__header {
+    padding: 10px 20px; /* 패딩값을 조정합니다. */
 }
 
 </style>
