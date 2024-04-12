@@ -80,29 +80,44 @@ export class Api {
 
     /**
      * Axios Transaction post
-     * @param url 
-     * @param params 
+     * @param url           // backend url
+     * @param params        // 보낼 파라미터
+     * @param loadingOption // loading 옵션 사용 여부
      * @returns 
      */
-    public static post = async (url: string, params: Object): Promise<any> => {
+    public static post = async (url: string, params: Object, loadingOption?: Boolean): Promise<any> => {
         
-        const loading = ElLoading.service({
-            lock: true,
-            text: 'Loading',
-            background: 'rgba(0, 0, 0, 0.7)',
-        })
-
-        try {
-
-            const retData = await axios.post(url, params)
-
-            loading.close()
-
-            return retData
-        } catch (error) {
-            loading.close()
-            Common.error('요청 중 에러가 발생했습니다.')
-            return Promise.reject(error)
+        if(loadingOption) {
+            const loading = ElLoading.service({
+                lock: true,
+                text: 'Loading',
+                background: 'rgba(0, 0, 0, 0.7)',
+            })
+    
+            try {
+    
+                const retData = await axios.post(url, params)
+    
+                loading.close()
+    
+                return retData
+            } catch (error) {
+                loading.close()
+                Common.error('요청 중 에러가 발생했습니다.')
+                return Promise.reject(error)
+            }
+        }
+        else {
+    
+            try {
+    
+                const retData = await axios.post(url, params)
+    
+                return retData
+            } catch (error) {
+                Common.error('요청 중 에러가 발생했습니다.')
+                return Promise.reject(error)
+            }
         }
     }
 

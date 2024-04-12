@@ -20,8 +20,9 @@
                         <el-form label-width="120px">
                             <el-row :gutter="0">
 
-                                <el-col :span="16" style="margin-bottom: 8px">
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-tooltip
+                                        class="box-item"
                                         effect="dark"
                                         placement="left-start"
                                         raw-content
@@ -35,11 +36,14 @@
                                         />
                                     </el-tooltip>
                                 </el-col>
-                                <el-col :span="8" style="margin-bottom: 8px; text-align: left">
-                                    <el-button color="#D1C4E9" style="width: 60%; margin-left: 8px; font-weight: bold;" :icon="Select" @click="onClickChkId">중복확인</el-button>
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle0"></el-button>
+                                </el-col>
+                                <el-col :span="5" style="margin-bottom: 8px; text-align: left">
+                                    <el-button type="info" plain style="font-weight: bold; margin-left: 4px; width: 100%;" @click="onClickChkId">중복확인</el-button>
                                 </el-col>
 
-                                <el-col :span="16" style="margin-bottom: 8px">
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-tooltip
                                         class="box-item"
                                         effect="dark"
@@ -67,11 +71,12 @@
                                     </el-tooltip>
                                     </el-tooltip>
                                 </el-col>
-                                <el-col :span="8" style="margin-bottom: 8px">
-                                    <el-form-item/>
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle1"></el-button>
                                 </el-col>
+                                <el-col :span="5" />
 
-                                <el-col :span="16" style="margin-bottom: 8px">
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-tooltip
                                         effect="dark"
                                         placement="left-start"
@@ -87,62 +92,60 @@
                                         />
                                     </el-tooltip>
                                 </el-col>
-                                <el-col :span="8" style="margin-bottom: 8px">
-                                    <el-form-item/>
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle2"></el-button>
                                 </el-col>
+                                <el-col :span="5" />
 
-                                <el-col :span="16" style="margin-bottom: 8px">
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-input
                                         ref="passwdHint"
                                         v-model="state.ivo.passwdHint"
                                         placeholder="비밀번호 찾기 질문"
                                         />
                                 </el-col>
-                                <el-col :span="8" style="margin-bottom: 8px">
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle3"></el-button>
+                                </el-col>
+                                <el-col :span="5" />
+
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-input
                                         ref="passwdHintAnswer"
                                         v-model="state.ivo.passwdHintAnswer"
-                                        style="width: 90%;"
                                         placeholder="정답 입력"
                                         />
                                 </el-col>
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle4"></el-button>
+                                </el-col>
+                                <el-col :span="5" />
 
-                                <el-col :span="16">
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-input
                                         ref="email1"
                                         v-model="state.ivo.email"
                                         placeholder="이메일"
                                         />
                                 </el-col>
-
-                                <el-col :span="8" style="margin-bottom: 8px">
-                                    <el-select
-                                        ref="email2"
-                                        v-model="mail"
-                                        class="m-2"
-                                        placeholder="@선택"
-                                        style="width: 90%;"
-                                    >
-                                        <el-option
-                                        v-for="item in mailOptions"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value"
-                                        />
-                                    </el-select>
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle5"></el-button>
                                 </el-col>
+                                <el-col :span="5" />
 
-                                <el-col :span="16" style="margin-bottom: 8px">
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-input
                                         ref="userName"
                                         v-model="state.ivo.userName"
                                         placeholder="사용자명"
                                         />
                                 </el-col>
-                                <el-col :span="8" style="margin-bottom: 8px">
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle6"></el-button>
                                 </el-col>
+                                <el-col :span="5" />
 
-                                <el-col :span="16" style="margin-bottom: 8px">
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-input
                                         ref="birthDate"
                                         maxlength="10"
@@ -150,14 +153,17 @@
                                         placeholder="생년월일 ex) 2024.02.01"
                                         />
                                 </el-col>
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle7"></el-button>
+                                </el-col>
+                                <el-col :span="5" />
 
-                                <el-col :span="8" style="margin-bottom: 8px">
+                                <el-col :span="17" style="margin-bottom: 8px">
                                     <el-select
                                         ref="genderCode"
                                         v-model="gender"
                                         class="m-2"
                                         placeholder="성별"
-                                        style="width: 90%;"
                                     >
                                         <el-option
                                         v-for="item in genOptions"
@@ -167,22 +173,30 @@
                                         />
                                     </el-select>
                                 </el-col>
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle8"></el-button>
+                                </el-col>
+                                <el-col :span="5" />
 
-                                <el-col :span="8" style="margin-bottom: 8px">
+                                <el-col :span="4" style="margin-bottom: 8px">
                                     <el-input
                                         ref="ph1"
                                         v-model="state.ph1"
                                         placeholder="010"
                                         />
                                 </el-col>
-                                <el-col :span="16" style="margin-bottom: 8px">
+                                <el-col :span="13" style="margin-bottom: 8px; text-align: right">
                                     <el-input
                                         ref="ph2"
                                         v-model="state.ph2"
-                                        style="width: 95%;"
+                                        style="width: 98%;"
                                         placeholder="휴대폰 뒷자리"
                                         />
                                 </el-col>
+                                <el-col :span="2" style="text-align: right">
+                                    <el-button :icon="Select" :class="state.style.btnStyle9"></el-button>
+                                </el-col>
+                                <el-col :span="5" />
 
                                 <el-col :span="8" style="text-align: left; padding-bottom: 10px;">
                                     <el-checkbox label="[필수] 인증약관동의" 
@@ -269,7 +283,6 @@ const passwdChk = ref()
 const passwdHint = ref()
 const passwdHintAnswer = ref()
 const email1 = ref()
-const email2 = ref()
 const userName = ref()
 const birthDate = ref()
 const genderCode = ref()
@@ -359,6 +372,18 @@ const state = reactive({
         val5: false,
     } as any,
     click: false,
+    style: {
+        btnStyle0: 'btn_default',
+        btnStyle1: 'btn_default',
+        btnStyle2: 'btn_default',
+        btnStyle3: 'btn_default',
+        btnStyle4: 'btn_default',
+        btnStyle5: 'btn_default',
+        btnStyle6: 'btn_default',
+        btnStyle7: 'btn_default',
+        btnStyle8: 'btn_default',
+        btnStyle9: 'btn_default',
+    }
 })
 
 // 아이디 중복확인
@@ -368,25 +393,26 @@ const onClickChkId = async () => {
 
     if(state.ivo.userId.trim().length < 5) {
         state.idChk.msg = state.idChk.valid.msg
-        state.idChk.type = state.idChk.valid.type
         state.canSignDvcd.isUserIdDup = true
 
         return
     }
 
-    let retData = await Api.post("/api/join/chkUserId", state.ivo)
+    let retData = await Api.post("/api/join/chkUserId", state.ivo, false)
 
     if(retData.data.idDupYn == 'Y') {
+        state.style.btnStyle0 = 'btn_error'
         state.idChk.msg = state.idChk.error.msg
-        state.idChk.type = state.idChk.error.type
         state.canSignDvcd.isUserIdDup = true
     }
     else if(retData.data.idDupYn == 'N') {
+        state.style.btnStyle0 = 'btn_success'
         state.idChk.msg = state.idChk.success.msg
-        state.idChk.type = state.idChk.success.type
         state.canSignDvcd.isUserIdDup = false
     }
 }
+
+
 
 // 아이디
 watch(
@@ -414,6 +440,7 @@ watch(
                 state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
+                state.style.btnStyle1 = 'btn_error'
                 state.ruleChk.msg = state.ruleChk.error1.msg
                 state.ruleChk.type = state.ruleChk.error1.type
             }
@@ -422,6 +449,7 @@ watch(
                 state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
+                state.style.btnStyle1 = 'btn_error'
                 state.ruleChk.msg = state.ruleChk.error2.msg
                 state.ruleChk.type = state.ruleChk.error2.type
             }
@@ -430,6 +458,7 @@ watch(
                 state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
+                state.style.btnStyle1 = 'btn_error'
                 state.ruleChk.msg = state.ruleChk.error3.msg
                 state.ruleChk.type = state.ruleChk.error3.type
             }
@@ -440,6 +469,7 @@ watch(
                 state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
+                state.style.btnStyle1 = 'btn_error'
                 state.ruleChk.msg = state.ruleChk.error4.msg
                 state.ruleChk.type = state.ruleChk.error4.type
             }
@@ -450,6 +480,7 @@ watch(
                 state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
+                state.style.btnStyle1 = 'btn_error'
                 state.ruleChk.msg = state.ruleChk.error5.msg
                 state.ruleChk.type = state.ruleChk.error5.type
             }
@@ -457,6 +488,7 @@ watch(
                 state.isVisibleRule = true
             }
             else {
+                state.style.btnStyle1 = 'btn_success'
                 state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = true
 
@@ -477,6 +509,7 @@ watch(
             state.isHiddenChk = true
             state.canSignDvcd.ispasswdChk = false
 
+            state.style.btnStyle2 = 'btn_error'
             state.chkType.msg = state.chkType.error.msg
             state.chkType.type = state.chkType.error.type
         }
@@ -485,11 +518,13 @@ watch(
             state.isHiddenChk = true
             state.canSignDvcd.ispasswdChk = true
 
+            state.style.btnStyle2 = 'btn_success'
             state.chkType.msg = state.chkType.success.msg
             state.chkType.type = state.chkType.success.type
         }
 
         if(state.passwdChk.length == 0) {
+            state.style.btnStyle2 = 'btn_default'
             state.isHiddenChk = false
             state.canSignDvcd.ispasswdChk = false
         }
@@ -514,6 +549,79 @@ watch(
         // 포맷된 전화번호를 상태에 설정
         state.ph2 = formattedPhnum
     }
+)
+
+// 기타 입력정보 입력에 따른 오류색상 컨트롤
+watch(
+    () => state.ivo,
+    () => {
+
+        // 비밀번호 찾기 질문
+        if(state.ivo.passwdHint.trim().length == 0) {
+            state.style.btnStyle3 = 'btn_default'
+        }
+        else {
+            state.style.btnStyle3 = 'btn_success'
+        }
+
+        // 정답
+        if(state.ivo.passwdHintAnswer.trim().length == 0) {
+            state.style.btnStyle4 = 'btn_default'
+        }
+        else {
+            state.style.btnStyle4 = 'btn_success'
+        }
+
+        // 이메일
+        if(state.ivo.email.trim().length == 0) {
+            state.style.btnStyle5 = 'btn_default'
+        }
+        else {
+            state.style.btnStyle5 = 'btn_success'
+        }
+
+        // 사용자명
+        if(state.ivo.userName.trim().length == 0) {
+            state.style.btnStyle6 = 'btn_default'
+        }
+        else {
+            state.style.btnStyle6 = 'btn_success'
+        }
+
+        // 생년월일
+        if(state.ivo.birthDate.trim().length == 0) {
+            state.style.btnStyle7 = 'btn_default'
+        }
+        else if(state.ivo.birthDate.trim().length == 0 || state.ivo.birthDate.trim().length != 10) {
+            state.style.btnStyle7 = 'btn_error'
+        }
+        else {
+            state.style.btnStyle7 = 'btn_success'
+        }
+
+        // 성별
+        if(gender.value.trim().length == 0) {
+            state.style.btnStyle8 = 'btn_default'
+        }
+        else {
+            state.style.btnStyle8 = 'btn_success'
+        }
+
+        // 전화번호
+        if(state.ph1.trim().length == 0 && state.ph2.trim().length == 0) {
+            state.style.btnStyle8 = 'btn_default'
+        }
+        else if(state.ph1.trim().length == 0 || state.ph1.trim().length != 3) {
+            state.style.btnStyle8 = 'btn_error'
+        }
+        else if(state.ph2.trim().length == 0 || state.ph2.trim().length != 9) {
+            state.style.btnStyle8 = 'btn_error'
+        }
+        else {
+            state.style.btnStyle8 = 'btn_success'
+        }
+    },
+    {deep: true}
 )
 
 // 약관보기 컨트롤
@@ -560,39 +668,21 @@ watch(
 )
 
 const mail = ref('')
-const mailOptions = [
-  {
-    value: '@naver.com',
-    label: '@naver.com',
-  },
-  {
-    value: '@gmail.com',
-    label: '@gmail.com',
-  },
-  {
-    value: '@daum.net',
-    label: '@daum.net',
-  },
-  {
-    value: '@hanmail.net',
-    label: '@hanmail.net',
-  },
-]
 
 const gender = ref('')
 const genOptions = [
-  {
-    value: 'M',
-    label: '남자',
-  },
-  {
-    value: 'W',
-    label: '여자',
-  },
-  {
-    value: 'N',
-    label: '선택안함',
-  },
+    {
+        value: 'M',
+        label: '남자',
+    },
+    {
+        value: 'W',
+        label: '여자',
+    },
+    {
+        value: 'N',
+        label: '선택안함',
+    },
 ]
 
 // 회원가입버튼
@@ -603,97 +693,140 @@ const onClickJoin = async () => {
             type: 'error',
             message: '사용자ID를 확인해주세요.',
         })
+        state.style.btnStyle0 = 'btn_error'
         userId.value.focus()
         return
     }
+    else{
+        state.style.btnStyle0 = 'btn_success'
+    }
+
     if(state.canSignDvcd.isPasswdRule == false) {
         ElMessage({
             type: 'error',
             message: '비밀번호를 다시 설정해주세요.',
         })
+        state.style.btnStyle1 = 'btn_error'
         userPasswd.value.focus()
         return
     }
+    else{
+        state.style.btnStyle1 = 'btn_success'
+    }
+
     if(state.canSignDvcd.ispasswdChk == false) {
         ElMessage({
             type: 'error',
             message: '비밀번호 확인이 올바르지 않습니다.',
         })
+        state.style.btnStyle2 = 'btn_error'
         passwdChk.value.focus()
         return
     }
+    else{
+        state.style.btnStyle2 = 'btn_success'
+    }
+
     if(state.ivo.passwdHint.trim().length == 0) {
         ElMessage({
             type: 'error',
             message: '비밀번호 찾기 질문을 설정해주세요.',
         })
+        state.style.btnStyle3 = 'btn_error'
         passwdHint.value.focus()
         return
     }
+    else{
+        state.style.btnStyle3 = 'btn_success'
+    }
+
     if(state.ivo.passwdHintAnswer.trim().length == 0) {
         ElMessage({
             type: 'error',
             message: '비밀번호 찾기 질문에 대한 정답을 설정해주세요.',
         })
+        state.style.btnStyle4 = 'btn_error'
         passwdHintAnswer.value.focus()
         return
     }
+    else{
+        state.style.btnStyle4 = 'btn_success'
+    }
+
     if(state.ivo.email.trim().length == 0) {
         ElMessage({
             type: 'error',
             message: '이메일을 확인해주세요.',
         })
+        state.style.btnStyle5 = 'btn_error'
         email1.value.focus()
         return
     }
-    if(mail.value == '') {
-        ElMessage({
-            type: 'error',
-            message: '이메일을 확인해주세요.',
-        })
-        email2.value.focus()
-        return
+    else{
+        state.style.btnStyle5 = 'btn_success'
     }
+    
     if(state.ivo.userName.trim().length == 0) {
         ElMessage({
             type: 'error',
             message: '사용자명을 입력해주세요.',
         })
+        state.style.btnStyle6 = 'btn_error'
         userName.value.focus()
         return
     }
+    else{
+        state.style.btnStyle6 = 'btn_success'
+    }
+
     if(state.ivo.birthDate.trim().length == 0 || state.ivo.birthDate.trim().length != 10) {
         ElMessage({
             type: 'error',
             message: '생년월일을 확인해주세요.',
         })
+        state.style.btnStyle7 = 'btn_error'
         birthDate.value.focus()
         return
     }
+    else{
+        state.style.btnStyle7 = 'btn_success'
+    }
+
     if(gender.value == '') {
         ElMessage({
             type: 'error',
             message: '성별을 선택해주세요.',
         })
+        state.style.btnStyle8 = 'btn_error'
         genderCode.value.focus()
         return
     }
+    else{
+        state.style.btnStyle8 = 'btn_success'
+    }
+
     if(state.ph1.trim().length == 0 || state.ph1.trim().length != 3) {
         ElMessage({
             type: 'error',
             message: '휴대폰 번호를 확인해주세요.',
         })
+        state.style.btnStyle9 = 'btn_error'
         ph1.value.focus()
         return
     }
-    if(state.ph2.trim().length == 0 || state.ph2.trim().length != 9) {
+    else if(state.ph2.trim().length == 0 || state.ph2.trim().length != 9) {
         ElMessage({
             type: 'error',
             message: '휴대폰 번호를 확인해주세요.',
         })
+        state.style.btnStyle9 = 'btn_error'
         ph2.value.focus()
         return
     }
+    else{
+        state.style.btnStyle9 = 'btn_success'
+    }
+
     if(isAgreed.value == false) {
         ElMessage({
             type: 'error',
@@ -773,9 +906,18 @@ const onClickToLogin = () => {
     text-align: center;
 }
 
-.el-popper.is-dark {
-    color: var(--el-bg-color);
-    background: #dadde5;
-    border: 1px solid var(--el-text-color-primary);
+.btn_default {
+    background-color: #F5F5F5;
+    width: 90%;
+}
+
+.btn_error {
+    background-color: #FFCDD2; 
+    width: 90%;
+}
+
+.btn_success {
+    background-color: #C8E6C9; 
+    width: 90%;
 }
 </style>
