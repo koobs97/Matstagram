@@ -20,26 +20,26 @@
                         <el-form label-width="120px">
                             <el-row :gutter="0">
 
-                                <el-col :span="16">
+                                <el-col :span="16" style="margin-bottom: 8px">
+                                    <el-tooltip
+                                        effect="dark"
+                                        placement="left-start"
+                                        raw-content
+                                        :content="state.idChk.msg"
+                                        :visible="state.isVisibleIdChk"
+                                    >
                                     <el-input
                                         ref="userId"
                                         v-model="state.ivo.userId"
-                                        style="height: 40px; "
                                         placeholder="사용자ID"
                                         />
+                                    </el-tooltip>
                                 </el-col>
-                                <el-col :span="8">
-                                    <el-button color="#626aef" style="height: 40px; width: 90%; font-weight: bold;" plain :icon="Select" @click="onClickChkId">중복확인</el-button>
-                                </el-col>
-
-                                <el-col :span="16">
-                                    <el-text class="mx-1" :type="state.idChk.type" style="height: 11px; font-size: 11px; float: left;" :hidden="state.isHiddenIdChk">{{ state.idChk.msg }}</el-text>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-form-item/>
+                                <el-col :span="8" style="margin-bottom: 8px; text-align: left">
+                                    <el-button color="#D1C4E9" style="width: 60%; margin-left: 8px; font-weight: bold;" :icon="Select" @click="onClickChkId">중복확인</el-button>
                                 </el-col>
 
-                                <el-col :span="16">
+                                <el-col :span="16" style="margin-bottom: 8px">
                                     <el-tooltip
                                         class="box-item"
                                         effect="dark"
@@ -51,82 +51,77 @@
                                         <br>4. 생년월일/전화번호 포함 불가"
                                         raw-content
                                     >
+                                    <el-tooltip
+                                        effect="dark"
+                                        placement="left-start"
+                                        raw-content
+                                        :content="state.ruleChk.msg"
+                                        :visible="state.isVisibleRule"
+                                    >
                                     <el-input
                                         ref="userPasswd"
                                         v-model="state.ivo.userPasswd"
-                                        style="height: 40px; "
                                         type="password"
                                         placeholder="비밀번호"
                                         />
                                     </el-tooltip>
+                                    </el-tooltip>
                                 </el-col>
-                                <el-col :span="8">
+                                <el-col :span="8" style="margin-bottom: 8px">
                                     <el-form-item/>
                                 </el-col>
 
-                                <el-col :span="16">
-                                    <el-text class="mx-1" :type="state.ruleChk.type" style="height: 11px; font-size: 11px; float: left;" :hidden="state.isHiddenRule">{{ state.ruleChk.msg }}</el-text>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-form-item/>
-                                </el-col>
-
-                                <el-col :span="16">
+                                <el-col :span="16" style="margin-bottom: 8px">
+                                    <el-tooltip
+                                        effect="dark"
+                                        placement="left-start"
+                                        raw-content
+                                        :content="state.chkType.msg"
+                                        :visible="state.isHiddenChk"
+                                    >
                                     <el-input
                                         ref="passwdChk"
                                         v-model="state.passwdChk"
-                                        style="height: 40px; "
                                         type="password"
                                         placeholder="비밀번호 확인"
                                         />
+                                    </el-tooltip>
                                 </el-col>
-                                <el-col :span="8">
+                                <el-col :span="8" style="margin-bottom: 8px">
                                     <el-form-item/>
                                 </el-col>
 
-                                <el-col :span="16">
-                                    <el-text class="mx-1" :type="state.chkType.type" style="height: 11px; font-size: 11px; float: left;" :hidden="state.isHiddenChk">{{ state.chkType.msg }}</el-text>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-form-item/>
-                                </el-col>
-
-                                <el-col :span="16">
+                                <el-col :span="16" style="margin-bottom: 8px">
                                     <el-input
                                         ref="passwdHint"
                                         v-model="state.ivo.passwdHint"
-                                        style="height: 40px; "
                                         placeholder="비밀번호 찾기 질문"
                                         />
                                 </el-col>
-                                <el-col :span="8">
+                                <el-col :span="8" style="margin-bottom: 8px">
                                     <el-input
                                         ref="passwdHintAnswer"
                                         v-model="state.ivo.passwdHintAnswer"
-                                        style="height: 40px;  width: 90%;"
+                                        style="width: 90%;"
                                         placeholder="정답 입력"
                                         />
                                 </el-col>
 
                                 <el-col :span="16">
-                                    <el-form-item/>
                                     <el-input
                                         ref="email1"
                                         v-model="state.ivo.email"
-                                        style="height: 40px; "
                                         placeholder="이메일"
                                         />
                                 </el-col>
 
-                                <el-col :span="8">
-                                    <el-form-item/>
+                                <el-col :span="8" style="margin-bottom: 8px">
                                     <el-select
                                         ref="email2"
                                         v-model="mail"
                                         class="m-2"
                                         placeholder="@선택"
-                                        size="large"
-                                        style="width: 90%; font-size: 11px;"
+                                        style="width: 90%;"
                                     >
                                         <el-option
                                         v-for="item in mailOptions"
@@ -137,38 +132,31 @@
                                     </el-select>
                                 </el-col>
 
-                                <el-col :span="16">
-                                    <el-form-item/>
+                                <el-col :span="16" style="margin-bottom: 8px">
                                     <el-input
                                         ref="userName"
                                         v-model="state.ivo.userName"
-                                        style="height: 40px; "
                                         placeholder="사용자명"
                                         />
                                 </el-col>
-                                <el-col :span="8">
-                                    <el-form-item/>
+                                <el-col :span="8" style="margin-bottom: 8px">
                                 </el-col>
 
-                                <el-col :span="16">
-                                    <el-form-item/>
+                                <el-col :span="16" style="margin-bottom: 8px">
                                     <el-input
                                         ref="birthDate"
                                         maxlength="10"
                                         v-model="state.ivo.birthDate"
-                                        style="height: 40px; "
                                         placeholder="생년월일 ex) 2024.02.01"
                                         />
                                 </el-col>
 
-                                <el-col :span="8">
-                                    <el-form-item/>
+                                <el-col :span="8" style="margin-bottom: 8px">
                                     <el-select
                                         ref="genderCode"
                                         v-model="gender"
                                         class="m-2"
                                         placeholder="성별"
-                                        size="large"
                                         style="width: 90%;"
                                     >
                                         <el-option
@@ -180,27 +168,23 @@
                                     </el-select>
                                 </el-col>
 
-                                <el-col :span="8">
-                                    <el-form-item/>
+                                <el-col :span="8" style="margin-bottom: 8px">
                                     <el-input
                                         ref="ph1"
                                         v-model="state.ph1"
-                                        style="height: 40px; "
                                         placeholder="010"
                                         />
                                 </el-col>
-                                <el-col :span="16">
-                                    <el-form-item/>
+                                <el-col :span="16" style="margin-bottom: 8px">
                                     <el-input
                                         ref="ph2"
                                         v-model="state.ph2"
-                                        style="width: 95%; height: 40px; "
+                                        style="width: 95%;"
                                         placeholder="휴대폰 뒷자리"
                                         />
                                 </el-col>
 
                                 <el-col :span="8" style="text-align: left; padding-bottom: 10px;">
-                                    <el-form-item/>
                                     <el-checkbox label="[필수] 인증약관동의" 
                                                 ref="agreed"
                                                 v-model="isAgreed"
@@ -213,7 +197,6 @@
                                 </el-col>
 
                                 <el-col :span="16" style="padding-left: 10px;">
-                                    <el-form-item/>
                                     <el-collapse v-model="activeNames" style="width: 97%;">
                                         <el-collapse-item title="약관보기" name="1">
                                             <div style="display: flex;">
@@ -231,7 +214,6 @@
                                     </el-collapse>
                                 </el-col>
 
-                                <br/>
                                 <br/>
                                 <br/>
                                 <br/>
@@ -305,7 +287,7 @@ const state = reactive({
         isPasswdRule: false,
         ispasswdChk: false,
     },
-    isHiddenIdChk: true,
+    isVisibleIdChk: false,
     idChk: {
         msg: '',
         type: '',
@@ -354,7 +336,7 @@ const state = reactive({
             type: 'success',
         },
     },
-    isHiddenRule: true,
+    isVisibleRule: false,
     passwdChk: '' as string,
     chkType: {
         msg: '',
@@ -368,7 +350,7 @@ const state = reactive({
             type: 'success',
         },
     },
-    isHiddenChk: true,
+    isHiddenChk: false,
     chk: {
         val1: false,
         val2: false,
@@ -382,7 +364,7 @@ const state = reactive({
 // 아이디 중복확인
 const onClickChkId = async () => {
 
-    state.isHiddenIdChk = false
+    state.isVisibleIdChk = true
 
     if(state.ivo.userId.trim().length < 5) {
         state.idChk.msg = state.idChk.valid.msg
@@ -410,7 +392,7 @@ const onClickChkId = async () => {
 watch(
     () => state.ivo.userId,
     () => {
-        state.isHiddenIdChk = false
+        state.isVisibleIdChk = true
         state.idChk.msg = state.idChk.default.msg
         state.idChk.type = state.idChk.default.type
         state.canSignDvcd.isUserIdDup = true
@@ -429,7 +411,7 @@ watch(
         if(state.ivo.userPasswd.length > 0) {
             // 비밀번호 8자리 체크
             if(state.ivo.userPasswd.length < 8) {
-                state.isHiddenRule = false
+                state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
                 state.ruleChk.msg = state.ruleChk.error1.msg
@@ -437,7 +419,7 @@ watch(
             }
             // 영문 포함여부 확인
             else if(!hasLettersRegExp.test(state.ivo.userPasswd) || !hasSpecialCharsRegExp.test(state.ivo.userPasswd) || !hasNumbersRegExp.test(state.ivo.userPasswd)) {
-                state.isHiddenRule = false
+                state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
                 state.ruleChk.msg = state.ruleChk.error2.msg
@@ -445,7 +427,7 @@ watch(
             }
             // 유저ID 포함여부 확인
             else if (state.ivo.userPasswd.includes(state.ivo.userId) && state.ivo.userId.length != 0) {
-                state.isHiddenRule = false
+                state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
                 state.ruleChk.msg = state.ruleChk.error3.msg
@@ -455,7 +437,7 @@ watch(
             else if( (state.ivo.userPasswd.includes(state.ivo.birthDate.replaceAll('.', '').substring(0,4)) 
                 || state.ivo.userPasswd.includes(state.ivo.birthDate.replaceAll('.', '').substring(4,8)) )
                 && state.ivo.birthDate.length != 0) {
-                state.isHiddenRule = false
+                state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
                 state.ruleChk.msg = state.ruleChk.error4.msg
@@ -465,17 +447,17 @@ watch(
             else if( (state.ivo.userPasswd.includes(state.ivo.phoneNumber.replaceAll('-', '').substring(0,4)) 
                 || state.ivo.userPasswd.includes(state.ivo.phoneNumber.replaceAll('-', '').substring(4,8)) )
                 && state.ivo.phoneNumber.length != 0) {
-                state.isHiddenRule = false
+                state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
                 state.ruleChk.msg = state.ruleChk.error5.msg
                 state.ruleChk.type = state.ruleChk.error5.type
             }
             else if(state.ivo.userPasswd.length == 0) {
-                state.isHiddenRule = true
+                state.isVisibleRule = true
             }
             else {
-                state.isHiddenRule = false
+                state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = true
 
                 state.ruleChk.msg = state.ruleChk.success.msg
@@ -492,7 +474,7 @@ watch(
     () => {
         // 비밀번호 확인이 다를 때
         if(state.passwdChk.length != 0 && state.passwdChk != state.ivo.userPasswd) {
-            state.isHiddenChk = false
+            state.isHiddenChk = true
             state.canSignDvcd.ispasswdChk = false
 
             state.chkType.msg = state.chkType.error.msg
@@ -500,7 +482,7 @@ watch(
         }
         // 비밀번호 확인이 같을 때
         if(state.passwdChk.length != 0 && state.passwdChk == state.ivo.userPasswd) {
-            state.isHiddenChk = false
+            state.isHiddenChk = true
             state.canSignDvcd.ispasswdChk = true
 
             state.chkType.msg = state.chkType.success.msg
@@ -508,7 +490,7 @@ watch(
         }
 
         if(state.passwdChk.length == 0) {
-            state.isHiddenChk = true
+            state.isHiddenChk = false
             state.canSignDvcd.ispasswdChk = false
         }
     }
@@ -770,24 +752,30 @@ const onClickToLogin = () => {
     font-family: 'dancing';
 }
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -50px;
 }
 .login {
     width: 100%;
     height: 45px; 
     font-weight: bold; 
     font-size: 16px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .text-container {
-  position: fixed;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  text-align: center;
+    position: fixed;
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.el-popper.is-dark {
+    color: var(--el-bg-color);
+    background: #dadde5;
+    border: 1px solid var(--el-text-color-primary);
 }
 </style>

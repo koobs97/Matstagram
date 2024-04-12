@@ -70,75 +70,69 @@
                         </el-col>
 
                         <!-- 질문/답변 Dialog -->
-                        <el-dialog v-model="state.isOpen.Question" align-center style="width: 500px; height: 280px; border-radius: 8px;">
-                            <template #header>
-                                <h4 style="margin-top: 5px; margin-bottom: 5px;">질문에 답변하기</h4>
-                            </template>
-                            <el-form :model="state">
-                                <el-form-item label="질문">
-                                    <el-input autocomplete="off" v-model="state.ivo.passwdHint" disabled />
-                                </el-form-item>
-                                <el-form-item label="정답">
-                                    <el-input autocomplete="off" />
-                                </el-form-item>
-                            </el-form>
-                            <template #footer>
-                                <div style="text-align: center;">
+                        <el-dialog v-model="state.isOpen.Question" align-center style="width: 500px; height: 300px; border-radius: 8px;" :title="'질문에 답변하기'">
+                                <el-divider style="margin-top: 0px;"><el-button link :icon="Lock"></el-button></el-divider>
+                                <el-form :model="state">
+                                    <el-form-item label="질문">
+                                        <el-input autocomplete="off" v-model="state.ivo.passwdHint" disabled />
+                                    </el-form-item>
+                                    <el-form-item label="정답">
+                                        <el-input autocomplete="off" />
+                                    </el-form-item>
+                                </el-form>
+                                <template #footer>
+                                    <div style="text-align: center;">
                                     <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">인증</el-button>
                                     <el-button @click="state.isOpen.Question = false">취소</el-button>
                                 </div>
-                            </template>
+                                </template>
                         </el-dialog>
                         <!-- 질문/답변 Dialog -->
 
                         <!-- 질문/답변 Dialog -->
-                        <el-dialog v-model="state.isOpen.chgPasswd" align-center style="width: 500px; height: 500px; border-radius: 8px;" :title="'비밀번호 변경'">
-                            <div>
+                        <el-dialog v-model="state.isOpen.chgPasswd" align-center style="width: 500px; height: 510px; border-radius: 8px;" :title="'비밀번호 변경'">
                                     <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 8px">
                                         <el-row :gutter="0">
                                             <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px;">저희 사이트를 사용해주셔서 감사합니다.</el-text>
                                             </el-col>
                                             <el-col :span="4"/>
 
                                             <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px;">비밀번호 생성규칙은 다음과 같습니다.</el-text>
                                             </el-col>
                                             <el-col :span="4"/>
                                         </el-row>
                                     </el-card>
-                                </div>
-                                <div>
                                     <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0;">
                                         <el-row :gutter="0">
                                             <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px; font-weight: bold">1. 8자리 이상</el-text>
                                             </el-col>
                                             <el-col :span="4"/>
 
                                             <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px; font-weight: bold">2. 영문/특수기호/숫자 전부 포함</el-text>
                                             </el-col>
                                             <el-col :span="4"/>
 
                                             <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px; font-weight: bold">3. ID와 동일하게 사용불가</el-text>
                                             </el-col>
                                             <el-col :span="4"/>
 
                                             <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 1px;">
+                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px; font-weight: bold">4. 생년월일/전화번호 포함 불가</el-text>
                                             </el-col>
                                             <el-col :span="4"/>
                                         </el-row>
                                     </el-card>
-                                </div>
                                 <el-divider><el-button link :icon="Unlock">재설정하기</el-button></el-divider>
 
                                 <el-form :model="state">
@@ -178,7 +172,7 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, ChatLineSquare, Checked, Unlock } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, ChatLineSquare, Checked, Lock, Unlock } from '@element-plus/icons-vue';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SearchUserPwIvo } from '../vo/ivo/SearchUserPwIvo';
@@ -318,8 +312,11 @@ const onClickAuthPw = () => {
     --el-card-bg-color: var(--el-fill-color-blank);
 }
 
-.custom-title .el-dialog__header {
-    padding: 10px 20px; /* 패딩값을 조정합니다. */
+
+.container .el-dialog .el-dialog__header {
+    padding: 5px;
+    color: var(--el-text-color-regular);
+    font-size: var(--el-dialog-content-font-size);
 }
 
 </style>
