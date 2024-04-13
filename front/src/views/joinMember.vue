@@ -250,6 +250,25 @@
                     <el-form label-width="120px" style="height: 80%; width: 30%;">
                         <el-form>
                             <el-button color="#311B92" class="login" @click="onClickJoin" >회원가입</el-button>
+
+                            <!-- 질문/답변 Dialog -->
+                        <el-dialog v-model="state.isOpen.confirm" align-center style="width: 280px; height: 140px; border-radius: 8px;">
+                            <template #header>
+                                <div style="text-align: left;">
+                                    <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                        <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
+                                        알림창
+                                    </h4>
+                                <el-text>회원가입을 진행하시겠습니까?</el-text>
+                                </div>
+                                <div style="text-align: left; margin-top: 20px">
+                                    <el-button type="primary" color="#7E57C2" @click="onClickjoinComfirm">확인</el-button>
+                                    <el-button style="margin-left: 4px;" @click="state.isOpen.confirm = false">취소</el-button>
+                                </div>
+                            </template>
+                        </el-dialog>
+                        <!-- 질문/답변 Dialog -->
+
                         </el-form>
                     </el-form>
                 </div>
@@ -264,7 +283,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeft, Select } from '@element-plus/icons-vue'
+import { ArrowLeft, InfoFilled, Select } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
@@ -290,9 +309,31 @@ const ph1 = ref()
 const ph2 = ref()
 const agreed = ref()
 
+const mail = ref('')
+
+const gender = ref('')
+const genOptions = [
+    {
+        value: 'M',
+        label: '남자',
+    },
+    {
+        value: 'W',
+        label: '여자',
+    },
+    {
+        value: 'N',
+        label: '선택안함',
+    },
+]
+
 const state = reactive({
     ivo: new joinMemberIvo(),
     ivoParam: new joinMemberIvo(),
+    isOpen: {
+        confirm: false
+    },
+    joinYn: false,
     ph1: '',
     ph2: '',
     canSignDvcd: {
@@ -412,8 +453,6 @@ const onClickChkId = async () => {
     }
 }
 
-
-
 // 아이디
 watch(
     () => state.ivo.userId,
@@ -465,7 +504,7 @@ watch(
             // 생년월일 8자리 포함여부 확인
             else if( (state.ivo.userPasswd.includes(state.ivo.birthDate.replaceAll('.', '').substring(0,4)) 
                 || state.ivo.userPasswd.includes(state.ivo.birthDate.replaceAll('.', '').substring(4,8)) )
-                && state.ivo.birthDate.length != 0) {
+                && state.ivo.birthDate.length != 0 && state.ivo.birthDate.length >= 8) {
                 state.isVisibleRule = true
                 state.canSignDvcd.isPasswdRule = false
 
@@ -553,7 +592,7 @@ watch(
 
 // 기타 입력정보 입력에 따른 오류색상 컨트롤
 watch(
-    () => state.ivo,
+    () => [state.ivo, gender.value, state.ph1, state.ph2],
     () => {
 
         // 비밀번호 찾기 질문
@@ -609,16 +648,16 @@ watch(
 
         // 전화번호
         if(state.ph1.trim().length == 0 && state.ph2.trim().length == 0) {
-            state.style.btnStyle8 = 'btn_default'
+            state.style.btnStyle9 = 'btn_default'
         }
         else if(state.ph1.trim().length == 0 || state.ph1.trim().length != 3) {
-            state.style.btnStyle8 = 'btn_error'
+            state.style.btnStyle9 = 'btn_error'
         }
         else if(state.ph2.trim().length == 0 || state.ph2.trim().length != 9) {
-            state.style.btnStyle8 = 'btn_error'
+            state.style.btnStyle9 = 'btn_error'
         }
         else {
-            state.style.btnStyle8 = 'btn_success'
+            state.style.btnStyle9 = 'btn_success'
         }
     },
     {deep: true}
@@ -666,24 +705,6 @@ watch(
         isAgreed.value = true
     }
 )
-
-const mail = ref('')
-
-const gender = ref('')
-const genOptions = [
-    {
-        value: 'M',
-        label: '남자',
-    },
-    {
-        value: 'W',
-        label: '여자',
-    },
-    {
-        value: 'N',
-        label: '선택안함',
-    },
-]
 
 // 회원가입버튼
 const onClickJoin = async () => {
@@ -836,6 +857,14 @@ const onClickJoin = async () => {
         return
     }
 
+    // 확인창 Open
+    state.isOpen.confirm = true
+
+}
+
+// 확인 버튼 누를 시 회원가입 진행
+const onClickjoinComfirm = async () => {
+
     /* 로그인 파라미터 세팅 */
     state.ivoParam.userId           = state.ivo.userId                          // 사용자ID
     state.ivoParam.userName         = state.ivo.userName                        // 사용자명
@@ -868,6 +897,7 @@ const onClickJoin = async () => {
         })
         router.push('/')
     }
+
 }
 
 // 로그인 페이지로 이동

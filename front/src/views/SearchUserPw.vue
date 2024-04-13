@@ -70,28 +70,40 @@
                         </el-col>
 
                         <!-- 질문/답변 Dialog -->
-                        <el-dialog v-model="state.isOpen.Question" align-center style="width: 500px; height: 300px; border-radius: 8px;" :title="'질문에 답변하기'">
-                                <el-divider style="margin-top: 0px;"><el-button link :icon="Lock"></el-button></el-divider>
-                                <el-form :model="state">
-                                    <el-form-item label="질문">
-                                        <el-input autocomplete="off" v-model="state.ivo.passwdHint" disabled />
-                                    </el-form-item>
-                                    <el-form-item label="정답">
-                                        <el-input autocomplete="off" />
-                                    </el-form-item>
-                                </el-form>
-                                <template #footer>
+                        <el-dialog v-model="state.isOpen.Question" align-center style="width: 500px; height: 240px; border-radius: 8px;">
+                                <template #header>
+                                    <div style="text-align: left; display: flex; margin-bottom: 0px;">
+                                        <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                            질문에 답변하기
+                                        </h4>
+                                    </div>
+                                    <el-divider style="margin-top: 0px;"></el-divider>
+                                    <el-form :model="state">
+                                            <el-form-item label="질문">
+                                                <el-input autocomplete="off" v-model="state.ivo.passwdHint" disabled />
+                                            </el-form-item>
+                                            <el-form-item label="정답">
+                                                <el-input autocomplete="off" />
+                                            </el-form-item>
+                                        </el-form>
                                     <div style="text-align: center;">
-                                    <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">인증</el-button>
-                                    <el-button @click="state.isOpen.Question = false">취소</el-button>
-                                </div>
+                                        <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">인증</el-button>
+                                        <el-button @click="state.isOpen.Question = false">취소</el-button>
+                                    </div>
                                 </template>
                         </el-dialog>
                         <!-- 질문/답변 Dialog -->
 
                         <!-- 질문/답변 Dialog -->
-                        <el-dialog v-model="state.isOpen.chgPasswd" align-center style="width: 500px; height: 510px; border-radius: 8px;" :title="'비밀번호 변경'">
-                                    <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 8px">
+                        <el-dialog v-model="state.isOpen.chgPasswd" align-center style="width: 500px; height: 475px; border-radius: 8px;" :title="'비밀번호 변경'">
+                            <template #header>
+                                <div style="text-align: left; display: flex; margin-bottom: 0px;">
+                                    <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                        비밀번호 변경
+                                    </h4>
+                                </div>
+                                <el-divider style="margin-top: 0px;"></el-divider>
+                                <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 8px">
                                         <el-row :gutter="0">
                                             <el-col :span="4"/>
                                             <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
@@ -143,7 +155,6 @@
                                         <el-input autocomplete="off" />
                                     </el-form-item>
                                 </el-form>
-                            <template #footer>
                                 <div style="text-align: center;">
                                     <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">비밀번호변경</el-button>
                                     <el-button @click="state.isOpen.Question = false">다음에하기</el-button>
@@ -172,7 +183,7 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, ChatLineSquare, Checked, Lock, Unlock } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, ChatLineSquare, Checked, Unlock } from '@element-plus/icons-vue';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SearchUserPwIvo } from '../vo/ivo/SearchUserPwIvo';
