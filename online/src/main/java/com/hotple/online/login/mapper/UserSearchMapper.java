@@ -8,8 +8,20 @@ import com.hotple.online.login.dto.ShowIdDto;
 import com.hotple.online.login.ivo.SearchIdIvo;
 import com.hotple.online.login.ivo.SearchPwIvo;
 
+/**
+ * UserSearchMapper 
+ * 아이디/비밀번호 찾기
+ * 
+ * @Class   UserSearchMapper
+ * @Author  Koo Bon Sang
+ * @Date    2024.03.25
+ * @Version 1.1.0
+ * 
+ */
+
 @Mapper
 public interface UserSearchMapper {
+
     public String chkUserEmail(SearchIdIvo ivo);            // 이메일 정합성 체크
     public SearchIdDto chkEmailAuth(SearchIdIvo ivo);       // 이메일 인증번호 체크
     public int saveAuthCode(SearchIdIvo ivo);               // 인증번호 저장
@@ -17,4 +29,5 @@ public interface UserSearchMapper {
     public ShowIdDto showUserId(SearchIdIvo ivo);           // 유저ID 조회
 
     public SearchPwDto searchUserPw(SearchPwIvo ivo);       // 유저 힌트 조회
+
 }

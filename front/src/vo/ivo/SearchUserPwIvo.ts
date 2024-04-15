@@ -14,5 +14,6 @@ export class SearchUserPwIvo {
     public email: string = ''      // 이메일
     public userId: string = ''     // 아이디
 
-    public passwdHint: string = '' // 질문
+    public passwdHint: string = ''       // 질문
+    public passwdHintAnswer: string = '' // 정답
 }

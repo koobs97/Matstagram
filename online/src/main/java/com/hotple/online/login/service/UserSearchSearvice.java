@@ -16,6 +16,16 @@ import com.hotple.online.login.ovo.ShowIdOvo;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * UserSearchSearvice 
+ * 아이디/비밀번호 찾기
+ * 
+ * @Class   UserSearchSearvice
+ * @Author  Koo Bon Sang
+ * @Date    2024.03.25
+ * @Version 1.1.0
+ * 
+ */
 
 @Service
 @RequiredArgsConstructor

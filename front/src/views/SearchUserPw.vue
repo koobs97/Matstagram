@@ -10,7 +10,7 @@
  * @Date    2024.03.29
  * @Version 1.1.0
  * 
- -->
+-->
 
 <template>
     <el-form label-width="120px">
@@ -70,39 +70,87 @@
                         </el-col>
 
                         <!-- 질문/답변 Dialog -->
-                        <el-dialog v-model="state.isOpen.Question" align-center style="width: 500px; height: 240px; border-radius: 8px;">
-                                <template #header>
+                        <el-dialog 
+                            v-model="state.isOpen.Question" 
+                            :show-close="false" 
+                            :before-close="handleClose"
+                            draggable 
+                            destroy-on-close 
+                            align-center 
+                            style="width: 520px; height: 480px; border-radius: 8px; transition: width 0.1s ease;"
+                        >
+                                <template #header="{}">
                                     <div style="text-align: left; display: flex; margin-bottom: 0px;">
-                                        <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                        <h4 style="margin-top: 0px; margin-bottom: 15px; font-size: 16px">
                                             질문에 답변하기
                                         </h4>
                                     </div>
-                                    <el-divider style="margin-top: 0px;"></el-divider>
-                                    <el-form :model="state">
-                                            <el-form-item label="질문">
-                                                <el-input autocomplete="off" v-model="state.ivo.passwdHint" disabled />
-                                            </el-form-item>
-                                            <el-form-item label="정답">
-                                                <el-input autocomplete="off" />
-                                            </el-form-item>
-                                        </el-form>
-                                    <div style="text-align: center;">
-                                        <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">인증</el-button>
-                                        <el-button @click="state.isOpen.Question = false">취소</el-button>
-                                    </div>
+                                    <el-divider style="margin-top: 0px; margin-bottom: 0px; width: 50%;"></el-divider>
                                 </template>
+
+                                <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
+                                    <el-row :gutter="0">
+
+                                        <el-col :span="2" style="height: 40px;" />
+                                        <el-col :span="4" style="height: 40px;">
+                                            <el-form-item label="아이디">
+                                            </el-form-item>
+                                        </el-col>
+                                        <el-col :span="15" style="height: 40px;">
+                                            <el-input v-model="state.local.userId" disabled />
+                                        </el-col>
+                                        <el-col :span="3" style="height: 40px;" />
+
+                                        <el-col :span="2" style="height: 30px;" />
+                                        <el-col :span="4" style="height: 30px;">
+                                            <el-form-item label="사용자명">
+                                            </el-form-item>
+                                        </el-col>
+                                        <el-col :span="15" style="height: 30px;">
+                                            <el-input v-model="state.local.userName" disabled />
+                                        </el-col>
+                                        <el-col :span="3" style="height: 30px;" />
+
+                                    </el-row>
+                                </el-card>
+
+                                <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 30px">
+                                    <el-row :gutter="0">
+                                        <el-col :span="24" style="text-align: left; margin-bottom: 2px;">
+                                            <el-text style="margin-left: 15px;">회원가입 시 입력한 "비밀번호 찾기 질문"에 대한 답변을 입력해주세요.</el-text>
+                                        </el-col>
+                                    </el-row>
+                                </el-card>
+
+                                <el-divider><el-icon><InfoFilled /></el-icon></el-divider>
+
+                                <el-form :model="state">
+                                    <el-form-item label="질문">
+                                        <el-input v-model="state.ivo.passwdHint" disabled />
+                                    </el-form-item>
+                                    <el-form-item label="정답">
+                                        <el-input v-model="state.ivo.passwdHintAnswer" ref="passwdHintAnswer" />
+                                    </el-form-item>
+                                </el-form>
+                                
+                                <div style="text-align: center; margin-top: 50px">
+                                    <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">인증</el-button>
+                                    <el-button @click="state.isOpen.Question = false">취소</el-button>
+                                </div>
                         </el-dialog>
                         <!-- 질문/답변 Dialog -->
 
                         <!-- 질문/답변 Dialog -->
-                        <el-dialog v-model="state.isOpen.chgPasswd" align-center style="width: 500px; height: 475px; border-radius: 8px;" :title="'비밀번호 변경'">
+                        <el-dialog v-model="state.isOpen.chgPasswd" align-center style="width: 500px; height: 510px; border-radius: 8px;" :title="'비밀번호 변경'">
                             <template #header>
                                 <div style="text-align: left; display: flex; margin-bottom: 0px;">
-                                    <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                    <h4 style="margin-top: 0px; margin-bottom: 15px; font-size: 16px">
                                         비밀번호 변경
                                     </h4>
                                 </div>
-                                <el-divider style="margin-top: 0px;"></el-divider>
+                                <el-divider style="margin-top: 0px; margin-bottom: 0px; width: 50%;"></el-divider>
+                            </template>
+
                                 <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 8px">
                                         <el-row :gutter="0">
                                             <el-col :span="4"/>
@@ -155,11 +203,11 @@
                                         <el-input autocomplete="off" />
                                     </el-form-item>
                                 </el-form>
-                                <div style="text-align: center;">
+                                <div style="text-align: center; margin-top: 50px">
                                     <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">비밀번호변경</el-button>
                                     <el-button @click="state.isOpen.Question = false">다음에하기</el-button>
                                 </div>
-                            </template>
+
                         </el-dialog>
                         <!-- 질문/답변 Dialog -->
 
@@ -183,9 +231,11 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, ChatLineSquare, Checked, Unlock } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, ChatLineSquare, Checked, InfoFilled, Unlock } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { Api } from '../common/common';
 import { SearchUserPwIvo } from '../vo/ivo/SearchUserPwIvo';
 
 const router        = useRouter()   // router
@@ -196,6 +246,7 @@ const plainPasswd   = ref(false)    // 찾기 구분 선택
 const userName  = ref()             // focus
 const email     = ref()             // focus
 const userId    = ref()             // focus
+const passwdHintAnswer = ref()      // focus
 
 // state reactive
 const state = reactive({
@@ -204,6 +255,10 @@ const state = reactive({
         Question: false,    // 질문 팝업창
         chgPasswd: false,   // 비밀번호 변경
     },
+    local: {
+        userId: '',
+        userName: '',
+    }
 })
 
 // 화면진입 시
@@ -215,48 +270,54 @@ onMounted( () => {
 const onClickOpenQuestion = async () => {
 
     // 필수입력 체크
-    // if(state.ivo.userName == '') {
-    //     ElMessage({
-    //         type: 'error',
-    //         message: '사용자명을 입력하세요.',
-    //     })
-    //     userName.value.focus()
-    //     return
-    // }
-    // if(state.ivo.email == '') {
-    //     ElMessage({
-    //         type: 'error',
-    //         message: '이메일을 입력하세요.',
-    //     })
-    //     email.value.focus()
-    //     return
-    // }
-    // if(state.ivo.userId == '') {
-    //     ElMessage({
-    //         type: 'error',
-    //         message: '아이디를 입력하세요.',
-    //     })
-    //     userId.value.focus()
-    //     return
-    // }
+    if(state.ivo.userName == '') {
+        ElMessage({
+            type: 'error',
+            message: '사용자명을 입력하세요.',
+        })
+        userName.value.focus()
+        return
+    }
+    if(state.ivo.email == '') {
+        ElMessage({
+            type: 'error',
+            message: '이메일을 입력하세요.',
+        })
+        email.value.focus()
+        return
+    }
+    if(state.ivo.userId == '') {
+        ElMessage({
+            type: 'error',
+            message: '아이디를 입력하세요.',
+        })
+        userId.value.focus()
+        return
+    }
 
-    // let retData = await Api.post("/api/search/searchUserPw", state.ivo)
-    // console.log(retData)
+    let retData = await Api.post("/api/search/searchUserPw", state.ivo)
 
-    // if(retData.data == '') {
-    //     ElMessage({
-    //         type: 'error',
-    //         message: '사용자 정보를 확인해주세요.',
-    //     })
-    //     return
-    // }
-    // else {
-    //     state.isOpen.Question = true
-    //     state.ivo.passwdHint = retData.data.passwdHint
-    // }
+    if(retData.data == '') {
+        ElMessage({
+            type: 'error',
+            message: '사용자 정보를 확인해주세요.',
+        })
+        return
+    }
+    else {
+        state.isOpen.Question = true
+        state.ivo.passwdHint = retData.data.passwdHint
 
-    state.isOpen.Question = true
+        state.local.userId = state.ivo.userId
+        state.local.userName = state.ivo.userName
 
+        setTimeout(()=>{ passwdHintAnswer.value.focus() }, 50)
+    }
+
+}
+
+// 팝업창 바깥 클릭 시
+const handleClose = () => {
 }
 
 // 아이디 찾기 페이지로 이동
@@ -321,13 +382,6 @@ const onClickAuthPw = () => {
     --el-card-border-radius: 4px;
     --el-card-padding: 12px;
     --el-card-bg-color: var(--el-fill-color-blank);
-}
-
-
-.container .el-dialog .el-dialog__header {
-    padding: 5px;
-    color: var(--el-text-color-regular);
-    font-size: var(--el-dialog-content-font-size);
 }
 
 </style>

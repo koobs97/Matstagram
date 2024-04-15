@@ -13,6 +13,17 @@ import com.hotple.online.login.ovo.SearchIdOvo;
 import com.hotple.online.login.ovo.ShowIdOvo;
 import com.hotple.online.login.service.UserSearchSearvice;
 
+/**
+ * UserSearchController 
+ * 아이디/비밀번호 찾기
+ * 
+ * @Class   UserSearchController
+ * @Author  Koo Bon Sang
+ * @Date    2024.03.25
+ * @Version 1.1.0
+ * 
+ */
+
 @RestController
 @RequestMapping("/api/search")
 public class UserSearchController {

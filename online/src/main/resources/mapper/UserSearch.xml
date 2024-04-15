@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--
+ * <h3>
+ *  아이디/비밀번호 찾기
+ * </h3>
+ * 
+ * 아이디/비밀번호 찾기
+ * 
+ * @Class   UserSearch.xml
+ * @Author  Koo Bon Sang
+ * @Date    2024.03.25
+ * @Version 1.1.0
+ * 
+-->
 
 <mapper namespace="com.hotple.online.login.mapper.UserSearchMapper">
 
@@ -57,7 +70,7 @@
                                    WHERE A.EMAIL            =   B.EMAIL                         /* 이메일 */
                                      AND B.USE_YN           =   'Y'                             /* 사용여부 */
                                      AND A.EMAIL            =   #{email}                        /* 이메일 */
-                                     AND A.AUTH_GEN_TIME    >= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI') - '3' 
+                                     AND A.AUTH_GEN_TIME    >= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI') - '3'   /* 인증번호생성시간 */
                                      AND A.USE_YN           =   'Y'                             /* 사용여부 */
                                      AND A.AUTH_YN          =   'N' )                           /* 인증여부 */
         ]]>
@@ -75,7 +88,7 @@
                                    WHERE A.EMAIL            =   B.EMAIL                         /* 이메일 */
                                      AND B.USE_YN           =   'Y'                             /* 사용여부 */
                                      AND A.EMAIL            =   #{email}                        /* 이메일 */
-                                     AND A.AUTH_GEN_TIME    >= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI') - '4' 
+                                     AND A.AUTH_GEN_TIME    >= TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24MI') - '4'   /* 인증번호생성시간 */
                                      AND A.USE_YN           =   'Y'                             /* 사용여부 */
                                      AND A.AUTH_YN          =   'N' )                           /* 인증여부 */
         ]]>
