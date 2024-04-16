@@ -163,5 +163,18 @@ public class UserSearchSearvice {
 
         return dto;
     }
+
+    /**
+     * 사용자 정답여부 조회
+     * @param ivo
+     * @return SearchPwDto
+     */
+    public SearchPwDto searchPwAnswer(SearchPwIvo ivo) {
+
+        SearchPwDto dto = new SearchPwDto();
+        dto = userSearchMapper.searchPwAnswer(ivo);
+
+        return dto;
+    }
     
 }

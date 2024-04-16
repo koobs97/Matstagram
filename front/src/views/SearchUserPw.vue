@@ -295,6 +295,7 @@ const onClickOpenQuestion = async () => {
         return
     }
 
+    // 질문 조회
     let retData = await Api.post("/api/search/searchUserPw", state.ivo)
 
     if(retData.data == '') {
@@ -336,10 +337,34 @@ const onClickToLogin = () => {
 /********************************
  * 질문 답변 팝업
  ********************************/
-const onClickAuthPw = () => {
-    state.isOpen.Question = false
+const onClickAuthPw = async () => {
+    // state.isOpen.Question = false
+    // state.isOpen.chgPasswd = true
 
-    state.isOpen.chgPasswd = true
+    // 필수입력 체크
+    if(state.ivo.passwdHintAnswer == '') {
+        ElMessage({
+            type: 'error',
+            message: '정답을 입력하세요.',
+        })
+        passwdHintAnswer.value.focus()
+        return
+    }
+
+    // 정답 조회
+    let retData = await Api.post("/api/search/searchPwAnswer", state.ivo)
+
+    if(retData.data.userId == null) {
+        ElMessage({
+            type: 'error',
+            message: '정답이 일치하지 않습니다.',
+        })
+        return
+    }
+    else {
+        state.isOpen.Question = false
+        state.isOpen.chgPasswd = true
+    }
 }
 
 

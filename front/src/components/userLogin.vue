@@ -27,7 +27,8 @@
                                         />
                                 </el-col>
 
-                                <el-col :span="24">
+                                <!-- 비밀번호 감추는 영역 -->
+                                <el-col :span="24" :hidden="state.isHidden.HideIcon">
                                     <el-form-item/>
                                     <el-input
                                         v-model="state.ivo.userPasswd"
@@ -36,7 +37,30 @@
                                         style="height: 40px; font-size: 15px;"
                                         type="password"
                                         placeholder="비밀번호"
-                                        />
+                                        >
+                                        <template #append>
+                                            <el-button :icon="Hide" @click="onClickHideIcon" />
+                                        </template>
+                                    </el-input>
+                                </el-col>
+
+                                <!-- 보여지는 비밀번호 영역 -->
+                                <el-col :span="24" :hidden="state.isHidden.ViewIcon">
+                                    <el-form-item/>
+                                    <el-input
+                                        v-model="state.ivo.userPasswd"
+                                        ref="passwd"
+                                        @keyup.enter="onClickLogin"
+                                        style="height: 40px; font-size: 15px;"
+                                        type="text"
+                                        placeholder="비밀번호"
+                                        :suffix-icon="View"
+                                        @click="onClickViewIcon"
+                                        >
+                                        <template #append>
+                                            <el-button :icon="View" @click="onClickViewIcon" />
+                                        </template>
+                                    </el-input>
                                 </el-col>
 
                                 <el-col :span="24">
@@ -75,6 +99,7 @@
 
 <script lang="ts" setup>
 
+import { Hide, View } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -90,13 +115,29 @@ const passwd    = ref()
 
 const state = reactive({
     ivo: new UserLoginIvo(),
-    ivoParam: new UserLoginIvo()
+    ivoParam: new UserLoginIvo(),
+    isHidden: {
+        HideIcon: false,
+        ViewIcon: true,
+    },
 })
 
 // 화면진입 시
 onMounted(() => {
     id.value.focus()
 })
+
+// 패스워드 숨기기 아이콘 클릭
+const onClickHideIcon = () => {
+    state.isHidden.HideIcon = true
+    state.isHidden.ViewIcon = false
+}
+
+// 패스워드 보기 아이콘 클릭
+const onClickViewIcon = () => {
+    state.isHidden.HideIcon = false
+    state.isHidden.ViewIcon = true
+}
 
 // 로그인
 const onClickLogin = async () => {

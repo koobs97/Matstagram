@@ -29,5 +29,6 @@ public interface UserSearchMapper {
     public ShowIdDto showUserId(SearchIdIvo ivo);           // 유저ID 조회
 
     public SearchPwDto searchUserPw(SearchPwIvo ivo);       // 유저 힌트 조회
+    public SearchPwDto searchPwAnswer(SearchPwIvo ivo);     // 유저 정답여부 확인
 
 }

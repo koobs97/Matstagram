@@ -63,4 +63,12 @@ public class UserSearchController {
         return dto;
     }
 
+    @PostMapping("/searchPwAnswer")
+    public SearchPwDto searchPwAnswer(@RequestBody SearchPwIvo ivo) {
+        
+        SearchPwDto dto = svc.searchPwAnswer(ivo);
+
+        return dto;
+    }
+
 }
