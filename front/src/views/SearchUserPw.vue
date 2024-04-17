@@ -79,7 +79,7 @@
                             align-center 
                             style="width: 520px; height: 480px; border-radius: 8px; transition: width 0.1s ease;"
                         >
-                                <template #header="{}">
+                                <template #header>
                                     <div style="text-align: left; display: flex; margin-bottom: 0px;">
                                         <h4 style="margin-top: 0px; margin-bottom: 15px; font-size: 16px">
                                             질문에 답변하기
@@ -141,7 +141,14 @@
                         <!-- 질문/답변 Dialog -->
 
                         <!-- 질문/답변 Dialog -->
-                        <el-dialog v-model="state.isOpen.chgPasswd" align-center style="width: 500px; height: 510px; border-radius: 8px;" :title="'비밀번호 변경'">
+                        <el-dialog 
+                            v-model="state.isOpen.chgPasswd" 
+                            :show-close="false" 
+                            :before-close="handleClose"
+                            draggable 
+                            destroy-on-close 
+                            align-center
+                            style="width: 400px; height: 760px; border-radius: 8px;">
                             <template #header>
                                 <div style="text-align: left; display: flex; margin-bottom: 0px;">
                                     <h4 style="margin-top: 0px; margin-bottom: 15px; font-size: 16px">
@@ -151,59 +158,126 @@
                                 <el-divider style="margin-top: 0px; margin-bottom: 0px; width: 50%;"></el-divider>
                             </template>
 
+                            <div style="text-align: left; margin-top: 0px; margin-bottom: 5px;" >
+                                <el-icon style="font-size: 14px;"><CaretRight /></el-icon> <el-text style="font-weight: bold;">사용자정보</el-text>
+                            </div>
+                            <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
+
+                                
+                                        <el-descriptions :column="1" border>
+                                            <el-descriptions-item label-align="left" align="left">
+                                                <template #label>
+                                                    <div class="cell-item">
+                                                        <el-icon>
+                                                            <User />
+                                                        </el-icon>
+                                                        사용자명
+                                                    </div>
+                                                </template>
+                                                구본상
+                                            </el-descriptions-item>
+                                            <el-descriptions-item label-align="left" align="left">
+                                                <template #label>
+                                                    <div class="cell-item">
+                                                        <el-icon>
+                                                            <UserFilled />
+                                                        </el-icon>
+                                                        아이디
+                                                    </div>
+                                                </template>
+                                                koobs97
+                                            </el-descriptions-item>
+                                            <el-descriptions-item label-align="left" align="left">
+                                                <template #label>
+                                                    <div class="cell-item">
+                                                        <el-icon>
+                                                            <Calendar />
+                                                        </el-icon>
+                                                        생년월일
+                                                    </div>
+                                                </template>
+                                                1997-07-29
+                                            </el-descriptions-item>
+                                            <el-descriptions-item label-align="left" align="left">
+                                                <template #label>
+                                                    <div class="cell-item">
+                                                        <el-icon>
+                                                            <Phone />
+                                                        </el-icon>
+                                                        전화번호
+                                                    </div>
+                                                </template>
+                                                010-8702-3099
+                                            </el-descriptions-item>
+                                        </el-descriptions>
+
+                                </el-card>
+
                                 <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 8px">
                                         <el-row :gutter="0">
-                                            <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
-                                                <el-text style="margin-left: 15px;">저희 사이트를 사용해주셔서 감사합니다.</el-text>
-                                            </el-col>
-                                            <el-col :span="4"/>
+                                            <el-col :span="2"/>
+                                            <el-col :span="20" style="text-align: left; margin-bottom: 2px;">
+                                                <el-text>저희 사이트를 사용해주셔서 감사합니다.</el-text>
+                                            </el-col> 
+                                            <el-col :span="2"/>
 
-                                            <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
-                                                <el-text style="margin-left: 15px;">비밀번호 생성규칙은 다음과 같습니다.</el-text>
+                                            <el-col :span="2"/>
+                                            <el-col :span="20" style="text-align: left; margin-bottom: 2px;">
+                                                <el-text >비밀번호 생성규칙은 다음과 같습니다.</el-text>
                                             </el-col>
-                                            <el-col :span="4"/>
+                                            <el-col :span="2"/>
                                         </el-row>
                                     </el-card>
                                     <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0;">
                                         <el-row :gutter="0">
-                                            <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
+                                            <el-col :span="3"/>
+                                            <el-col :span="19" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px; font-weight: bold">1. 8자리 이상</el-text>
                                             </el-col>
-                                            <el-col :span="4"/>
+                                            <el-col :span="2"/>
 
-                                            <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
+                                            <el-col :span="3"/>
+                                            <el-col :span="19" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px; font-weight: bold">2. 영문/특수기호/숫자 전부 포함</el-text>
                                             </el-col>
-                                            <el-col :span="4"/>
+                                            <el-col :span="2"/>
 
-                                            <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
+                                            <el-col :span="3"/>
+                                            <el-col :span="19" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px; font-weight: bold">3. ID와 동일하게 사용불가</el-text>
                                             </el-col>
-                                            <el-col :span="4"/>
+                                            <el-col :span="2"/>
 
-                                            <el-col :span="4"/>
-                                            <el-col :span="16" style="text-align: left; margin-bottom: 2px;">
+                                            <el-col :span="3"/>
+                                            <el-col :span="19" style="text-align: left; margin-bottom: 2px;">
                                                 <el-text style="margin-left: 15px; font-weight: bold">4. 생년월일/전화번호 포함 불가</el-text>
                                             </el-col>
-                                            <el-col :span="4"/>
+                                            <el-col :span="2"/>
                                         </el-row>
                                     </el-card>
                                 <el-divider><el-button link :icon="Unlock">재설정하기</el-button></el-divider>
 
                                 <el-form :model="state">
                                     <el-form-item label="비밀변호 변경">
-                                        <el-input autocomplete="off" v-model="state.ivo.passwdHint" />
+                                        <el-input autocomplete="off" v-model="state.ivo.passwdHint" :suffix-icon="Hide" />
                                     </el-form-item>
                                     <el-form-item label="비밀변호 확인">
-                                        <el-input autocomplete="off" />
+                                        <el-input autocomplete="off" :suffix-icon="Hide" />
                                     </el-form-item>
                                 </el-form>
-                                <div style="text-align: center; margin-top: 50px">
+                                
+                                <div style="text-align: center; margin-top: 50px; display: flex;">
+                                    <el-col :span="3"/>
+                                    <el-col :span="2">
+                                        {{ '안전' }}
+                                    </el-col>
+                                    <el-col :span="1"/>
+                                    <el-col :span="16">
+                                        <el-progress :percentage="100" status="success" />
+                                    </el-col>
+                                    <el-col :span="2"/>
+                                </div>
+                                <div style="text-align: center; margin-top: 20px">
                                     <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">비밀번호변경</el-button>
                                     <el-button @click="state.isOpen.Question = false">다음에하기</el-button>
                                 </div>
@@ -231,7 +305,7 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, ChatLineSquare, Checked, InfoFilled, Unlock } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, Calendar, CaretRight, ChatLineSquare, Checked, Hide, InfoFilled, Phone, Unlock, User, UserFilled } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -268,6 +342,8 @@ onMounted( () => {
 
 // 질문 답변하기 팝업 open
 const onClickOpenQuestion = async () => {
+
+    state.isOpen.chgPasswd = true
 
     // 필수입력 체크
     if(state.ivo.userName == '') {
