@@ -950,4 +950,14 @@ const onClickToLogin = () => {
     background-color: #C8E6C9; 
     width: 90%;
 }
+
+.el-checkbox {
+    --el-checkbox-checked-text-color: #7C4DFF;
+    --el-checkbox-checked-input-border-color: #70039b;
+    --el-checkbox-checked-bg-color: #70039b;
+}
+
+.el-checkbox.is-bordered.is-checked {
+    border-color: #7C4DFF;
+}
 </style>

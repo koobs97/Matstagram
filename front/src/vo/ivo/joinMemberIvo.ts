@@ -1,4 +1,5 @@
 export class joinMemberIvo {
+
     public userId: string = ''
     public userPasswd: string = ''
     public email: string = ''
@@ -9,4 +10,6 @@ export class joinMemberIvo {
     public termsAgreYn: string = ''
     public passwdHint: string = ''
     public passwdHintAnswer: string = ''
+
+    
 }

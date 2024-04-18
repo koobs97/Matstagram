@@ -76,40 +76,46 @@
                             :before-close="handleClose"
                             draggable 
                             destroy-on-close 
-                            align-center 
+                            align-center
+                            :title="'질문에 답변하기'"
                             style="width: 520px; height: 480px; border-radius: 8px; transition: width 0.1s ease;"
                         >
-                                <template #header>
-                                    <div style="text-align: left; display: flex; margin-bottom: 0px;">
-                                        <h4 style="margin-top: 0px; margin-bottom: 15px; font-size: 16px">
-                                            질문에 답변하기
-                                        </h4>
-                                    </div>
-                                    <el-divider style="margin-top: 0px; margin-bottom: 0px; width: 50%;"></el-divider>
-                                </template>
+                            <div style="text-align: left; margin-top: 0px; margin-bottom: 5px;" >
+                                <el-text style="font-weight: bold;"><el-icon><CaretRight /></el-icon>사용자정보</el-text>
+                            </div>
 
                                 <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
                                     <el-row :gutter="0">
 
-                                        <el-col :span="2" style="height: 40px;" />
-                                        <el-col :span="4" style="height: 40px;">
-                                            <el-form-item label="아이디">
-                                            </el-form-item>
+                                        <el-col :span="3">
+                                            <el-avatar style="height: 41px ; width: 41px;" :src="'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'" />
                                         </el-col>
-                                        <el-col :span="15" style="height: 40px;">
-                                            <el-input v-model="state.local.userId" disabled />
+                                        <el-col :span="21">
+                                            <el-descriptions :column="2" border>
+                                                <el-descriptions-item label-align="left" align="left">
+                                                    <template #label>
+                                                        <div class="cell-item">
+                                                            <el-icon>
+                                                                <UserFilled />
+                                                            </el-icon>
+                                                            아이디
+                                                        </div>
+                                                    </template>
+                                                    {{ state.local.userId }}
+                                                </el-descriptions-item>
+                                                <el-descriptions-item label-align="left" align="left">
+                                                    <template #label>
+                                                        <div class="cell-item">
+                                                            <el-icon>
+                                                                <User />
+                                                            </el-icon>
+                                                            사용자명
+                                                        </div>
+                                                    </template>
+                                                    {{ state.local.userName }}
+                                                </el-descriptions-item>
+                                            </el-descriptions>
                                         </el-col>
-                                        <el-col :span="3" style="height: 40px;" />
-
-                                        <el-col :span="2" style="height: 30px;" />
-                                        <el-col :span="4" style="height: 30px;">
-                                            <el-form-item label="사용자명">
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="15" style="height: 30px;">
-                                            <el-input v-model="state.local.userName" disabled />
-                                        </el-col>
-                                        <el-col :span="3" style="height: 30px;" />
 
                                     </el-row>
                                 </el-card>
@@ -125,12 +131,11 @@
                                 <el-divider><el-icon><InfoFilled /></el-icon></el-divider>
 
                                 <el-form :model="state">
-                                    <el-form-item label="질문">
-                                        <el-input v-model="state.ivo.passwdHint" disabled />
-                                    </el-form-item>
-                                    <el-form-item label="정답">
-                                        <el-input v-model="state.ivo.passwdHintAnswer" ref="passwdHintAnswer" />
-                                    </el-form-item>
+                                    <div style="text-align: left;">
+                                        <el-input v-model="state.ivo.passwdHint" placeholder="내 이름은?" disabled></el-input>
+                                        <el-input style="margin-top: 5px;" v-model="state.ivo.passwdHintAnswer" placeholder="본인확인 질문 답변" ref="passwdHintAnswer" />
+                                        <el-checkbox>본인 확인 답변 숨기기</el-checkbox>
+                                    </div>
                                 </el-form>
                                 
                                 <div style="text-align: center; margin-top: 50px">
@@ -148,18 +153,11 @@
                             draggable 
                             destroy-on-close 
                             align-center
-                            style="width: 400px; height: 760px; border-radius: 8px;">
-                            <template #header>
-                                <div style="text-align: left; display: flex; margin-bottom: 0px;">
-                                    <h4 style="margin-top: 0px; margin-bottom: 15px; font-size: 16px">
-                                        비밀번호 변경
-                                    </h4>
-                                </div>
-                                <el-divider style="margin-top: 0px; margin-bottom: 0px; width: 50%;"></el-divider>
-                            </template>
+                            :title="'비밀번호 변경'"
+                            style="width: 400px; height: 770px; border-radius: 8px;">
 
                             <div style="text-align: left; margin-top: 0px; margin-bottom: 5px;" >
-                                <el-icon style="font-size: 14px;"><CaretRight /></el-icon> <el-text style="font-weight: bold;">사용자정보</el-text>
+                                <el-text style="font-weight: bold;"><el-icon><CaretRight /></el-icon>사용자정보</el-text>
                             </div>
                             <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
 
@@ -213,7 +211,7 @@
 
                                 </el-card>
 
-                                <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 8px">
+                                <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 5px">
                                         <el-row :gutter="0">
                                             <el-col :span="2"/>
                                             <el-col :span="20" style="text-align: left; margin-bottom: 2px;">
@@ -259,27 +257,38 @@
 
                                 <el-form :model="state">
                                     <el-form-item label="비밀변호 변경">
-                                        <el-input autocomplete="off" v-model="state.ivo.passwdHint" :suffix-icon="Hide" />
+                                        <el-input v-model="state.pwChgIvo.userPasswd" :suffix-icon="Hide" />
                                     </el-form-item>
                                     <el-form-item label="비밀변호 확인">
-                                        <el-input autocomplete="off" :suffix-icon="Hide" />
+                                        <el-input v-model="state.pwChgIvo.userPasswdChk" :suffix-icon="Hide" />
                                     </el-form-item>
                                 </el-form>
                                 
-                                <div style="text-align: center; margin-top: 50px; display: flex;">
+                                
+                                <el-col :span="24" style="margin-top: 20px;">
+                                    <el-tag plain style="color: #4527A0;">
+                                        <el-icon>
+                                            <Hide />
+                                        </el-icon>
+                                        패스워드 복잡도
+                                    </el-tag>
+                                </el-col>
+
+                                <div style="text-align: center; display: flex;">
+
                                     <el-col :span="3"/>
                                     <el-col :span="2">
                                         {{ '안전' }}
                                     </el-col>
                                     <el-col :span="1"/>
                                     <el-col :span="16">
-                                        <el-progress :percentage="100" status="success" />
+                                        <el-progress :percentage="33" status="exception" />
                                     </el-col>
                                     <el-col :span="2"/>
                                 </div>
-                                <div style="text-align: center; margin-top: 20px">
+                                <div style="text-align: center; margin-top: 50px">
                                     <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">비밀번호변경</el-button>
-                                    <el-button @click="state.isOpen.Question = false">다음에하기</el-button>
+                                    <el-button @click="state.isOpen.chgPasswd = false">다음에하기</el-button>
                                 </div>
 
                         </el-dialog>
@@ -310,6 +319,7 @@ import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Api } from '../common/common';
+import { ChgUserPwIvo } from '../vo/ivo/ChgUserPwIvo';
 import { SearchUserPwIvo } from '../vo/ivo/SearchUserPwIvo';
 
 const router        = useRouter()   // router
@@ -325,6 +335,7 @@ const passwdHintAnswer = ref()      // focus
 // state reactive
 const state = reactive({
     ivo: new SearchUserPwIvo(),
+    pwChgIvo: new ChgUserPwIvo(),
     isOpen: {
         Question: false,    // 질문 팝업창
         chgPasswd: false,   // 비밀번호 변경
@@ -343,8 +354,11 @@ onMounted( () => {
 // 질문 답변하기 팝업 open
 const onClickOpenQuestion = async () => {
 
-    state.isOpen.chgPasswd = true
+    state.local.userId = 'koobs97'
+    state.local.userName = '구본상'
 
+    state.isOpen.chgPasswd = true
+    // state.isOpen.Question = true
     // 필수입력 체크
     if(state.ivo.userName == '') {
         ElMessage({
@@ -483,6 +497,17 @@ const onClickAuthPw = async () => {
     --el-card-border-radius: 4px;
     --el-card-padding: 12px;
     --el-card-bg-color: var(--el-fill-color-blank);
+}
+
+.el-checkbox {
+    --el-checkbox-checked-text-color: #7C4DFF;
+    --el-checkbox-checked-input-border-color: #70039b;
+    --el-checkbox-checked-bg-color: #70039b;
+}
+
+.el-alert--info.is-light {
+    background-color: #EDE7F6;
+    color: #4527A0;
 }
 
 </style>
