@@ -251,23 +251,23 @@
                         <el-form>
                             <el-button color="#311B92" class="login" @click="onClickJoin" >회원가입</el-button>
 
-                            <!-- 질문/답변 Dialog -->
-                        <el-dialog v-model="state.isOpen.confirm" align-center style="width: 280px; height: 140px; border-radius: 8px;">
-                            <template #header>
-                                <div style="text-align: left;">
-                                    <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
-                                        <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
-                                        알림창
-                                    </h4>
-                                <el-text>회원가입을 진행하시겠습니까?</el-text>
-                                </div>
-                                <div style="text-align: left; margin-top: 20px">
-                                    <el-button type="primary" color="#7E57C2" @click="onClickjoinComfirm">확인</el-button>
-                                    <el-button style="margin-left: 4px;" @click="state.isOpen.confirm = false">취소</el-button>
-                                </div>
-                            </template>
-                        </el-dialog>
-                        <!-- 질문/답변 Dialog -->
+                            <!-- 회원가입진행여부 확인창 Dialog -->
+                            <el-dialog v-model="state.isOpen.confirm" align-center style="width: 280px; height: 140px; border-radius: 8px;">
+                                <template #header>
+                                    <div style="text-align: left;">
+                                        <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                            <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
+                                            알림창
+                                        </h4>
+                                    <el-text>회원가입을 진행하시겠습니까?</el-text>
+                                    </div>
+                                    <div style="text-align: left; margin-top: 20px">
+                                        <el-button type="primary" color="#7E57C2" @click="onClickjoinComfirm">확인</el-button>
+                                        <el-button style="margin-left: 4px;" @click="state.isOpen.confirm = false">취소</el-button>
+                                    </div>
+                                </template>
+                            </el-dialog>
+                            <!-- 회원가입진행여부 확인창 Dialog -->
 
                         </el-form>
                     </el-form>
@@ -951,13 +951,54 @@ const onClickToLogin = () => {
     width: 90%;
 }
 
+/* 체크박스 색상 */
 .el-checkbox {
     --el-checkbox-checked-text-color: #7C4DFF;
     --el-checkbox-checked-input-border-color: #70039b;
     --el-checkbox-checked-bg-color: #70039b;
 }
 
+/* 체크박스 색상 */
 .el-checkbox.is-bordered.is-checked {
     border-color: #7C4DFF;
+}
+
+/* 버튼 색상 */
+.el-button {
+    --el-button-font-weight: var(--el-font-weight-primary);
+    --el-button-border-color: var(--el-border-color);
+    --el-button-bg-color: var(--el-fill-color-blank);
+    --el-button-text-color: var(--el-text-color-regular);
+    --el-button-disabled-text-color: var(--el-disabled-text-color);
+    --el-button-disabled-bg-color: var(--el-fill-color-blank);
+    --el-button-disabled-border-color: var(--el-border-color-light);
+    --el-button-divide-border-color: rgba(255, 255, 255, 0.5);
+    --el-button-hover-text-color: #4527A0;                              /* 마우스 올렸을 때 글씨 색 */
+    --el-button-hover-bg-color: #EDE7F6;                                /* 마우스 올렸을 때 배경 색 */
+    --el-button-hover-border-color: #7C4DFF;                            /* 마우스 올렸을 때 테두리 색 */
+    --el-button-active-text-color: var(--el-button-hover-text-color);
+    --el-button-active-border-color: #9575CD;
+    --el-button-active-bg-color: var(--el-button-hover-bg-color);
+    --el-button-outline-color: var(--el-color-primary-light-5);
+    --el-button-hover-link-text-color: var(--el-color-info);
+    --el-button-active-color: var(--el-text-color-primary);
+}
+
+/* input 색상 조정 */
+.el-input {
+    --el-input-text-color: var(--el-text-color-regular);
+    --el-input-border: var(--el-border);
+    --el-input-hover-border: var(--el-border-color-hover);
+    --el-input-focus-border: var(--el-color-primary);
+    --el-input-transparent-border: 0 0 0 1px transparent inset;
+    --el-input-border-color: var(--el-border-color);
+    --el-input-border-radius: var(--el-border-radius-base);
+    --el-input-bg-color: var(--el-fill-color-blank);
+    --el-input-icon-color: var(--el-text-color-placeholder);
+    --el-input-placeholder-color: var(--el-text-color-placeholder);
+    --el-input-hover-border-color: var(--el-border-color-hover);
+    --el-input-clear-hover-color: var(--el-text-color-secondary);
+    --el-input-focus-border-color: #9575CD;
+    --el-input-width: 100%;
 }
 </style>

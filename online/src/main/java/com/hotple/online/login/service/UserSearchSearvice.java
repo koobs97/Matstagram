@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.hotple.online.common.service.MailService;
 import com.hotple.online.login.dto.SearchIdDto;
 import com.hotple.online.login.dto.SearchPwDto;
+import com.hotple.online.login.ivo.ChgUserPwIvo;
 import com.hotple.online.login.ivo.SearchIdIvo;
 import com.hotple.online.login.ivo.SearchPwIvo;
 import com.hotple.online.login.mapper.UserSearchMapper;
@@ -176,5 +177,17 @@ public class UserSearchSearvice {
 
         return dto;
     }
-    
+
+    /**
+     * 사용자 정답여부 조회
+     * @param ivo
+     * @return SearchPwDto
+     */
+    public Boolean updateUserPw(ChgUserPwIvo ivo) {
+
+        userSearchMapper.updateUserPw(ivo);
+
+        return true;
+    }
+
 }

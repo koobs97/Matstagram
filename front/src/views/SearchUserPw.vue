@@ -101,7 +101,7 @@
                                                             아이디
                                                         </div>
                                                     </template>
-                                                    {{ state.local.userId }}
+                                                    {{ state.pop1.ivo.userId }}
                                                 </el-descriptions-item>
                                                 <el-descriptions-item label-align="left" align="left">
                                                     <template #label>
@@ -112,7 +112,7 @@
                                                             사용자명
                                                         </div>
                                                     </template>
-                                                    {{ state.local.userName }}
+                                                    {{ state.pop1.ivo.userName }}
                                                 </el-descriptions-item>
                                             </el-descriptions>
                                         </el-col>
@@ -132,8 +132,8 @@
 
                                 <el-form :model="state">
                                     <div style="text-align: left;">
-                                        <el-input v-model="state.ivo.passwdHint" placeholder="내 이름은?" disabled></el-input>
-                                        <el-input style="margin-top: 5px;" v-model="state.ivo.passwdHintAnswer" placeholder="본인확인 질문 답변" ref="passwdHintAnswer" />
+                                        <el-input v-model="state.pop1.ivo.passwdHint" placeholder="내 이름은?" disabled></el-input>
+                                        <el-input style="margin-top: 5px;" v-model="state.pop1.ivo.passwdHintAnswer" placeholder="본인확인 질문 답변" ref="passwdHintAnswer" />
                                         <el-checkbox>본인 확인 답변 숨기기</el-checkbox>
                                     </div>
                                 </el-form>
@@ -150,18 +150,17 @@
                             v-model="state.isOpen.chgPasswd" 
                             :show-close="false" 
                             :before-close="handleClose"
-                            draggable 
-                            destroy-on-close 
+                            :draggable="false"
+                            destroy-on-close
                             align-center
                             :title="'비밀번호 변경'"
-                            style="width: 400px; height: 770px; border-radius: 8px;">
+                            style="width: 400px; height: 780px; border-radius: 8px;">
 
                             <div style="text-align: left; margin-top: 0px; margin-bottom: 5px;" >
                                 <el-text style="font-weight: bold;"><el-icon><CaretRight /></el-icon>사용자정보</el-text>
                             </div>
-                            <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
 
-                                
+                            <div style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
                                         <el-descriptions :column="1" border>
                                             <el-descriptions-item label-align="left" align="left">
                                                 <template #label>
@@ -172,7 +171,7 @@
                                                         사용자명
                                                     </div>
                                                 </template>
-                                                구본상
+                                                {{ state.pop2.pwChgIvo1.userName }}
                                             </el-descriptions-item>
                                             <el-descriptions-item label-align="left" align="left">
                                                 <template #label>
@@ -183,7 +182,7 @@
                                                         아이디
                                                     </div>
                                                 </template>
-                                                koobs97
+                                                {{ state.pop2.pwChgIvo1.userId }}
                                             </el-descriptions-item>
                                             <el-descriptions-item label-align="left" align="left">
                                                 <template #label>
@@ -194,7 +193,7 @@
                                                         생년월일
                                                     </div>
                                                 </template>
-                                                1997-07-29
+                                                {{ state.pop2.pwChgIvo1.birthDate }}
                                             </el-descriptions-item>
                                             <el-descriptions-item label-align="left" align="left">
                                                 <template #label>
@@ -205,11 +204,11 @@
                                                         전화번호
                                                     </div>
                                                 </template>
-                                                010-8702-3099
+                                                {{ state.pop2.pwChgIvo1.phoneNumber }}
                                             </el-descriptions-item>
                                         </el-descriptions>
 
-                                </el-card>
+                                    </div>
 
                                 <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 5px">
                                         <el-row :gutter="0">
@@ -226,49 +225,61 @@
                                             <el-col :span="2"/>
                                         </el-row>
                                     </el-card>
-                                    <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0;">
-                                        <el-row :gutter="0">
-                                            <el-col :span="3"/>
-                                            <el-col :span="19" style="text-align: left; margin-bottom: 2px;">
-                                                <el-text style="margin-left: 15px; font-weight: bold">1. 8자리 이상</el-text>
-                                            </el-col>
-                                            <el-col :span="2"/>
 
-                                            <el-col :span="3"/>
-                                            <el-col :span="19" style="text-align: left; margin-bottom: 2px;">
-                                                <el-text style="margin-left: 15px; font-weight: bold">2. 영문/특수기호/숫자 전부 포함</el-text>
-                                            </el-col>
-                                            <el-col :span="2"/>
-
-                                            <el-col :span="3"/>
-                                            <el-col :span="19" style="text-align: left; margin-bottom: 2px;">
-                                                <el-text style="margin-left: 15px; font-weight: bold">3. ID와 동일하게 사용불가</el-text>
-                                            </el-col>
-                                            <el-col :span="2"/>
-
-                                            <el-col :span="3"/>
-                                            <el-col :span="19" style="text-align: left; margin-bottom: 2px;">
-                                                <el-text style="margin-left: 15px; font-weight: bold">4. 생년월일/전화번호 포함 불가</el-text>
-                                            </el-col>
-                                            <el-col :span="2"/>
-                                        </el-row>
-                                    </el-card>
-                                <el-divider><el-button link :icon="Unlock">재설정하기</el-button></el-divider>
-
+                                            <el-descriptions
+                                                :column="1"
+                                                size="small"
+                                                border
+                                            >
+                                                <el-descriptions-item label-class-name="my-label" label="필수">8자리 이상</el-descriptions-item>
+                                                <el-descriptions-item label-class-name="my-label" label="필수">영문/특수기호/숫자 전부 포함</el-descriptions-item>
+                                                <el-descriptions-item label-class-name="my-label" label="필수">ID와 동일하게 사용불가</el-descriptions-item>
+                                                <el-descriptions-item label-class-name="my-label" label="필수">생년월일/전화번호 포함 불가</el-descriptions-item>
+                                                <el-descriptions-item label="권장">3자리의 순차적인 숫자 사용 금지</el-descriptions-item>
+                                            </el-descriptions>
+                                <el-divider style="margin-bottom: 20px;"><el-text disabled><el-icon style="margin-right: 5px;"><Unlock /></el-icon>재설정하기</el-text></el-divider>
+                                
                                 <el-form :model="state">
-                                    <el-form-item label="비밀변호 변경">
-                                        <el-input v-model="state.pwChgIvo.userPasswd" :suffix-icon="Hide" />
-                                    </el-form-item>
-                                    <el-form-item label="비밀변호 확인">
-                                        <el-input v-model="state.pwChgIvo.userPasswdChk" :suffix-icon="Hide" />
-                                    </el-form-item>
+
+                                    <div style="margin-bottom: 5px; margin-top: 5px;">
+                                        <el-tooltip
+                                            effect="dark"
+                                            placement="right-start"
+                                            raw-content
+                                            :content="state.pop2.ruleChk.msg"
+                                            :visible="state.pop2.isVisibleRule"
+                                        >
+                                            <el-input v-model="state.pop2.pwChgIvo1.userPasswd" type="password" placeholder="비밀번호 변경">
+                                                <template #append>
+                                                    <el-button :icon="Hide" disabled />
+                                                </template>
+                                            </el-input>
+                                        </el-tooltip>
+                                    </div>
+
+                                    <div style="margin-bottom: 12px;">
+                                        <el-tooltip
+                                            effect="dark"
+                                            placement="right-start"
+                                            raw-content
+                                            :content="state.pop2.chkType.msg"
+                                            :visible="state.pop2.isHiddenChk"
+                                        >
+                                            <el-input v-model="state.pop2.pwChgIvo1.userPasswdChk" type="password" placeholder="비밀번호 확인">
+                                                <template #append>
+                                                    <el-button :icon="Hide" disabled />
+                                                </template>
+                                            </el-input>
+                                        </el-tooltip>
+                                    </div>
+
                                 </el-form>
                                 
                                 
                                 <el-col :span="24" style="margin-top: 20px;">
                                     <el-tag plain style="color: #4527A0;">
                                         <el-icon>
-                                            <Hide />
+                                            <Lock />
                                         </el-icon>
                                         패스워드 복잡도
                                     </el-tag>
@@ -276,23 +287,69 @@
 
                                 <div style="text-align: center; display: flex;">
 
-                                    <el-col :span="3"/>
-                                    <el-col :span="2">
-                                        {{ '안전' }}
-                                    </el-col>
-                                    <el-col :span="1"/>
+                                    <el-col :span="6" />
                                     <el-col :span="16">
-                                        <el-progress :percentage="33" status="exception" />
+                                        <el-progress
+                                            :stroke-width="8"
+                                            :percentage="state.pop2.complexity.percentage" :status="state.pop2.complexity.status" />
                                     </el-col>
                                     <el-col :span="2"/>
                                 </div>
                                 <div style="text-align: center; margin-top: 50px">
-                                    <el-button type="primary" @click="onClickAuthPw" color="#7E57C2">비밀번호변경</el-button>
-                                    <el-button @click="state.isOpen.chgPasswd = false">다음에하기</el-button>
+                                    <el-button type="primary" @click="onClickOpenCinfirm1" color="#7E57C2" :disabled="state.pop2.disableButton">비밀번호변경</el-button>
+                                    <el-button @click="onClickOpenCinfirm2" :disabled="state.pop2.disableButton">다음에하기</el-button>
                                 </div>
 
                         </el-dialog>
                         <!-- 질문/답변 Dialog -->
+
+                        <!-- 비밀번호 변경하기 확인창  -->
+                        <el-dialog 
+                            v-model="state.isOpen.confirm1" 
+                            :before-close="handleClose" 
+                            :show-close="false" 
+                            align-center 
+                            style="width: 280px; height: 140px; border-radius: 8px;"
+                        >
+                            <template #header>
+                                <div style="text-align: left;">
+                                    <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                        <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
+                                        알림창
+                                    </h4>
+                                <el-text>비밀번호를 변경하시겠습니까?</el-text>
+                                </div>
+                                <div style="text-align: center; margin-top: 20px">
+                                    <el-button style="margin-left: 16px;" type="primary" color="#7E57C2" @click="onClickChangePw">확인</el-button>
+                                    <el-button style="margin-left: 4px;" @click="state.isOpen.confirm1 = false">취소</el-button>
+                                </div>
+                            </template>
+                        </el-dialog>
+                        <!-- 비밀번호 변경하기 확인창  -->
+
+                        <!-- 다음에하기 확인창  -->
+                        <el-dialog 
+                            v-model="state.isOpen.confirm2" 
+                            :before-close="handleClose" 
+                            :show-close="false" 
+                            align-center 
+                            style="width: 280px; height: 140px; border-radius: 8px;"
+                        >
+                            <template #header>
+                                <div style="text-align: left;">
+                                    <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                        <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
+                                        알림창
+                                    </h4>
+                                <el-text>다음에 변경하시겠습니까?</el-text>
+                                </div>
+                                <div style="text-align: center; margin-top: 20px">
+                                    <el-button style="margin-left: 16px;" type="primary" color="#7E57C2" @click="onClickConfirm">확인</el-button>
+                                    <el-button style="margin-left: 4px;" @click="state.isOpen.confirm2 = false">취소</el-button>
+                                </div>
+                            </template>
+                        </el-dialog>
+                        <!-- 다음에하기 확인창  -->
 
                     </el-row>
                 </el-form>
@@ -314,11 +371,11 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, Calendar, CaretRight, ChatLineSquare, Checked, Hide, InfoFilled, Phone, Unlock, User, UserFilled } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, Calendar, CaretRight, ChatLineSquare, Checked, Hide, InfoFilled, Phone, Unlock, User, UserFilled, Lock } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { Api } from '../common/common';
+import { Api, Common } from '../common/common'
 import { ChgUserPwIvo } from '../vo/ivo/ChgUserPwIvo';
 import { SearchUserPwIvo } from '../vo/ivo/SearchUserPwIvo';
 
@@ -334,16 +391,60 @@ const passwdHintAnswer = ref()      // focus
 
 // state reactive
 const state = reactive({
-    ivo: new SearchUserPwIvo(),
-    pwChgIvo: new ChgUserPwIvo(),
+    ivo: new SearchUserPwIvo(),     // 메인화면 ivo
+    
     isOpen: {
-        Question: false,    // 질문 팝업창
-        chgPasswd: false,   // 비밀번호 변경
+        Question: false,            // 질문 팝업창
+        chgPasswd: false,           // 비밀번호 변경
+        confirm1: false,            // 비밀번호변경 확인창
+        confirm2: false,            // 다음에 하기 확인창
     },
-    local: {
-        userId: '',
-        userName: '',
-    }
+
+    /* 팝업1 변수 */
+    pop1: {
+        ivo: new SearchUserPwIvo(),
+    },
+
+    /* 팝업2 변수 */
+    pop2: {
+
+        pwChgIvo1: new ChgUserPwIvo(),      // 비밀번호변경 팝업 ivo
+        pwChgIvo2: new ChgUserPwIvo(),      // 비밀번호변경 팝업 ivo - 저장할 리스트
+
+        /* 비밀번호 변경 변수 */
+        isVisibleRule: false,               // 비밀번호 tool-tip 보이기 여부
+        ruleChk: {
+            msg: '',
+            type: '',
+            error1: { msg: '비밀번호는 8자리 이상이어야 합니다.', type: 'danger' },
+            error2: { msg: '비밀번호에는 [영문/특수기호/숫자]가 포함되어야 합니다.', type: 'danger' },
+            error3: { msg: '비밀번호에는 사용자ID를 포함할 수 없습니다.', type: 'danger' },
+            error4: { msg: '비밀번호에는 생년월일을 포함할 수 없습니다.', type: 'danger' },
+            error5: { msg: '비밀번호에는 휴대폰번호를 포함할 수 없습니다.', type: 'danger' },
+            success: { msg: '비밀번호 생성규칙에 적합합니다.', type: 'success', },
+        },
+
+        /* 비밀번호 확인 변수 */
+        isHiddenChk: false,     // 비밀번호 확인 tool-tip 보이기 여부
+        chkType: {
+            msg: '',
+            type: '',
+            error: { msg: '비밀번호가 일치하지 않습니다.', type: 'danger' },
+            success: { msg: '비밀번호가 일치합니다.', type: 'success' },
+        },
+
+        canChgDvcd: false,  // 비밀번호 변경가능여부
+
+        /* 패스워드 복잡도 상태 */
+        complexity: {
+            percentage: '33',
+            status: 'exception',
+        },
+
+        /* 패스워드 변경 완료 후 잠시 버튼 disabled */
+        disableButton: false,
+    },
+
 })
 
 // 화면진입 시
@@ -354,11 +455,21 @@ onMounted( () => {
 // 질문 답변하기 팝업 open
 const onClickOpenQuestion = async () => {
 
-    state.local.userId = 'koobs97'
-    state.local.userName = '구본상'
+    state.pop1.ivo.userId = 'koobs97'
+    state.pop1.ivo.userName = '구본상'
 
-    state.isOpen.chgPasswd = true
-    // state.isOpen.Question = true
+    // state.pop2.pwChgIvo1.userName = '구본상'
+    // state.pop2.pwChgIvo1.userId = 'koobs97'
+    // state.pop2.pwChgIvo1.birthDate = '19970729'
+    // state.pop2.pwChgIvo1.phoneNumber = '01087023099'
+
+    // state.isOpen.chgPasswd = true
+    state.isOpen.Question = true
+
+
+
+
+
     // 필수입력 체크
     if(state.ivo.userName == '') {
         ElMessage({
@@ -397,10 +508,10 @@ const onClickOpenQuestion = async () => {
     }
     else {
         state.isOpen.Question = true
-        state.ivo.passwdHint = retData.data.passwdHint
+        state.pop1.ivo.passwdHint = retData.data.passwdHint
 
-        state.local.userId = state.ivo.userId
-        state.local.userName = state.ivo.userName
+        state.pop1.ivo.userId = state.ivo.userId
+        state.pop1.ivo.userName = state.ivo.userName
 
         setTimeout(()=>{ passwdHintAnswer.value.focus() }, 50)
     }
@@ -421,8 +532,316 @@ const onClickToLogin = () => {
     router.push('/')
 }
 
+/********************************
+ * 비밀번호 변경 팝업
+ ********************************/
+
+// 생년월일 포맷
+watch(
+    () => state.pop2.pwChgIvo1.birthDate,
+    (newValue) => {
+        const formattedDate = newValue.replace(/\D/g, '').replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3')
+        // 포맷된 날짜를 상태에 설정
+        state.pop2.pwChgIvo1.birthDate = formattedDate
+    }
+)
+
+// 전화번호 포맷
+watch(
+    () => state.pop2.pwChgIvo1.phoneNumber,
+    (newValue) => {
+        const formattedPhnum = newValue.replace(/\D/g, '').replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3')
+        // 포맷된 전화번호를 상태에 설정
+        state.pop2.pwChgIvo1.phoneNumber = formattedPhnum
+    }
+)
+
+/**
+ * [비밀번호 복잡도 기준]
+ * 
+ * 취약 : 변경 조건을 만족하지 못함 
+ * 보통 : 변경 조건을 전부 만족하지만 연속된 순차적인 숫자가 있는경우
+ * 안전 : 변경 조건을 전부 만족하고 연속된 순차적인 숫자가 없을때
+ */
+
+// 비밀번호 복잡도 세팅
+watch(
+    () => [state.pop2.pwChgIvo1.userPasswd, state.pop2.pwChgIvo1.userId, state.pop2.pwChgIvo1.birthDate, state.pop2.pwChgIvo1.phoneNumber, state.pop2.ruleChk.type],
+    () => {
+
+        // 비밀번호 변경 창이 열렸을 때만 수행
+        if(state.isOpen.chgPasswd == true) {
+
+            // 취약 : 변경 조건을 만족하지 못함
+            if(state.pop2.ruleChk.type != 'success') {
+                state.pop2.complexity.percentage = '33'
+                state.pop2.complexity.status = 'exception'
+            }
+            else {
+
+                // 숫자를 연달아 세번 사용한 경우
+                if(state.pop2.pwChgIvo1.userPasswd.match(/\d{3,}/g) != null) {
+
+                    for(let i in state.pop2.pwChgIvo1.userPasswd.match(/\d{3,}/g)) {
+
+                        /**
+                         * ex: number = ['123', '456']
+                         */
+                        const number = state.pop2.pwChgIvo1.userPasswd.match(/\d{3,}/g)[i] as string
+                        let numberList = []
+
+                        for(let i = 0; i < number.length; i++) {
+                            numberList.push(number.substring(i, i + 1))
+                        }
+
+                        // 보통 : 변경 조건을 전부 만족하지만 순차적인 숫자를 사용한 경우
+                        if(numberList.length >= 3) {
+
+                            let index = 0
+                            for(let i = 0; i < numberList.length; i++) {
+
+                                if(Number(numberList[i]) + 1 == Number(numberList[i + 1])) {
+                                    index++
+                                }
+                                else {
+                                    index = 0
+                                }
+
+                                if(index == 2)  {
+                                    break
+                                }
+                            }
+
+                            if(index == 2) {
+                                state.pop2.complexity.percentage = '66'
+                                state.pop2.complexity.status = 'warning'
+                            }
+                            else {
+                                state.pop2.complexity.percentage = '100'
+                                state.pop2.complexity.status = 'success'
+                            }
+
+                        }
+                        else {
+                            state.pop2.complexity.percentage = '100'
+                            state.pop2.complexity.status = 'success'
+                        }
+
+                    }
+
+                }
+                // 숫자를 연달아 세번 사용한 경우
+                else {
+                    state.pop2.complexity.percentage = '100'
+                    state.pop2.complexity.status = 'success'
+                }
+
+            }
+
+        }
+        
+    }
+)
+
+// 비밀번호 변경 시 이벤트
+watch(
+    () => [state.pop2.pwChgIvo1.userPasswd, state.pop2.pwChgIvo1.userId, state.pop2.pwChgIvo1.birthDate, state.pop2.pwChgIvo1.phoneNumber, state.pop2.ruleChk.type],
+    () => {
+
+        // 비밀번호 변경 창이 열렸을 때만 수행
+        if(state.isOpen.chgPasswd == true) {
+
+            const hasLettersRegExp: RegExp = /[a-zA-Z]/         // 영문자 포함 정규식
+            const hasSpecialCharsRegExp: RegExp = /[^\w\s]/     // 특수문자 포함 정규식
+            const hasNumbersRegExp: RegExp = /\d/               // 숫자 포함 정규식
+
+            if(state.pop2.pwChgIvo1.userPasswd.length > 0) {
+
+                // 비밀번호 8자리 체크
+                if(state.pop2.pwChgIvo1.userPasswd.length < 8) {
+                    state.pop2.isVisibleRule = true
+
+                    state.pop2.ruleChk.msg = state.pop2.ruleChk.error1.msg
+                    state.pop2.ruleChk.type = state.pop2.ruleChk.error1.type
+                }
+                // 영문 포함여부 확인
+                else if(!hasLettersRegExp.test(state.pop2.pwChgIvo1.userPasswd) || !hasSpecialCharsRegExp.test(state.pop2.pwChgIvo1.userPasswd) || !hasNumbersRegExp.test(state.pop2.pwChgIvo1.userPasswd)) {
+                    state.pop2.isVisibleRule = true
+
+                    state.pop2.ruleChk.msg = state.pop2.ruleChk.error2.msg
+                    state.pop2.ruleChk.type = state.pop2.ruleChk.error2.type
+                }
+                // 유저ID 포함여부 확인
+                else if (state.pop2.pwChgIvo1.userPasswd.includes(state.pop2.pwChgIvo1.userId)) {
+                    state.pop2.isVisibleRule = true
+
+                    state.pop2.ruleChk.msg = state.pop2.ruleChk.error3.msg
+                    state.pop2.ruleChk.type = state.pop2.ruleChk.error3.type
+                }
+                // 생년월일 8자리 포함여부 확인
+                else if( (state.pop2.pwChgIvo1.userPasswd.includes(state.pop2.pwChgIvo1.birthDate.replaceAll('-', '').substring(0,4)) 
+                    || state.pop2.pwChgIvo1.userPasswd.includes(state.pop2.pwChgIvo1.birthDate.replaceAll('-', '').substring(4,8)) )
+                    && state.pop2.pwChgIvo1.birthDate.length != 0 && state.pop2.pwChgIvo1.birthDate.length >= 8) {
+                    state.pop2.isVisibleRule = true
+
+                    state.pop2.ruleChk.msg = state.pop2.ruleChk.error4.msg
+                    state.pop2.ruleChk.type = state.pop2.ruleChk.error4.type
+                }
+                // 휴대폰번호 포함여부 확인
+                else if( (state.pop2.pwChgIvo1.userPasswd.includes(state.pop2.pwChgIvo1.phoneNumber.replaceAll('-', '').substring(0,4)) 
+                    || state.pop2.pwChgIvo1.userPasswd.includes(state.pop2.pwChgIvo1.phoneNumber.replaceAll('-', '').substring(4,8)) )
+                    && state.pop2.pwChgIvo1.phoneNumber.length != 0) {
+                    state.pop2.isVisibleRule = true
+
+                    state.pop2.ruleChk.msg = state.pop2.ruleChk.error5.msg
+                    state.pop2.ruleChk.type = state.pop2.ruleChk.error5.type
+                }
+                else if(state.pop2.pwChgIvo1.userPasswd.length == 0) {
+                    state.pop2.isVisibleRule = true
+                }
+                else {
+                    state.pop2.isVisibleRule = true
+
+                    state.pop2.ruleChk.msg = state.pop2.ruleChk.success.msg
+                    state.pop2.ruleChk.type = state.pop2.ruleChk.success.type
+                }
+            }
+            else {
+                state.pop2.isVisibleRule = false
+            }
+
+        }
+        
+    }
+)
+
+// 비밀번호 확인
+watch(
+    () => [state.pop2.pwChgIvo1.userPasswd, state.pop2.pwChgIvo1.userPasswdChk],
+    () => {
+
+        // 비밀번호 변경 창이 열렸을 때만 수행
+        if(state.isOpen.chgPasswd == true) {
+
+            // 비밀번호 확인 입력 시에만 수행
+            if(state.pop2.pwChgIvo1.userPasswdChk.length != 0) {
+
+                // 비밀번호 확인이 다를 때
+                if(state.pop2.pwChgIvo1.userPasswdChk != state.pop2.pwChgIvo1.userPasswd) {
+                    state.pop2.isHiddenChk = true
+                    state.pop2.canChgDvcd = false
+
+                    state.pop2.chkType.msg = state.pop2.chkType.error.msg
+                    state.pop2.chkType.type = state.pop2.chkType.error.type
+                }
+                // 비밀번호 확인이 같을 때
+                if(state.pop2.pwChgIvo1.userPasswdChk == state.pop2.pwChgIvo1.userPasswd) {
+                    state.pop2.isHiddenChk = true
+                    state.pop2.canChgDvcd = true
+
+                    state.pop2.chkType.msg = state.pop2.chkType.success.msg
+                    state.pop2.chkType.type = state.pop2.chkType.success.type
+                }
+
+            }
+            else {
+                state.pop2.isHiddenChk = false
+                state.pop2.canChgDvcd = false
+            }
+        }
 
 
+    }
+)
+
+// 다음에하기 버튼 클릭 시
+const onClickOpenCinfirm2 = () => {
+    // 확인창 Open
+    state.isOpen.confirm2 = true
+}
+
+// 확인 버튼 누를 시 팝업창 닫기
+const onClickConfirm = async () => {
+    state.isOpen.confirm2 = false
+    
+    setTimeout(()=> {
+        state.isOpen.chgPasswd = false
+    }, 100)
+
+    clearPopupItem2()
+}
+
+// 비밀번호 변경 팝업 변수 초기화
+const clearPopupItem2 = () => {
+
+    state.pop2.pwChgIvo1 = new ChgUserPwIvo()        // ivo 초기화
+    state.pop2.isVisibleRule = false                // tool-tip visible 초기화
+    state.pop2.isHiddenChk = false                  // tool-tip visible 초기화
+    state.pop2.ruleChk.msg = ''                     // tool-tip 메시지 초기화
+    state.pop2.ruleChk.type = ''                    // tool-tip 타입 초기화
+    state.pop2.chkType.msg = ''                     // tool-tip 메시지 초기화
+    state.pop2.chkType.type = ''                    // tool-tip 타입 초기화
+    state.pop2.complexity.percentage = '33'         // 패스워드 복잡도 초기화
+    state.pop2.complexity.status = 'exception'      // 패스워드 복잡도 초기화
+    state.pop2.canChgDvcd = false                   // 비밀번호 변경가능여부 초기화
+
+}
+
+// 비밀번호 변경 - 확인창 열기
+const onClickOpenCinfirm1 = () => {
+
+    if(state.pop2.canChgDvcd == false) {
+        ElMessage({
+            type: 'error',
+            grouping: true,
+            message: '비밀번호 확인을 진행해주세요.',
+        })
+        return
+    }
+
+    // 확인창 오픈
+    state.isOpen.confirm1 = true
+}
+
+// 비밀번호 변경 확인
+const onClickChangePw = async () => {
+
+    // 변경(저장)할 파라미터 세팅
+    state.pop2.pwChgIvo2.userName       = state.pop2.pwChgIvo1.userName
+    state.pop2.pwChgIvo2.userId         = state.pop2.pwChgIvo1.userId
+    state.pop2.pwChgIvo2.birthDate      = state.pop2.pwChgIvo1.birthDate
+    state.pop2.pwChgIvo2.phoneNumber    = state.pop2.pwChgIvo1.phoneNumber
+    state.pop2.pwChgIvo2.userPasswd     = Common.encypt(state.pop2.pwChgIvo2.userPasswd)       // 패스워드(암호화)
+
+    // 비밀번호 변경
+    let retData = await Api.post("/api/search/updateUserPw", state.pop2.pwChgIvo2)
+    
+    if(retData.data == true) {
+
+        state.isOpen.confirm1 = false
+    
+        ElMessage({
+            type: 'success',
+            grouping: true,
+            message: '비밀번호가 변경되었습니다.',
+        })
+        setTimeout(()=>{ 
+            ElMessage({
+                type: 'success',
+                grouping: true,
+                message: '로그인창으로 이동합니다.',
+            })
+        }, 1500)
+        
+        state.pop2.disableButton = true
+
+        setTimeout(()=>{ 
+            router.push('/')
+        }, 4500)
+
+    }
+
+}
 
 /********************************
  * 질문 답변 팝업
@@ -432,7 +851,7 @@ const onClickAuthPw = async () => {
     // state.isOpen.chgPasswd = true
 
     // 필수입력 체크
-    if(state.ivo.passwdHintAnswer == '') {
+    if(state.pop1.ivo.passwdHintAnswer == '') {
         ElMessage({
             type: 'error',
             message: '정답을 입력하세요.',
@@ -456,8 +875,6 @@ const onClickAuthPw = async () => {
         state.isOpen.chgPasswd = true
     }
 }
-
-
 
 </script>
 
@@ -491,23 +908,62 @@ const onClickAuthPw = async () => {
     right: 0;
     text-align: center;
 }
-
 .custom-card {
     --el-card-border-color: var(--el-border-color-light);
     --el-card-border-radius: 4px;
     --el-card-padding: 12px;
     --el-card-bg-color: var(--el-fill-color-blank);
 }
-
+/* 체크박스 색상 */
 .el-checkbox {
     --el-checkbox-checked-text-color: #7C4DFF;
     --el-checkbox-checked-input-border-color: #70039b;
     --el-checkbox-checked-bg-color: #70039b;
 }
-
 .el-alert--info.is-light {
     background-color: #EDE7F6;
     color: #4527A0;
+}
+/* 버튼 색상 */
+.el-button {
+    --el-button-font-weight: var(--el-font-weight-primary);
+    --el-button-border-color: var(--el-border-color);
+    --el-button-bg-color: var(--el-fill-color-blank);
+    --el-button-text-color: var(--el-text-color-regular);
+    --el-button-disabled-text-color: var(--el-disabled-text-color);
+    --el-button-disabled-bg-color: var(--el-fill-color-blank);
+    --el-button-disabled-border-color: var(--el-border-color-light);
+    --el-button-divide-border-color: rgba(255, 255, 255, 0.5);
+    --el-button-hover-text-color: #4527A0;                              /* 마우스 올렸을 때 글씨 색 */
+    --el-button-hover-bg-color: #EDE7F6;                                /* 마우스 올렸을 때 배경 색 */
+    --el-button-hover-border-color: #7C4DFF;                            /* 마우스 올렸을 때 테두리 색 */
+    --el-button-active-text-color: var(--el-button-hover-text-color);
+    --el-button-active-border-color: #9575CD;
+    --el-button-active-bg-color: var(--el-button-hover-bg-color);
+    --el-button-outline-color: var(--el-color-primary-light-5);
+    --el-button-hover-link-text-color: var(--el-color-info);
+    --el-button-active-color: var(--el-text-color-primary);
+}
+/* description 라벨 색상 */
+:deep(.my-label) {
+    background: var(--el-color-success-light-9) !important;
+}
+/* input 색상 조정 */
+.el-input {
+    --el-input-text-color: var(--el-text-color-regular);
+    --el-input-border: var(--el-border);
+    --el-input-hover-border: var(--el-border-color-hover);
+    --el-input-focus-border: var(--el-color-primary);
+    --el-input-transparent-border: 0 0 0 1px transparent inset;
+    --el-input-border-color: var(--el-border-color);
+    --el-input-border-radius: var(--el-border-radius-base);
+    --el-input-bg-color: var(--el-fill-color-blank);
+    --el-input-icon-color: var(--el-text-color-placeholder);
+    --el-input-placeholder-color: var(--el-text-color-placeholder);
+    --el-input-hover-border-color: var(--el-border-color-hover);
+    --el-input-clear-hover-color: var(--el-text-color-secondary);
+    --el-input-focus-border-color: #9575CD;
+    --el-input-width: 100%;
 }
 
 </style>

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.hotple.online.login.dto.SearchIdDto;
 import com.hotple.online.login.dto.SearchPwDto;
 import com.hotple.online.login.dto.ShowIdDto;
+import com.hotple.online.login.ivo.ChgUserPwIvo;
 import com.hotple.online.login.ivo.SearchIdIvo;
 import com.hotple.online.login.ivo.SearchPwIvo;
 
@@ -30,5 +31,6 @@ public interface UserSearchMapper {
 
     public SearchPwDto searchUserPw(SearchPwIvo ivo);       // 유저 힌트 조회
     public SearchPwDto searchPwAnswer(SearchPwIvo ivo);     // 유저 정답여부 확인
+    public int updateUserPw(ChgUserPwIvo ivo);              // 비밀번호 변경
 
 }

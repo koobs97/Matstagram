@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotple.online.login.dto.SearchPwDto;
+import com.hotple.online.login.ivo.ChgUserPwIvo;
 import com.hotple.online.login.ivo.SearchIdIvo;
 import com.hotple.online.login.ivo.SearchPwIvo;
 import com.hotple.online.login.ovo.SearchIdOvo;
@@ -69,6 +70,14 @@ public class UserSearchController {
         SearchPwDto dto = svc.searchPwAnswer(ivo);
 
         return dto;
+    }
+
+    @PostMapping("/updateUserPw")
+    public Boolean updateUserPw(@RequestBody ChgUserPwIvo ivo) {
+        
+        Boolean result = svc.updateUserPw(ivo);
+
+        return result;
     }
 
 }

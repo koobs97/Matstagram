@@ -273,15 +273,15 @@ const onClickToLogin = () => {
 <style scoped>
 
 .container_header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
 }
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .top_button {
@@ -297,11 +297,50 @@ const onClickToLogin = () => {
 }
 
 .text-container {
-  position: fixed;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  text-align: center;
+    position: fixed;
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+/* 버튼 색상 */
+.el-button {
+    --el-button-font-weight: var(--el-font-weight-primary);
+    --el-button-border-color: var(--el-border-color);
+    --el-button-bg-color: var(--el-fill-color-blank);
+    --el-button-text-color: var(--el-text-color-regular);
+    --el-button-disabled-text-color: var(--el-disabled-text-color);
+    --el-button-disabled-bg-color: var(--el-fill-color-blank);
+    --el-button-disabled-border-color: var(--el-border-color-light);
+    --el-button-divide-border-color: rgba(255, 255, 255, 0.5);
+    --el-button-hover-text-color: #4527A0;                              /* 마우스 올렸을 때 글씨 색 */
+    --el-button-hover-bg-color: #EDE7F6;                                /* 마우스 올렸을 때 배경 색 */
+    --el-button-hover-border-color: #7C4DFF;                            /* 마우스 올렸을 때 테두리 색 */
+    --el-button-active-text-color: var(--el-button-hover-text-color);
+    --el-button-active-border-color: #9575CD;
+    --el-button-active-bg-color: var(--el-button-hover-bg-color);
+    --el-button-outline-color: var(--el-color-primary-light-5);
+    --el-button-hover-link-text-color: var(--el-color-info);
+    --el-button-active-color: var(--el-text-color-primary);
+}
+
+/* input 색상 조정 */
+.el-input {
+    --el-input-text-color: var(--el-text-color-regular);
+    --el-input-border: var(--el-border);
+    --el-input-hover-border: var(--el-border-color-hover);
+    --el-input-focus-border: var(--el-color-primary);
+    --el-input-transparent-border: 0 0 0 1px transparent inset;
+    --el-input-border-color: var(--el-border-color);
+    --el-input-border-radius: var(--el-border-radius-base);
+    --el-input-bg-color: var(--el-fill-color-blank);
+    --el-input-icon-color: var(--el-text-color-placeholder);
+    --el-input-placeholder-color: var(--el-text-color-placeholder);
+    --el-input-hover-border-color: var(--el-border-color-hover);
+    --el-input-clear-hover-color: var(--el-text-color-secondary);
+    --el-input-focus-border-color: #9575CD;
+    --el-input-width: 100%;
 }
 
 </style>

@@ -10,9 +10,11 @@
 
 export class ChgUserPwIvo {
 
-    public userName: string = ''   // 사용자명
-    public email: string = ''      // 이메일
-    public userId: string = ''     // 아이디
+    public userName: string = ''    // 사용자명
+    public email: string = ''       // 이메일
+    public userId: string = ''      // 아이디
+    public birthDate: string = ''   // 생년월일
+    public phoneNumber: string = '' // 전화번호
 
     public userPasswd: string = ''      // 비밀번호
     public userPasswdChk: string = ''   // 비밀번호 확인

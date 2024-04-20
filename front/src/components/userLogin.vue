@@ -209,9 +209,9 @@ const onClickSearchPw = () => {
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .login {
@@ -222,12 +222,29 @@ const onClickSearchPw = () => {
 }
 
 .text-container {
-  position: fixed;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  text-align: center;
+    position: fixed;
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
+/* input 색상 조정 */
+.el-input {
+    --el-input-text-color: var(--el-text-color-regular);
+    --el-input-border: var(--el-border);
+    --el-input-hover-border: var(--el-border-color-hover);
+    --el-input-focus-border: var(--el-color-primary);
+    --el-input-transparent-border: 0 0 0 1px transparent inset;
+    --el-input-border-color: var(--el-border-color);
+    --el-input-border-radius: var(--el-border-radius-base);
+    --el-input-bg-color: var(--el-fill-color-blank);
+    --el-input-icon-color: var(--el-text-color-placeholder);
+    --el-input-placeholder-color: var(--el-text-color-placeholder);
+    --el-input-hover-border-color: var(--el-border-color-hover);
+    --el-input-clear-hover-color: var(--el-text-color-secondary);
+    --el-input-focus-border-color: #9575CD;
+    --el-input-width: 100%;
+}
 
 </style>

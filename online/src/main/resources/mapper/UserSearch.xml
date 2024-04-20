@@ -133,6 +133,19 @@
                 AND PASSWD_HINT_ANSWER  =   #{passwdHintAnswer}                                 /* 비밀번호힌트정답 */
                 AND USE_YN              =   'Y'                                                 /* 사용여부 */
       ]]>
-  </select>
+    </select>
+
+    <update id="updateUserPw" parameterType="com.hotple.online.login.ivo.ChgUserPwIvo">
+        <![CDATA[ 
+             UPDATE /* com.hotple.online.login.mapper.UserSearchMapper - updateUserPw */
+                    TB_USER                                                                     /* TB_유저 */
+                SET USER_PASSWD     =   #{userPasswd}                                           /* 비밀번호 */
+                  , PASSWD_CHG_DT   =   TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDD')                  /* 비밀번호변경일자 */
+                  , CHG_DTTM        =   CURRENT_TIMESTAMP                                       /* 변경일시 */
+              WHERE USER_NAME       =   #{userName}                                             /* 사용자명 */
+                AND USER_ID         =   #{userId}                                               /* 유저ID */
+                AND EMAIL           =   #{email}                                                /* 이메일 */
+        ]]>
+    </update>
     
 </mapper>
