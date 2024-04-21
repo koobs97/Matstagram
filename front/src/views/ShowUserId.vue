@@ -25,38 +25,66 @@
                         
                     </div>
                 </template>
+
                 <el-form label-position="top">
                     <el-row :gutter="0">
-                        <el-col :span="5" style="text-align: center;">
-                            <el-card shadow="never" style="height: 100%; width: 100%;">
-                                <el-icon style="font-size: 75px;"><UserFilled /></el-icon>
-                            </el-card>
+                        <el-col :span="24" style="text-align: left;">
+                            <el-descriptions :column="2" border>
+                                <el-descriptions-item label-align="left" align="left">
+                                    <template #label>
+                                        <div class="cell-item">
+                                            <el-icon><User /></el-icon>
+                                            사용자명
+                                        </div>
+                                    </template>
+                                    {{ state.userName }}
+                                </el-descriptions-item>
+                                <el-descriptions-item label-align="center" align="center">
+                                </el-descriptions-item>
+                                <el-descriptions-item label-align="left" align="left">
+                                    <template #label>
+                                        <div class="cell-item">
+                                            <el-icon><Phone /></el-icon>
+                                            전화번호
+                                        </div>
+                                    </template>
+                                    {{ state.phoneNumber }}
+                                </el-descriptions-item>
+                                <el-descriptions-item label-align="center" align="center">
+                                    <template #label>
+                                        <div class="cell-item">
+                                            성별
+                                        </div>
+                                    </template>
+                                    <el-tag plain style="color: #4527A0;">
+                                        {{ state.genderCode }}
+                                    </el-tag>
+                                </el-descriptions-item>
+                                <el-descriptions-item label-align="left" align="left">
+                                    <template #label>
+                                        <div class="cell-item">
+                                            <el-icon><UserFilled /></el-icon>
+                                            아이디
+                                        </div>
+                                    </template>
+                                    <div style="display: flex;">
+                                        <div style="width: 86%;">
+                                            {{ state.userId }}
+                                        </div>
+                                        <div style="width: 14%;">
+                                            <el-button :icon="CopyDocument" style="width: 12px; height: 23px; font-size: 12px;" type="primary" @click="onClickCopyId" />
+                                        </div>
+                                    </div>
+                                </el-descriptions-item>
+                            </el-descriptions>
                         </el-col>
-
-                        <el-col :span="19" style="text-align: left;">
-                            <el-text style="margin-left: 15px; font-size: 15px; font-weight: bold;">이름</el-text>
-                            <el-input style="width: 270px; height: 25%; padding-left: 50px; font-size: 15px;" v-model="state.userName" disabled></el-input>
-
-                            <div style="margin-bottom: 10px;" />
-
-                            <el-text style="margin-left: 15px; font-size: 15px; font-weight: bold;">휴대전화</el-text>
-                            <el-input style="width: 240px; height: 25%; padding-left: 20px; font-size: 13px;" v-model="state.phoneNumber" disabled></el-input>
-
-                            <div style="margin-bottom: 10px;" />
-
-                            <el-text style="margin-left: 15px; font-size: 15px; font-weight: bold;">아이디</el-text>
-                            <el-input style="width: 255px; height: 25%; padding-left: 35px; font-size: 13px;" v-model="state.userId" disabled></el-input>
-                                
-                        </el-col>
-
                     </el-row>
-                    
                 </el-form>
             </el-card>
         </div>
 
         <div style="padding-top: 10px; font-size: 15px;">
-            <el-button @click="onClickToLogin">로그인페이지로<el-icon class="el-icon--right"><DArrowRight /></el-icon></el-button>
+            <el-button @click="onClickToLogin">로그인페이지<el-icon class="el-icon--right"><ArrowRight /></el-icon></el-button>
         </div>
 
         <div class="text-container">
@@ -67,7 +95,8 @@
 </template>
 
 <script lang="ts" setup>
-import { DArrowRight, InfoFilled, UserFilled } from '@element-plus/icons-vue';
+import { ArrowRight, InfoFilled, UserFilled, User, Phone, CopyDocument } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
 import { onMounted, reactive, watch } from 'vue';
 import { onBeforeRouteLeave, useRouter } from 'vue-router';
 import { Api } from '../common/common';
@@ -77,15 +106,16 @@ import { SearchUserId } from '../vo/ivo/SearchUserId';
 const router        = useRouter()
 const userStoreObj  = userStore()
 
-// state
+/* state reactive */
 const state = reactive({
     ivo: new SearchUserId(),
     userName: '',
     phoneNumber: '',
     userId: '',
+    genderCode: ''
 })
 
-// 뒤로가기/앞으로가기 시 실행할 작업
+/* 뒤로가기/앞으로가기 시 실행할 작업 */
 onBeforeRouteLeave(async(to, from, next) => {
 
     userStoreObj.delAuthentication()    // 유저인증정보 초기화
@@ -93,31 +123,52 @@ onBeforeRouteLeave(async(to, from, next) => {
 
 })
 
-// 화면진입 시
+/* 화면진입 시 */
 onMounted( async () => {
 
     state.ivo.userName = userStoreObj.getAuthenticated['username']
     state.ivo.email = userStoreObj.getAuthenticated['email']
 
-    let retData = await Api.post("/api/search/showId", state.ivo)
+    const retData = await Api.post("/api/search/showId", state.ivo)
 
     state.userName = retData.data.result.userName
     state.phoneNumber = retData.data.result.phoneNumber
     state.userId = retData.data.result.userId
 
+    if(retData.data.result.genderCode == 'M') {
+        state.genderCode = '남'
+    }
+    else {
+        state.genderCode = '여'
+    }
+
 })
 
-// 전화번호 포맷
+/* 전화번호 포맷 */
 watch(
     () => state.phoneNumber,
     (newValue) => {
         const formattedPhnum = newValue.replace(/\D/g, '').replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3')
-        // 포맷된 전화번호를 상태에 설정
-        state.phoneNumber = formattedPhnum
+        state.phoneNumber = formattedPhnum  // 포맷된 전화번호를 상태에 설정
     }
 )
 
-// 로그인 페이지로 이동
+/* 아이디 복사하기 */
+const onClickCopyId = () => {
+    navigator.clipboard.writeText(state.userId)
+        .then(() => {
+            ElMessage({
+                type: 'success',
+                grouping: true,
+                message: '아이디가 클립보드에 복사되었습니다',
+            })
+        })
+        .catch(err => {
+            console.error('클립보드 복사 실패:', err);
+        })
+}
+
+/* 로그인 페이지로 이동 */
 const onClickToLogin = () => {
 
     userStoreObj.delAuthentication()    // 유저인증정보 초기화
@@ -153,6 +204,45 @@ const onClickToLogin = () => {
     left: 0;
     right: 0;
     text-align: center;
+}
+
+/* 버튼 색상 */
+.el-button {
+    --el-button-font-weight: var(--el-font-weight-primary);
+    --el-button-border-color: var(--el-border-color);
+    --el-button-bg-color: var(--el-fill-color-blank);
+    --el-button-text-color: var(--el-text-color-regular);
+    --el-button-disabled-text-color: var(--el-disabled-text-color);
+    --el-button-disabled-bg-color: rgb(189 189 189);
+    --el-button-disabled-border-color: rgb(167 167 167);
+    --el-button-divide-border-color: rgba(255, 255, 255, 0.5);
+    --el-button-hover-text-color: #4527A0;                              /* 마우스 올렸을 때 글씨 색 */
+    --el-button-hover-bg-color: #EDE7F6;                                /* 마우스 올렸을 때 배경 색 */
+    --el-button-hover-border-color: #7C4DFF;                            /* 마우스 올렸을 때 테두리 색 */
+    --el-button-active-text-color: var(--el-button-hover-text-color);
+    --el-button-active-border-color: #9575CD;
+    --el-button-active-bg-color: var(--el-button-hover-bg-color);
+    --el-button-outline-color: var(--el-color-primary-light-5);
+    --el-button-hover-link-text-color: var(--el-color-info);
+    --el-button-active-color: var(--el-text-color-primary);
+}
+
+/* 버튼 색상 */
+.el-button--primary {
+    --el-button-text-color: var(--el-color-white);
+    --el-button-bg-color: #673AB7;
+    --el-button-border-color: #673AB7;
+    --el-button-outline-color: var(--el-color-primary-light-5);
+    --el-button-active-color: var(--el-color-primary-dark-2);
+    --el-button-hover-text-color: var(--el-color-white);
+    --el-button-hover-link-text-color: var(--el-color-primary-light-5);
+    --el-button-hover-bg-color: #7C4DFF;
+    --el-button-hover-border-color: #B388FF;
+    --el-button-active-bg-color: var(--el-color-primary-dark-2);
+    --el-button-active-border-color: var(--el-color-primary-dark-2);
+    --el-button-disabled-text-color: var(--el-color-white);
+    --el-button-disabled-bg-color: var(--el-color-primary-light-5);
+    --el-button-disabled-border-color: var(--el-color-primary-light-5);
 }
 
 </style>

@@ -43,7 +43,7 @@ const router = createRouter({
           component: SearchUserPw,
         },
         {
-          path: '/login/showId/',
+          path: '/login/showId',
             component: ShowUserId,
             beforeEnter: async (to, from, next) => {
 

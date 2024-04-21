@@ -185,8 +185,6 @@ public class UserSearchSearvice {
      */
     public Boolean updateUserPw(ChgUserPwIvo ivo) {
 
-        System.out.println(ivo.toString());
-
         userSearchMapper.updateUserPw(ivo);
 
         return true;

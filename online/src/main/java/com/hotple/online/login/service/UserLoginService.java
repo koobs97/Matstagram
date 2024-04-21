@@ -17,8 +17,6 @@ public class UserLoginService {
     
     public UserLoginDto selectUser(UserLoginIvo ivo) {
 
-        System.out.println(ivo.toString());
-
         UserLoginOvo ovo = new UserLoginOvo();
         UserLoginDto dto = new UserLoginDto();
 
