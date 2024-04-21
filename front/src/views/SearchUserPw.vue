@@ -132,9 +132,14 @@
 
                                 <el-form :model="state">
                                     <div style="text-align: left;">
-                                        <el-input v-model="state.pop1.ivo.passwdHint" placeholder="내 이름은?" disabled></el-input>
-                                        <el-input style="margin-top: 5px;" v-model="state.pop1.ivo.passwdHintAnswer" placeholder="본인확인 질문 답변" ref="passwdHintAnswer" />
-                                        <el-checkbox>본인 확인 답변 숨기기</el-checkbox>
+                                        <el-input v-model="state.pop1.ivo.passwdHint" disabled></el-input>
+                                        <el-input 
+                                            :type="passwdHintAnswerType"
+                                            style="margin-top: 5px;" v-model="state.pop1.ivo.passwdHintAnswer" 
+                                            placeholder="본인확인 질문 답변" 
+                                            ref="passwdHintAnswer"
+                                        />
+                                        <el-checkbox v-model="isAnswerHide">본인 확인 답변 숨기기</el-checkbox>
                                     </div>
                                 </el-form>
                                 
@@ -249,7 +254,7 @@
                                             :content="state.pop2.ruleChk.msg"
                                             :visible="state.pop2.isVisibleRule"
                                         >
-                                            <el-input v-model="state.pop2.pwChgIvo1.userPasswd" type="password" placeholder="비밀번호 변경">
+                                            <el-input v-model="state.pop2.pwChgIvo1.userPasswd" type="password" placeholder="비밀번호 변경" ref="chgPasswd">
                                                 <template #append>
                                                     <el-button :icon="Hide" disabled />
                                                 </template>
@@ -265,7 +270,7 @@
                                             :content="state.pop2.chkType.msg"
                                             :visible="state.pop2.isHiddenChk"
                                         >
-                                            <el-input v-model="state.pop2.pwChgIvo1.userPasswdChk" type="password" placeholder="비밀번호 확인">
+                                            <el-input v-model="state.pop2.pwChgIvo1.userPasswdChk" type="password" placeholder="비밀번호 확인" ref="chkPasswd">
                                                 <template #append>
                                                     <el-button :icon="Hide" disabled />
                                                 </template>
@@ -384,10 +389,15 @@ const router        = useRouter()   // router
 const plainId       = ref(true)     // 찾기 구분 선택
 const plainPasswd   = ref(false)    // 찾기 구분 선택
 
-const userName  = ref()             // focus
-const email     = ref()             // focus
-const userId    = ref()             // focus
-const passwdHintAnswer = ref()      // focus
+const isAnswerHide          = ref(false)    // 본인확인 질문 숨기기
+const passwdHintAnswerType  = ref('text')   // focus
+
+const userName          = ref()             // focus
+const email             = ref()             // focus
+const userId            = ref()             // focus
+const passwdHintAnswer  = ref()             // focus
+const chgPasswd         = ref()             // focus
+const chkPasswd         = ref()             // focus
 
 // state reactive
 const state = reactive({
@@ -455,21 +465,6 @@ onMounted( () => {
 // 질문 답변하기 팝업 open
 const onClickOpenQuestion = async () => {
 
-    state.pop1.ivo.userId = 'koobs97'
-    state.pop1.ivo.userName = '구본상'
-
-    // state.pop2.pwChgIvo1.userName = '구본상'
-    // state.pop2.pwChgIvo1.userId = 'koobs97'
-    // state.pop2.pwChgIvo1.birthDate = '19970729'
-    // state.pop2.pwChgIvo1.phoneNumber = '01087023099'
-
-    // state.isOpen.chgPasswd = true
-    state.isOpen.Question = true
-
-
-
-
-
     // 필수입력 체크
     if(state.ivo.userName == '') {
         ElMessage({
@@ -510,10 +505,9 @@ const onClickOpenQuestion = async () => {
         state.isOpen.Question = true
         state.pop1.ivo.passwdHint = retData.data.passwdHint
 
-        state.pop1.ivo.userId = state.ivo.userId
-        state.pop1.ivo.userName = state.ivo.userName
+        // 질문답변하기 팝업 열렸 때
+        onMoundPop1()
 
-        setTimeout(()=>{ passwdHintAnswer.value.focus() }, 50)
     }
 
 }
@@ -532,9 +526,85 @@ const onClickToLogin = () => {
     router.push('/')
 }
 
-/********************************
+/***************************************************************************
+ * 질문 답변 팝업
+ ***************************************************************************/
+
+// 질문답변하기 팝업 열렸 때
+const onMoundPop1 = () => {
+
+    state.pop1.ivo.userId = state.ivo.userId
+    state.pop1.ivo.userName = state.ivo.userName
+    state.pop1.ivo.email = state.ivo.email
+
+    setTimeout(()=>{ passwdHintAnswer.value.focus() }, 50)
+}
+
+// 답변 숨기기 체크 시
+watch(
+    () => isAnswerHide.value,
+    () => {
+
+        if(isAnswerHide.value == true) {
+            passwdHintAnswerType.value = 'password'
+        }
+        else {
+            passwdHintAnswerType.value = 'text'
+        }
+
+    }
+)
+
+// 인증하기 버튼 클릭
+const onClickAuthPw = async () => {
+
+    // 필수입력 체크
+    if(state.pop1.ivo.passwdHintAnswer == '') {
+        ElMessage({
+            type: 'error',
+            message: '정답을 입력하세요.',
+        })
+        passwdHintAnswer.value.focus()
+        return
+    }
+
+    // 정답 조회
+    let retData = await Api.post("/api/search/searchPwAnswer", state.pop1.ivo)
+
+    if(retData.data.userId == null) {
+        ElMessage({
+            type: 'error',
+            message: '정답이 일치하지 않습니다.',
+        })
+        return
+    }
+    else {
+
+        // 사용자 정보 세팅
+        state.pop2.pwChgIvo1.userName       = retData.data.userName
+        state.pop2.pwChgIvo1.userId         = retData.data.userId
+        state.pop2.pwChgIvo1.birthDate      = retData.data.birthDate
+        state.pop2.pwChgIvo1.phoneNumber    = retData.data.phoneNumber
+        state.pop2.pwChgIvo1.email          = retData.data.email
+
+        ElMessage({
+            type: 'success',
+            grouping: true,
+            message: '인증이 완료되었습니다. 비밀번호를 변경해주세요.',
+        })
+
+        setTimeout(()=>{ state.isOpen.Question = false }, 40)
+        setTimeout(()=>{ state.isOpen.chgPasswd = true }, 80)
+
+        setTimeout(()=>{ chgPasswd.value.focus() }, 100)
+
+    }
+}
+
+
+/***************************************************************************
  * 비밀번호 변경 팝업
- ********************************/
+ ***************************************************************************/
 
 // 생년월일 포맷
 watch(
@@ -811,7 +881,8 @@ const onClickChangePw = async () => {
     state.pop2.pwChgIvo2.userId         = state.pop2.pwChgIvo1.userId
     state.pop2.pwChgIvo2.birthDate      = state.pop2.pwChgIvo1.birthDate
     state.pop2.pwChgIvo2.phoneNumber    = state.pop2.pwChgIvo1.phoneNumber
-    state.pop2.pwChgIvo2.userPasswd     = Common.encypt(state.pop2.pwChgIvo2.userPasswd)       // 패스워드(암호화)
+    state.pop2.pwChgIvo2.email          = state.pop2.pwChgIvo1.email
+    state.pop2.pwChgIvo2.userPasswd     = Common.encypt(state.pop2.pwChgIvo1.userPasswd)       // 패스워드(암호화)
 
     // 비밀번호 변경
     let retData = await Api.post("/api/search/updateUserPw", state.pop2.pwChgIvo2)
@@ -841,39 +912,6 @@ const onClickChangePw = async () => {
 
     }
 
-}
-
-/********************************
- * 질문 답변 팝업
- ********************************/
-const onClickAuthPw = async () => {
-    // state.isOpen.Question = false
-    // state.isOpen.chgPasswd = true
-
-    // 필수입력 체크
-    if(state.pop1.ivo.passwdHintAnswer == '') {
-        ElMessage({
-            type: 'error',
-            message: '정답을 입력하세요.',
-        })
-        passwdHintAnswer.value.focus()
-        return
-    }
-
-    // 정답 조회
-    let retData = await Api.post("/api/search/searchPwAnswer", state.ivo)
-
-    if(retData.data.userId == null) {
-        ElMessage({
-            type: 'error',
-            message: '정답이 일치하지 않습니다.',
-        })
-        return
-    }
-    else {
-        state.isOpen.Question = false
-        state.isOpen.chgPasswd = true
-    }
 }
 
 </script>

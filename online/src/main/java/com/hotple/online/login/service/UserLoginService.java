@@ -3,6 +3,7 @@ package com.hotple.online.login.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hotple.online.login.dto.UserLoginDto;
 import com.hotple.online.login.ivo.UserLoginIvo;
 import com.hotple.online.login.mapper.UserLoginMapper;
 import com.hotple.online.login.ovo.UserLoginOvo;
@@ -14,12 +15,20 @@ public class UserLoginService {
     @Autowired
     UserLoginMapper userLoginMapper;
     
-    public UserLoginOvo selectUser(UserLoginIvo ivo) {
+    public UserLoginDto selectUser(UserLoginIvo ivo) {
+
+        System.out.println(ivo.toString());
 
         UserLoginOvo ovo = new UserLoginOvo();
+        UserLoginDto dto = new UserLoginDto();
+
         ovo.setLonginRslt(userLoginMapper.selectUser(ivo));
 
-        return ovo;
+        if(ovo.getLonginRslt().equals("1")) {
+            dto = userLoginMapper.selectUserInfo(ivo);
+        }
+
+        return dto;
     }
     
 }

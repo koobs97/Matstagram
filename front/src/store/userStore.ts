@@ -1,15 +1,24 @@
 import { defineStore } from 'pinia';
 
+interface userState {
+    userId      : string,
+    userName    : string,
+    email       : String,
+    phoneNumber : string,
+    birthDate   : string,
+    genderCode  : string,
+}
+
 export const userStore = defineStore("userStore", {
     state: () => ({
         userInfo: {
             userId      : '' as string,
             userName    : '' as string,
-            email       : '' as String,
-            phoneNumber : '' as String,
-            birthDate   : '' as String,
-            genderCode  : '' as String,
-        },
+            email       : '' as string,
+            phoneNumber : '' as string,
+            birthDate   : '' as string,
+            genderCode  : '' as string,
+        } as userState,
         authInfo: {
             username: '' as string,           // 이메일인증 성공 시
             email   : '' as string,           // 이메일인증 성공 시
@@ -31,8 +40,14 @@ export const userStore = defineStore("userStore", {
         },
     },
     actions: {
-        setUsername(newUsername: string) {
-            this.userInfo.userName = newUsername;
+        /* 유저 정보 세팅 */
+        setUserInfo(userInfo: userState) {
+            this.userInfo.userId        = userInfo.userId;
+            this.userInfo.userName      = userInfo.userName;
+            this.userInfo.email         = userInfo.email;
+            this.userInfo.phoneNumber   = userInfo.phoneNumber;
+            this.userInfo.birthDate     = userInfo.birthDate;
+            this.userInfo.genderCode    = userInfo.genderCode;
         },
         authentication(username: string, email: string, authenticated: boolean) {
             this.authInfo.username = username;

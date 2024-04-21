@@ -21,5 +21,20 @@
                 AND PASSWD_CHG_DT   >=  SYSDATE - 90
         ]]>
     </select>
+
+    <select id="selectUserInfo" resultType="com.hotple.online.login.dto.UserLoginDto" parameterType="com.hotple.online.login.ivo.UserLoginIvo">
+        <![CDATA[ 
+             SELECT /* com.hotple.online.login.mapper.UserLoginMapper - selectUserInfo */
+                    USER_ID                                                                     /* 사용자ID */
+                  , USER_NAME                                                                   /* 사용자명 */
+                  , EMAIL                                                                       /* 이메일 */
+                  , PHONE_NUMBER                                                                /* 핸드폰번호 */
+                  , BIRTH_DATE                                                                  /* 생년월일 */
+                  , GENDER_CODE                                                                 /* 성별코드 */
+               FROM TB_USER                                                                     /* TB_유저 */
+              WHERE USER_ID     =   #{userId}                                                   /* 사용자ID */
+                AND USE_YN      =   'Y'                                                         /* 사용여부 */
+        ]]>
+    </select>
     
 </mapper>

@@ -113,6 +113,16 @@ const userStoreObj  = userStore()
 const id        = ref()
 const passwd    = ref()
 
+// 유저정보
+interface userState {
+    userId      : string,
+    userName    : string,
+    email       : String,
+    phoneNumber : string,
+    birthDate   : string,
+    genderCode  : string,
+}
+
 const state = reactive({
     ivo: new UserLoginIvo(),
     ivoParam: new UserLoginIvo(),
@@ -164,11 +174,25 @@ const onClickLogin = async () => {
 
         let retData = await Api.post("/api/login", state.ivoParam)
 
-        if(retData.data.longinRslt == '1') {
-            userStoreObj.setUsername('구본상')
+        if(retData.data.userId != null) {
+
+            // 유저 정보 세팅할 파라미터
+            const userInfo = {
+                userId      : retData.data.userId,
+                userName    : retData.data.userName,
+                email       : retData.data.email,
+                phoneNumber : retData.data.phoneNumber,
+                birthDate   : retData.data.birthDate,
+                genderCode  : retData.data.genderCode,
+            } as userState
+
+            // 유저 정보 세팅
+            userStoreObj.setUserInfo(userInfo)
+
+            // 로그인 성공
             router.push('/')
         }
-        else if(retData.data.longinRslt == '2') {
+        else if(retData.data.userId == null) {
             ElMessage({
                 type: 'error',
                 message: '사용자ID 또는 비밀번호를 확인하세요.',

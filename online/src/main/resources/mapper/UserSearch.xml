@@ -126,6 +126,7 @@
                   , USER_NAME                                                                   /* 이메일 */
                   , PHONE_NUMBER                                                                /* 핸드폰번호 */
                   , BIRTH_DATE                                                                  /* 생년월일 */
+                  , EMAIL                                                                       /* 이메일 */
                FROM TB_USER                                                                     /* TB_유저 */
               WHERE USER_ID             =   #{userId}                                           /* 유저ID */
                 AND USER_NAME           =   #{userName}                                         /* 사용자명 */
