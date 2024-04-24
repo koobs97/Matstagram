@@ -98,7 +98,7 @@
                                             <el-descriptions-item label-align="left" align="left">
                                                 <template #label>
                                                     <div class="cell-item">
-                                                        <el-icon><UserFilled /></el-icon>
+                                                        <el-icon style="margin-right: 4px;"><UserFilled /></el-icon>
                                                         아이디
                                                     </div>
                                                 </template>
@@ -107,7 +107,7 @@
                                             <el-descriptions-item label-align="left" align="left">
                                                 <template #label>
                                                     <div class="cell-item">
-                                                        <el-icon><User /></el-icon>
+                                                        <el-icon style="margin-right: 4px;"><User /></el-icon>
                                                         사용자명
                                                     </div>
                                                 </template>
@@ -173,7 +173,7 @@
                                     <el-descriptions-item label-align="left" align="left">
                                         <template #label>
                                             <div class="cell-item">
-                                                <el-icon><User /></el-icon>
+                                                <el-icon style="margin-right: 4px;"><User /></el-icon>
                                                 사용자명
                                             </div>
                                         </template>
@@ -182,7 +182,7 @@
                                     <el-descriptions-item label-align="left" align="left">
                                         <template #label>
                                             <div class="cell-item">
-                                                <el-icon><UserFilled /></el-icon>
+                                                <el-icon style="margin-right: 4px;"><UserFilled /></el-icon>
                                                 아이디
                                             </div>
                                         </template>
@@ -191,7 +191,7 @@
                                     <el-descriptions-item label-align="left" align="left">
                                         <template #label>
                                             <div class="cell-item">
-                                                <el-icon><Calendar /></el-icon>
+                                                <el-icon style="margin-right: 4px;"><Calendar /></el-icon>
                                                 생년월일
                                             </div>
                                         </template>
@@ -200,7 +200,7 @@
                                     <el-descriptions-item label-align="left" align="left">
                                         <template #label>
                                             <div class="cell-item">
-                                                <el-icon><Phone /></el-icon>
+                                                <el-icon style="margin-right: 4px;"><Phone /></el-icon>
                                                 전화번호
                                             </div>
                                         </template>
@@ -948,6 +948,12 @@ const onClickChangePw = async () => {
     --el-card-padding: 12px;
     --el-card-bg-color: var(--el-fill-color-blank);
 }
+
+.cell-item {
+    display: flex;
+    align-items: center;
+}
+
 /* 체크박스 색상 */
 .el-checkbox {
     --el-checkbox-checked-text-color: #7C4DFF;

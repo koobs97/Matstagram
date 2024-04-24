@@ -62,24 +62,40 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="6" style="text-align: left; height: 40px; padding-left: 5px; padding-top: 5px;">
-                            <el-text class="mx-1" style="text-align: left; font-weight: bold; font-size: 12px; color: crimson;">{{ state.time }}</el-text>
+                            <el-text class="mx-1" style="text-align: left; font-weight: bold; font-size: 12px; color: crimson;">
+                                <el-icon style="margin-right: 1px;"><Timer /></el-icon>
+                                {{ state.time }}</el-text>
                         </el-col>
                         <el-col :span="6"/>
 
                         <el-col :span="4"/>
-                        <el-col :span="6" style="text-align: left; height: 20px;" >
+                        <el-col :span="6" style="text-align: left; height: 20px; margin-top: 1px;" >
                             <el-text type="info" style="font-size: 13px;">혹시 이메일이 오지 않는다면?</el-text>
                         </el-col>
                         <el-col :span="12" style="text-align: left; margin-bottom: 7px;">
-                            <el-tooltip 
-                                content="<strong>확인해주세요</strong>
-                                <br>1. 입력한 이메일 주소가 맞는지 확인해주세요.
-                                <br>2. koobs970729@gmail.com 메일주소가 스팸으로 등록된 것은 아닌지 확인해주세요.
-                                <br> 확인 후 다시 한 번 '인증번호 받기'를 눌러주세요."
-                                raw-content
-                            >
-                                <el-button style="height: 8px; width: 8px; padding: 0px;" :icon="QuestionFilled"></el-button>
-                            </el-tooltip>
+                            <el-popover placement="right" :width="380" trigger="hover">
+                                <template #reference>
+                                    <el-button style="height: 8px; width: 8px; padding: 0px;" :icon="QuestionFilled"></el-button>
+                                </template>
+                                <div>
+                                    <el-col :span="24" style="margin-bottom: 4px; margin-top: 4px;">
+                                        <el-text style="font-weight: bold;">
+                                            <el-icon style="margin-right: 1px;">
+                                                <InfoFilled />
+                                            </el-icon>
+                                            확인해주세요
+                                        </el-text>
+                                    </el-col>
+                                    <el-divider style="margin-bottom: 0px; margin-top: 0px;"></el-divider>
+                                    <el-col :span="24">
+                                        <el-tag style="margin-bottom: 4px; margin-top: 4px; width: 355px; justify-content: left; color: #4527A0;">1. 입력한 이메일 주소가 맞는지 확인해주세요.</el-tag>
+                                        <el-tag style="margin-bottom: 4px; width: 355px; justify-content: left; color: #4527A0;">2. koobs970729@gmail.com의 차단여부를 확인해주세요.</el-tag>
+                                        <el-tag style="margin-bottom: 4px; width: 355px; justify-content: left; color: #4527A0;">3. 인터넷 연결이 원활한지 확인해주세요.</el-tag>
+                                    </el-col>
+                                    <el-divider style="margin-bottom: 0px; margin-top: 0px;"></el-divider>
+                                    <el-tag style="margin-bottom: 4px; margin-top: 4px; width: 355px; justify-content: left; background-color: #F5F5F5; color: #212121;">확인 후 다시 한 번 '인증번호 받기'를 눌러주세요.</el-tag>
+                                </div>
+                            </el-popover>
                         </el-col>
 
                     </el-row>
@@ -103,7 +119,7 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, Message, QuestionFilled } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, Message, QuestionFilled, Timer, InfoFilled } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref, watch } from 'vue';
 import { onBeforeRouteLeave, useRouter } from 'vue-router';

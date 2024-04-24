@@ -33,7 +33,7 @@
                                 <el-descriptions-item label-align="left" align="left">
                                     <template #label>
                                         <div class="cell-item">
-                                            <el-icon><User /></el-icon>
+                                            <el-icon style="margin-right: 4px;"><User /></el-icon>
                                             사용자명
                                         </div>
                                     </template>
@@ -44,7 +44,7 @@
                                 <el-descriptions-item label-align="left" align="left">
                                     <template #label>
                                         <div class="cell-item">
-                                            <el-icon><Phone /></el-icon>
+                                            <el-icon style="margin-right: 4px;"><Phone /></el-icon>
                                             전화번호
                                         </div>
                                     </template>
@@ -63,7 +63,7 @@
                                 <el-descriptions-item label-align="left" align="left">
                                     <template #label>
                                         <div class="cell-item">
-                                            <el-icon><UserFilled /></el-icon>
+                                            <el-icon style="margin-right: 4px;"><UserFilled /></el-icon>
                                             아이디
                                         </div>
                                     </template>
@@ -204,6 +204,11 @@ const onClickToLogin = () => {
     left: 0;
     right: 0;
     text-align: center;
+}
+
+.cell-item {
+    display: flex;
+    align-items: center;
 }
 
 /* 버튼 색상 */
