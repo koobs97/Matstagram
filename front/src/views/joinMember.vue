@@ -61,17 +61,6 @@
                                     </el-button>
                                 </el-col>
                                 <el-col :span="17" style="margin-bottom: 4px">
-                                    <el-tooltip
-                                        class="box-item"
-                                        effect="dark"
-                                        placement="right-start"
-                                        content="<strong>비밀번호 생성규칙</strong>
-                                        <br>1. 8자리 이상
-                                        <br>2. 영문/특수기호/숫자 전부 포함
-                                        <br>3. ID와 동일하게 사용불가
-                                        <br>4. 생년월일/전화번호 포함 불가"
-                                        raw-content
-                                    >
                                         <el-tooltip
                                             effect="dark"
                                             placement="left-start"
@@ -79,14 +68,38 @@
                                             :content="state.ruleChk.msg"
                                             :visible="state.isVisibleRule"
                                         >
-                                            <el-input
-                                                ref="userPasswd"
-                                                v-model="state.ivo.userPasswd"
-                                                maxlength="50"
-                                                type="password"
-                                                placeholder="비밀번호"
-                                            />
-                                        </el-tooltip>
+                                        <div class="mt-4">
+                                            <el-popover placement="right" :width="300" trigger="click">
+                                                <template #reference>
+                                                    <el-input
+                                                        ref="userPasswd"
+                                                        v-model="state.ivo.userPasswd"
+                                                        maxlength="50"
+                                                        type="password"
+                                                        placeholder="비밀번호"
+                                                    >
+                                                        <template #append>
+                                                            <el-button :icon="InfoFilled" />
+                                                        </template>
+                                                    </el-input>
+                                                </template>
+                                                <div>
+                                                    <el-text style="font-weight: bold;">
+                                                        <el-icon style="margin-right: 1px;">
+                                                            <InfoFilled />
+                                                        </el-icon>
+                                                        비밀번호 생성규칙
+                                                    </el-text>
+                                                    <el-divider style="margin-bottom: 0px; margin-top: 0px;"></el-divider>
+                                                        <el-tag style="margin-bottom: 4px; margin-top: 4px; width: 275px; justify-content: left; color: #4527A0;">1. 8자리 이상</el-tag>
+                                                        <el-tag style="margin-bottom: 4px; width: 275px; justify-content: left; color: #4527A0;">2. 영문/특수기호/숫자 전부 포함</el-tag>
+                                                        <el-tag style="margin-bottom: 4px; width: 275px; justify-content: left; color: #4527A0;">3. ID와 동일하게 사용불가</el-tag>
+                                                        <el-tag style="margin-bottom: 4px; width: 275px; justify-content: left; color: #4527A0;">4. 생년월일/전화번호 포함 불가</el-tag>
+                                                    <el-divider style="margin-bottom: 0px; margin-top: 0px;"></el-divider>
+                                                    <el-tag style="margin-bottom: 4px; margin-top: 4px; width: 275px; justify-content: left; background-color: #F5F5F5; color: #212121;">생성규칙에 맞춰 비밀번호를 생성해주세요</el-tag>
+                                                </div>
+                                            </el-popover>
+                                        </div>
                                     </el-tooltip>
                                 </el-col>
                                 <el-col :span="2" style="text-align: right">
@@ -124,6 +137,7 @@
                                 <el-col :span="17" style="margin-bottom: 4px">
                                     <el-input
                                         ref="passwdHint"
+                                        maxlength="50"
                                         v-model="state.ivo.passwdHint"
                                         placeholder="비밀번호 찾기 질문"
                                         />
@@ -138,6 +152,8 @@
                                 <el-col :span="17" style="margin-bottom: 4px">
                                     <el-input
                                         ref="passwdHintAnswer"
+                                        maxlength="10"
+                                        show-word-limit
                                         v-model="state.ivo.passwdHintAnswer"
                                         placeholder="정답 입력"
                                     />
@@ -181,39 +197,24 @@
                                 </el-col>
                                 <el-col :span="5" />
                                 <el-col :span="17" style="margin-bottom: 4px">
-                                    <el-input
-                                        ref="birthDate"
-                                        maxlength="10"
-                                        v-model="state.ivo.birthDate"
-                                        placeholder="생년월일 ex) 2024.02.01"
-                                    />
+                                    <div style="display: flex;">
+                                        <el-input
+                                            ref="birthDate"
+                                            maxlength="10"
+                                            style="width: 74%;"
+                                            v-model="state.ivo.birthDate"
+                                            placeholder="생년월일 ex) 2024.02.01"
+                                        />
+                                    <el-radio-group v-model="gender" ref="genderCode" style="margin-left: 6px;">
+                                        <el-radio-button label="남" value="M" />
+                                        <el-radio-button label="여" value="W" />
+                                    </el-radio-group>
+                                    </div>
                                 </el-col>
                                 <el-col :span="2" style="text-align: right">
                                     <el-button 
                                         :icon="Select" 
                                         :class="state.style.btnStyle7"
-                                    />
-                                </el-col>
-                                <el-col :span="5" />
-                                <el-col :span="17" style="margin-bottom: 4px">
-                                    <el-select
-                                        ref="genderCode"
-                                        v-model="gender"
-                                        class="m-2"
-                                        placeholder="성별"
-                                    >
-                                        <el-option
-                                            v-for="item in genOptions"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value"
-                                        />
-                                    </el-select>
-                                </el-col>
-                                <el-col :span="2" style="text-align: right">
-                                    <el-button 
-                                        :icon="Select" 
-                                        :class="state.style.btnStyle8"
                                     />
                                 </el-col>
                                 <el-col :span="5" />
@@ -235,7 +236,7 @@
                                 <el-col :span="2" style="text-align: right">
                                     <el-button 
                                         :icon="Select" 
-                                        :class="state.style.btnStyle9"
+                                        :class="state.style.btnStyle8"
                                     />
                                 </el-col>
                                 <el-col :span="5" />
@@ -348,16 +349,6 @@ const agreed            = ref()
 
 const mail       = ref('')
 const gender     = ref('')
-const genOptions = [
-    {
-        value: 'M',
-        label: '남자',
-    },
-    {
-        value: 'W',
-        label: '여자',
-    },
-]
 
 /* state defined */
 const state = reactive({
@@ -456,7 +447,6 @@ const state = reactive({
         btnStyle6: 'btn_default',
         btnStyle7: 'btn_default',
         btnStyle8: 'btn_default',
-        btnStyle9: 'btn_default',
     }
 })
 
@@ -672,24 +662,24 @@ watch(
 
         /* 성별 */
         if(gender.value.trim().length == 0) {
-            state.style.btnStyle8 = 'btn_default'
+            state.style.btnStyle7 = 'btn_default'
         }
         else {
-            state.style.btnStyle8 = 'btn_success'
+            state.style.btnStyle7 = 'btn_success'
         }
 
         /* 전화번호 */
         if(state.ph1.trim().length == 0 && state.ph2.trim().length == 0) {
-            state.style.btnStyle9 = 'btn_default'
+            state.style.btnStyle8 = 'btn_default'
         }
         else if(state.ph1.trim().length == 0 || state.ph1.trim().length != 3) {
-            state.style.btnStyle9 = 'btn_error'
+            state.style.btnStyle8 = 'btn_error'
         }
         else if(state.ph2.trim().length == 0 || state.ph2.trim().length != 9) {
-            state.style.btnStyle9 = 'btn_error'
+            state.style.btnStyle8 = 'btn_error'
         }
         else {
-            state.style.btnStyle9 = 'btn_success'
+            state.style.btnStyle8 = 'btn_success'
         }
     },
     {deep: true}
@@ -841,21 +831,17 @@ const onClickJoin = async () => {
         birthDate.value.focus()
         return
     }
-    else{
-        state.style.btnStyle7 = 'btn_success'
-    }
-
-    if(gender.value == '') {
+    else if(gender.value == '') {
         ElMessage({
             type: 'error',
             message: '성별을 선택해주세요.',
         })
-        state.style.btnStyle8 = 'btn_error'
+        state.style.btnStyle7 = 'btn_error'
         genderCode.value.focus()
         return
     }
     else{
-        state.style.btnStyle8 = 'btn_success'
+        state.style.btnStyle7 = 'btn_success'
     }
 
     if(state.ph1.trim().length == 0 || state.ph1.trim().length != 3) {
@@ -863,7 +849,7 @@ const onClickJoin = async () => {
             type: 'error',
             message: '휴대폰 번호를 확인해주세요.',
         })
-        state.style.btnStyle9 = 'btn_error'
+        state.style.btnStyle8 = 'btn_error'
         ph1.value.focus()
         return
     }
@@ -872,12 +858,12 @@ const onClickJoin = async () => {
             type: 'error',
             message: '휴대폰 번호를 확인해주세요.',
         })
-        state.style.btnStyle9 = 'btn_error'
+        state.style.btnStyle8 = 'btn_error'
         ph2.value.focus()
         return
     }
     else{
-        state.style.btnStyle9 = 'btn_success'
+        state.style.btnStyle8 = 'btn_success'
     }
 
     if(isAgreed.value == false) {
@@ -1033,4 +1019,38 @@ const onClickToLogin = () => {
     --el-input-focus-border-color: #9575CD;
     --el-input-width: 100%;
 }
+
+/* 태그 색상 */
+.el-tag {
+    --el-tag-bg-color: var(--el-color-primary-light-9);
+    --el-tag-border-color: #dfdfdf;
+    --el-tag-hover-color: var(--el-color-primary);
+    --el-tag-text-color: var(--el-color-primary);
+    background-color: var(--el-tag-bg-color);
+    border-color: var(--el-tag-border-color);
+    color: var(--el-tag-text-color);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    height: 24px;
+    padding: 0 9px;
+    font-size: var(--el-tag-font-size);
+    line-height: 1;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: var(--el-tag-border-radius);
+    box-sizing: border-box;
+    white-space: nowrap;
+    --el-icon-size: 14px;
+    border: none;
+}
+
+.el-radio-button {
+    --el-radio-button-checked-bg-color: #4527A0;
+    --el-radio-button-checked-text-color: var(--el-color-white);
+    --el-radio-button-checked-border-color: #4527A0;
+    --el-radio-button-disabled-checked-fill: var(--el-border-color-extra-light);
+}
+
 </style>

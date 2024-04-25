@@ -24,14 +24,8 @@
                          WHEN COUNT(1) = 0 THEN 'N'                                             /* N.중복없음 */
                     ELSE '0' END       AS USER_DUP_YN                                           /* 재가입여부 */
                FROM TB_USER                                                                     /* TB_유저 */
-              WHERE (                                                                           /*  */
-                         USER_ID     =   #{userId}                                              /* 사용자ID */
-                     AND USER_NAME   =   #{userName}                                            /* 사용자명 */
-                    )
-                 OR (                                                                           /*  */
-                         USER_ID     =   #{userId}                                              /* 사용자ID */
-                     AND EMAIL       =   #{email}                                               /* 이메일 */
-                    )
+              WHERE USER_NAME   =   #{userName}                                                 /* 사용자명 */
+                AND EMAIL       =   #{email}                                                    /* 이메일 */
         ]]>
     </select>
 
