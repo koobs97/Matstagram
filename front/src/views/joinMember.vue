@@ -246,16 +246,152 @@
                                         ref="agreed"
                                         v-model="isAgreed"
                                         size="large" 
-                                        style="font-weight: bold; height: 50px; width: 100%;" 
+                                        style="font-weight: bold; height: 50px; width: 100%; margin-bottom: 4px;" 
                                         border 
                                     />
+                                    <div style="text-align: right;">
+                                        <el-button :icon="Search" style="font-weight: bold; font-size: 12px;" @click="state.isOpen.detail=true">약관상세보기</el-button>
+                                    </div>
+
+                                    <!-- 약관상세보기 Dialog -->
+                                    <el-dialog 
+                                        v-model="state.isOpen.detail" 
+                                        :show-close="false" 
+                                        :before-close="handleClose"
+                                        :draggable="false"
+                                        destroy-on-close
+                                        align-center
+                                        center
+                                        :title="'약관상세보기'"
+                                        style="width: 400px; height: 650px; border-radius: 8px;">
+
+                                        <div style="text-align: left; margin-top: 0px; margin-bottom: 5px;" >
+                                            <el-text style="font-weight: bold; margin-right: 4px; color: green; font-size: 12px;">
+                                                <el-icon style="margin-right: 4px;">
+                                                    <Select />
+                                                </el-icon>
+                                                    [필수]
+                                            </el-text>
+                                            <el-text style="font-weight: bold; font-size: 16px;">개인정보 수집</el-text>
+                                        </div>
+                                        <el-card class="custom-el-card" shadow="never" style="height: 120px; width: 100%;">
+                                            <div style="height: 100px;">
+                                                <el-scrollbar always style="padding-right: 32px; padding-top: 16px; padding-left: 16px;">
+                                                        <el-text style="font-size: 13px;">
+                                                            &nbsp;개인정보보호법에 따라 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 
+                                                            개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니 자세히 읽은 후 
+                                                            동의하여 주시기 바랍니다.
+
+                                                            회원가입 시점에 이용자로부터 수집하는 개인정보는 아래와 같습니다.<br>
+                                                            - 회원 가입 시 필수항목으로 아이디, 비밀번호, 이름, 생년월일, 성별, 휴대전화번호를 이메일주소를 수집합니다.<br>
+                                                            서비스 이용 과정에서 이용자로부터 수집하는 개인정보는 아래와 같습니다.<br>
+                                                            - 개별 서비스 이용 과정에서 해당 서비스의 이용자에 한해 추가 개인정보 수집이 발생할 수 있습니다. 
+                                                            추가로 개인정보를 수집할 경우에는 해당 개인정보 수집 시점에서 이용자에게 
+                                                            ‘수집하는 개인정보 항목, 개인정보의 수집 및 이용목적, 개인정보의 보관기간’에 대해 안내 드리고 동의를 받습니다.
+
+                                                            서비스 이용 과정에서 IP 주소, 쿠키, 서비스 이용 기록, 기기정보, 위치정보가 생성되어 수집될 수 있습니다. 
+                                                            또한 이미지 및 음성을 이용한 검색 서비스 등에서 이미지나 음성이 수집될 수 있습니다.<br><br>
+                                                        </el-text>
+                                                        <el-text style="font-size: 13px; font-weight: bold;">생성정보 수집에 대한 추가 설명<br></el-text>
+                                                        <el-text style="font-size: 13px;">
+                                                            - IP(Internet Protocol) 주소란?<br>
+                                                            IP 주소는 인터넷 망 사업자가 인터넷에 접속하는 이용자의 PC 등 기기에 부여하는 온라인 주소정보 입니다. 
+                                                            IP 주소가 개인정보에 해당하는지 여부에 대해서는 각국마다 매우 다양한 견해가 있습니다.<br>
+                                                            - 서비스 이용기록이란?<br>
+                                                            접속 일시, 이용한 서비스 목록 및 서비스 이용 과정에서 
+                                                            발생하는 정상 또는 비정상 로그 일체, 메일 수발신 과정에서 기록되는 이메일주소, 
+                                                            친구 초대하기 또는 선물하기 등에서 입력하는 휴대전화번호 등을 의미합니다.<br>
+                                                            - 쿠키(cookie)란?<br>
+                                                            쿠키는 이용자가 웹사이트를 접속할 때에 해당 웹사이트에서 이용자의 웹브라우저를 통해 이용자의 
+                                                            PC에 저장하는 매우 작은 크기의 텍스트 파일입니다. 이후 이용자가 다시 웹사이트를 방문할 경우 
+                                                            웹사이트 서버는 이용자 PC에 저장된 쿠키의 내용을 읽어 이용자가 설정한 서비스 이용 환경을 유지하여 
+                                                            편리한 인터넷 서비스 이용을 가능케 합니다. 또한 방문한 서비스 정보, 서비스 접속 시간 및 빈도, 
+                                                            서비스 이용 과정에서 생성된 또는 제공(입력)한 정보 등을 분석하여 이용자의 취향과 관심에 특화된 
+                                                            서비스(광고 포함)를 제공할 수 있습니다. 이용자는 쿠키에 대한 선택권을 가지고 있으며, 웹브라우저에서 
+                                                            옵션을 설정함으로써 모든 쿠키를 허용하거나, 쿠키가 저장될 때마다 확인을 거치거나, 아니면 모든 쿠키의 
+                                                            저장을 거부할 수도 있습니다. 다만, 쿠키의 저장을 거부할 경우에는 로그인이 필요한 네이버 일부 서비스의 
+                                                            이용에 불편이 있을 수 있습니다.
+                                                        </el-text>
+                                                </el-scrollbar>
+                                            </div>
+                                        </el-card>
+                                        <div style="text-align: left; margin-top: 20px; margin-bottom: 5px;" >
+                                            <el-text style="font-weight: bold; margin-right: 4px; color: green; font-size: 12px;">
+                                                <el-icon style="margin-right: 4px;">
+                                                    <Select />
+                                                </el-icon>
+                                                [필수]
+                                            </el-text>
+                                            <el-text style="font-weight: bold; font-size: 16px;">개인정보 이용</el-text>
+                                        </div>
+                                        <el-card class="custom-el-card" shadow="never" style="height: 120px; width: 100%;">
+                                            <div style="height: 100px;">
+                                                <el-scrollbar always style="padding-right: 32px; padding-top: 16px; padding-left: 16px;">
+                                                        <el-text style="font-size: 13px;">
+                                                            &nbsp;회원관리, 서비스 개발・제공 및 향상, 안전한 인터넷 이용환경 구축 등 아래의 목적으로만 개인정보를 이용합니다.<br>
+                                                            - 회원 가입 의사의 확인, 연령 확인 및 법정대리인 동의 진행, 이용자 및 법정대리인의 본인 확인, 이용자 식별, 
+                                                            회원탈퇴 의사의 확인 등 회원관리를 위하여 개인정보를 이용합니다.<br>
+                                                            - 콘텐츠 등 기존 서비스 제공(광고 포함)에 더하여, 인구통계학적 분석, 서비스 방문 및 이용기록의 분석, 
+                                                            개인정보 및 관심에 기반한 이용자간 관계의 형성, 지인 및 관심사 등에 기반한 맞춤형 서비스 제공 등 신규 
+                                                            서비스 요소의 발굴 및 기존 서비스 개선 등을 위하여 개인정보를 이용합니다.<br>
+                                                            - 서비스 이용기록과 접속 빈도 분석, 서비스 이용에 대한 통계, 서비스 분석 및 통계에 따른 맞춤 
+                                                            서비스 제공 등에 개인정보를 이용합니다. <br>
+                                                            - 보안, 프라이버시, 안전 측면에서 이용자가 안심하고 이용할 수 있는 서비스 이용환경 구축을 위해 개인정보를 이용합니다.
+                                                        </el-text>
+                                                </el-scrollbar>
+                                            </div>
+                                        </el-card>
+                                        <div style="text-align: left; margin-top: 20px; margin-bottom: 5px;" >
+                                            <el-text style="font-weight: bold; margin-right: 4px; color: green; font-size: 12px;">
+                                                <el-icon style="margin-right: 4px;">
+                                                    <Select />
+                                                </el-icon>
+                                                [필수]
+                                            </el-text>
+                                            <el-text style="font-weight: bold; font-size: 16px;">개인정보 처리</el-text>
+                                        </div>
+                                        <el-card class="custom-el-card" shadow="never" style="height: 120px; width: 100%;">
+                                            <div style="height: 100px;">
+                                                <el-scrollbar always style="padding-right: 32px; padding-top: 16px; padding-left: 16px;">
+                                                        <el-text style="font-size: 13px;">
+                                                            &nbsp;개인정보보호법에 따라 다음에 해당되는 경우를 제외하고 고유식별정보를 처리하지 않습니다.<br><br>
+
+                                                            - 개인정보 수집·이용의 경우 정보주체에게 다음의 사항을 알리고 다른 개인정보의 처리에 대한 동의와 별도의 동의를 얻은 경우<br>
+                                                            - 개인정보 제공의 경우 정보주체에게 다음의 사항을 알리고 다른 개인정보의 처리에 대한 동의와 별도의 동의를 얻은 경우
+                                                            - 법령에서 구체적으로 고유식별정보의 처리를 요구하거나 허용하는 경우<br>
+                                                            <el-card shadow="never" style="margin-top: 8px; width: 97%; background-color: #f0f0f0; font-size: 12px;">
+                                                                ※ "개인정보"란 살아 있는 개인에 관한 정보로서 다음의 어느 하나에 해당하는 정보를 말합니다(「개인정보 보호법」 제2조제1호).<br>
+                                                                1. 성명, 주민등록번호 및 영상 등을 통하여 개인을 알아볼 수 있는 정보<br>
+                                                                2. 해당 정보만으로는 특정 개인을 알아볼 수 없더라도 다른 정보와 쉽게 결합하여 
+                                                                알아볼 수 있는 정보(이 경우 쉽게 결합할 수 있는지 여부는 다른 정보의 입수 가능성 등 
+                                                                개인을 알아보는 데 소요되는 시간, 비용, 기술 등을 합리적으로 고려하여야 함)<br>
+                                                                3. 위 1. 또는 2. 에 따라 가명처리함으로써 원래의 상태로 복원하기 위한 추가 정보의 사용·결합 
+                                                                없이는 특정 개인을 알아볼 수 없는 정보<br>
+                                                                ※"가명처리"란 개인정보의 일부를 삭제하거나 일부 또는 전부를 대체하는 등의 방법으로 
+                                                                추가 정보가 없이는 특정 개인을 알아볼 수 없도록 처리하는 것을 말합니다(「개인정보 보호법」 제2조제1호의2).<br>
+                                                                ※ “정보주체”란 처리되는 정보에 의하여 알아볼 수 있는 사람으로서 그 정보의 주체가 
+                                                                되는 사람을 말합니다(「개인정보 보호법」 제2조제3호).<br>
+                                                                ※ “개인정보처리자”란 업무를 목적으로 개인정보파일을 운용하기 위하여 스스로 또는 
+                                                                다른 사람을 통하여 개인정보를 처리하는 공공기관, 법인, 단체 및 개인 등을 말합니다(「개인정보 보호법」 제2조제5호).<br>
+                                                            </el-card>
+                                                        </el-text>
+                                                </el-scrollbar>
+                                            </div>
+                                        </el-card>
+
+                                        <div style="text-align: center; margin-top: 30px">
+                                            <el-button @click="state.isOpen.detail=false">닫기</el-button>
+                                        </div>
+                                    </el-dialog>
+                                    <!-- 약관상세보기 Dialog -->
+
                                 </el-col>
                                 <el-col :span="16" style="padding-left: 10px;">
                                     <el-collapse v-model="activeNames" style="width: 97%;">
                                         <el-collapse-item title="약관보기" name="1">
                                             <div style="display: flex;">
                                                 <div style="width: 50%; text-align: left;">
-                                                    <el-checkbox v-model="state.chk.val1" label="개인정보 이용"/>
+                                                    <el-checkbox v-model="state.chk.val1" label="개인정보 이용" />
                                                     <el-checkbox v-model="state.chk.val2" label="개인정보수집 동의"/>
                                                     <el-checkbox v-model="state.chk.val3" label="고유식별정보 처리"/>
                                                 </div>
@@ -282,8 +418,7 @@
                     </el-card>
                 </div>
             </el-col>
-            <el-col :span="24">
-                <el-form-item/>
+            <el-col :span="24" style="margin-top: 12px;">
                 <div class="container">
                     <el-form label-width="120px" style="height: 80%; width: 30%;">
                         <el-form>
@@ -321,7 +456,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeft, InfoFilled, Select } from '@element-plus/icons-vue'
+import { ArrowLeft, InfoFilled, Select, Search } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
@@ -355,7 +490,8 @@ const state = reactive({
     ivo: new joinMemberIvo(),       // 입력 ivo
     ivoParam: new joinMemberIvo(),  // 저장 ivo
     isOpen: {
-        confirm: false
+        confirm: false, // 확인창
+        detail: false,  // 약관 상세보기
     },
     joinYn: false,
     ph1: '',
@@ -923,6 +1059,10 @@ const onClickToLogin = () => {
     router.push('/')
 }
 
+/* 팝업창 바깥 클릭 시 */
+const handleClose = () => {
+}
+
 </script>
 
 
@@ -937,6 +1077,12 @@ const onClickToLogin = () => {
     justify-content: center;
     align-items: center;
     margin-top: -50px;
+}
+.custom-el-card {
+    --el-card-border-color: var(--el-border-color-light);
+    --el-card-border-radius: 4px;
+    --el-card-padding: 0px;
+    --el-card-bg-color: var(--el-fill-color-blank);
 }
 .login {
     width: 100%;

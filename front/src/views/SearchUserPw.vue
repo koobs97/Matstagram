@@ -80,7 +80,7 @@
                             destroy-on-close 
                             align-center
                             :title="'질문에 답변하기'"
-                            style="width: 520px; height: 480px; border-radius: 8px; transition: width 0.1s ease;"
+                            style="width: 530px; height: 560px; border-radius: 8px; transition: width 0.1s ease;"
                         >
                             <div style="text-align: left; margin-top: 0px; margin-bottom: 5px;" >
                                 <el-text style="font-weight: bold;"><el-icon><CaretRight /></el-icon>사용자정보</el-text>
@@ -91,19 +91,10 @@
                                 <el-row :gutter="0">
 
                                     <el-col :span="3">
-                                        <el-avatar style="height: 41px ; width: 41px;" :src="'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'" />
+                                        <el-avatar style="height: 41px ; width: 45px;" shape="square" :src="'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png'" />
                                     </el-col>
                                     <el-col :span="21">
                                         <el-descriptions :column="2" border>
-                                            <el-descriptions-item label-align="left" align="left">
-                                                <template #label>
-                                                    <div class="cell-item">
-                                                        <el-icon style="margin-right: 4px;"><UserFilled /></el-icon>
-                                                        아이디
-                                                    </div>
-                                                </template>
-                                                {{ state.pop1.ivo.userId }}
-                                            </el-descriptions-item>
                                             <el-descriptions-item label-align="left" align="left">
                                                 <template #label>
                                                     <div class="cell-item">
@@ -113,6 +104,35 @@
                                                 </template>
                                                 {{ state.pop1.ivo.userName }}
                                             </el-descriptions-item>
+                                            <el-descriptions-item label-align="center" align="center">
+                                                <template #label>
+                                                    <div style="text-align: center;">
+                                                        성별
+                                                    </div>
+                                                </template>
+                                                <el-tag plain style="color: #4527A0;">
+                                                    {{ state.pop1.ivo.genderCode }}
+                                                </el-tag>
+                                            </el-descriptions-item>
+                                            <el-descriptions-item label-align="left" align="left" :span="2">
+                                                <template #label>
+                                                    <div class="cell-item">
+                                                        <el-icon style="margin-right: 4px;"><UserFilled /></el-icon>
+                                                        아이디
+                                                    </div>
+                                                </template>
+                                                {{ state.pop1.ivo.userId }}
+                                            </el-descriptions-item>
+                                            <el-descriptions-item label-align="left" align="left" :span="2">
+                                                <template #label>
+                                                    <div class="cell-item">
+                                                        <el-icon style="margin-right: 4px;"><Message /></el-icon>
+                                                        이메일
+                                                    </div>
+                                                </template>
+                                                {{ state.pop1.ivo.email }}
+                                            </el-descriptions-item>
+
                                         </el-descriptions>
                                     </el-col>
 
@@ -124,13 +144,14 @@
                             <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 30px">
                                 <el-row :gutter="0">
                                     <el-col :span="24" style="text-align: left; margin-bottom: 2px;">
+                                        <el-button style="height: 8px; width: 8px; padding: 0px;" :icon="InfoFilled"></el-button>
                                         <el-text style="margin-left: 15px;">회원가입 시 입력한 "비밀번호 찾기 질문"에 대한 답변을 입력해주세요.</el-text>
                                     </el-col>
                                 </el-row>
                             </el-card>
                             <!-- 안내문구 -->
 
-                            <el-divider><el-icon><InfoFilled /></el-icon></el-divider>
+                            <el-divider><el-icon><QuestionFilled /></el-icon></el-divider>
 
                             <el-form :model="state">
                                 <div style="text-align: left;">
@@ -161,7 +182,7 @@
                             destroy-on-close
                             align-center
                             :title="'비밀번호 변경'"
-                            style="width: 400px; height: 780px; border-radius: 8px;">
+                            style="width: 400px; height: 810px; border-radius: 8px;">
 
                             <div style="text-align: left; margin-top: 0px; margin-bottom: 5px;" >
                                 <el-text style="font-weight: bold;"><el-icon><CaretRight /></el-icon>사용자정보</el-text>
@@ -169,7 +190,7 @@
 
                             <!-- 사용자정보 -->
                             <div style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
-                                <el-descriptions :column="1" border>
+                                <el-descriptions :column="2" border>
                                     <el-descriptions-item label-align="left" align="left">
                                         <template #label>
                                             <div class="cell-item">
@@ -179,7 +200,17 @@
                                         </template>
                                         {{ state.pop2.pwChgIvo1.userName }}
                                     </el-descriptions-item>
-                                    <el-descriptions-item label-align="left" align="left">
+                                    <el-descriptions-item label-align="center" align="center">
+                                        <template #label>
+                                            <div style="text-align: center;">
+                                                성별
+                                            </div>
+                                        </template>
+                                        <el-tag plain style="color: #4527A0;">
+                                            {{ state.pop1.ivo.genderCode }}
+                                        </el-tag>
+                                    </el-descriptions-item>
+                                    <el-descriptions-item label-align="left" align="left" :span="2">
                                         <template #label>
                                             <div class="cell-item">
                                                 <el-icon style="margin-right: 4px;"><UserFilled /></el-icon>
@@ -188,7 +219,7 @@
                                         </template>
                                         {{ state.pop2.pwChgIvo1.userId }}
                                     </el-descriptions-item>
-                                    <el-descriptions-item label-align="left" align="left">
+                                    <el-descriptions-item label-align="left" align="left" :span="2">
                                         <template #label>
                                             <div class="cell-item">
                                                 <el-icon style="margin-right: 4px;"><Calendar /></el-icon>
@@ -197,7 +228,7 @@
                                         </template>
                                         {{ state.pop2.pwChgIvo1.birthDate }}
                                     </el-descriptions-item>
-                                    <el-descriptions-item label-align="left" align="left">
+                                    <el-descriptions-item label-align="left" align="left" :span="2">
                                         <template #label>
                                             <div class="cell-item">
                                                 <el-icon style="margin-right: 4px;"><Phone /></el-icon>
@@ -213,14 +244,15 @@
                             <!-- 안내문구 -->
                             <el-card class="custom-card" shadow="never" style="height: 100%; width: 100%; background-color: #f0f0f0; text-align: left; margin-bottom: 5px">
                                 <el-row :gutter="0">
-                                    <el-col :span="2"/>
-                                    <el-col :span="20" style="text-align: left; margin-bottom: 2px;">
-                                        <el-text>저희 사이트를 사용해주셔서 감사합니다.</el-text>
+                                    <el-col :span="1"/>
+                                    <el-col :span="21" style="text-align: left; margin-bottom: 2px;">
+                                        <el-button style="height: 8px; width: 8px; padding: 0px;" :icon="InfoFilled"></el-button>
+                                        <el-text style="margin-left: 15px;">저희 사이트를 사용해주셔서 감사합니다.</el-text>
                                     </el-col> 
                                     <el-col :span="2"/>
-                                    <el-col :span="2"/>
-                                    <el-col :span="20" style="text-align: left; margin-bottom: 2px;">
-                                        <el-text >비밀번호 생성규칙은 다음과 같습니다.</el-text>
+                                    <el-col :span="1"/>
+                                    <el-col :span="21" style="text-align: left; margin-bottom: 2px;">
+                                        <el-text style="margin-left: 22px;">비밀번호 생성규칙은 다음과 같습니다.</el-text>
                                     </el-col>
                                     <el-col :span="2"/>
                                 </el-row>
@@ -238,6 +270,7 @@
                                 <el-descriptions-item label-class-name="my-label" label="필수">ID와 동일하게 사용불가</el-descriptions-item>
                                 <el-descriptions-item label-class-name="my-label" label="필수">생년월일/전화번호 포함 불가</el-descriptions-item>
                                 <el-descriptions-item label="권장">3자리의 순차적인 숫자 사용 금지</el-descriptions-item>
+                                <el-descriptions-item label="권장">대문자(영문) 소문자(영문)이 한개 이상 포함</el-descriptions-item>
                             </el-descriptions>
                             <!-- 비밀번호 생성규칙 -->
 
@@ -376,7 +409,7 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowRight, Calendar, CaretRight, ChatLineSquare, Checked, Hide, InfoFilled, Phone, Unlock, User, UserFilled, Lock } from '@element-plus/icons-vue';
+import { ArrowRight, Calendar, CaretRight, ChatLineSquare, Checked, Hide, InfoFilled, QuestionFilled, Phone, Unlock, User, UserFilled, Lock, Message } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
@@ -505,6 +538,15 @@ const onClickOpenQuestion = async () => {
     else {
         state.isOpen.Question = true
         state.pop1.ivo.passwdHint = retData.data.passwdHint
+        state.pop1.ivo.genderCode = retData.data.genderCode
+        state.pop1.ivo.email      = state.ivo.email
+
+        if(state.pop1.ivo.genderCode == 'M') {
+            state.pop1.ivo.genderCode = '남'
+        }
+        else if (state.pop1.ivo.genderCode == 'W') {
+            state.pop1.ivo.genderCode = '여'
+        }
 
         /* 질문답변하기 팝업 열렸 때 */
         onMoundPop1()
@@ -538,6 +580,8 @@ const onMoundPop1 = () => {
     state.pop1.ivo.userId = state.ivo.userId
     state.pop1.ivo.userName = state.ivo.userName
     state.pop1.ivo.email = state.ivo.email
+
+    state.pop1.ivo.passwdHintAnswer = ''    // 답변 value 초기화
 
     setTimeout(()=>{ passwdHintAnswer.value.focus() }, 50)
 }
@@ -649,6 +693,17 @@ watch(
                 state.pop2.complexity.status = 'exception'
             }
             else {
+
+                /* 영문자와 소문자가 전부 포함되는지 여부 */
+                const regex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])/;
+
+                if (regex.test(state.pop2.pwChgIvo1.userPasswd)) {
+                    state.pop2.complexity.percentage = '100'
+                    state.pop2.complexity.status = 'success'
+                } else {
+                    state.pop2.complexity.percentage = '66'
+                    state.pop2.complexity.status = 'warning'
+                }
 
                 /* 숫자를 연달아 세번 사용한 경우 */
                 if(state.pop2.pwChgIvo1.userPasswd.match(/\d{3,}/g) != null) {

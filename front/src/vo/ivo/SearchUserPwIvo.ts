@@ -13,6 +13,7 @@ export class SearchUserPwIvo {
     public userName: string = ''   // 사용자명
     public email: string = ''      // 이메일
     public userId: string = ''     // 아이디
+    public genderCode: string = '' // 성별코드
 
     public passwdHint: string = ''       // 질문
     public passwdHintAnswer: string = '' // 정답

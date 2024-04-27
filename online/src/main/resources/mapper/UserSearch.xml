@@ -111,7 +111,11 @@
     <select id="searchUserPw" resultType="com.hotple.online.login.dto.SearchPwDto" parameterType="com.hotple.online.login.ivo.SearchPwIvo">
         <![CDATA[ 
              SELECT /* com.hotple.online.login.mapper.UserSearchMapper - searchUserPw */
-                    PASSWD_HINT                                                                 /* 비밀번호힌트 */
+                    USER_ID                                                                     /* 사용자ID */
+                  , USER_NAME                                                                   /* 이메일 */
+                  , PHONE_NUMBER                                                                /* 핸드폰번호 */
+                  , GENDER_CODE                                                                 /* 성별코드 */
+                  , PASSWD_HINT                                                                 /* 비밀번호힌트 */
                FROM TB_USER                                                                     /* TB_유저 */
               WHERE USER_ID             =   #{userId}                                           /* 유저ID */
                 AND USER_NAME           =   #{userName}                                         /* 사용자명 */
