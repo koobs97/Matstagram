@@ -6,35 +6,33 @@
         <el-row :gutter="0">
             <el-col :span="24">
                 <div class="container">
-                    <el-card shadow="never" style="height: 80%; width: 20%;">
+                    <el-card shadow="never" style="height: 80%; width: 19%;">
                         <el-form label-width="120px">
                             <el-row :gutter="0">
 
                                 <el-col :span="24">
                                     <p class="title">Matstagram</p>
                                 </el-col>
-
-                                <el-form-item/>
-
+                                <el-col :span="24" style="margin-bottom: 4px; text-align: right;">
+                                    <el-switch v-model="projectDetailView"></el-switch>
+                                </el-col>
                                 <el-col :span="24">
-                                    <el-form-item/>
                                     <el-input
                                         v-model="state.ivo.userId"
                                         ref="id"
                                         @keyup.enter="onClickLogin"
-                                        style="height: 40px; font-size: 15px;"
+                                        style="height: 40px; font-size: 15px; margin-bottom: 8px;"
                                         placeholder="사용자ID 또는 이메일"
-                                        />
+                                    />
                                 </el-col>
 
                                 <!-- 비밀번호 감추는 영역 -->
                                 <el-col :span="24" :hidden="state.isHidden.HideIcon">
-                                    <el-form-item/>
                                     <el-input
                                         v-model="state.ivo.userPasswd"
                                         ref="passwd"
                                         @keyup.enter="onClickLogin"
-                                        style="height: 40px; font-size: 15px;"
+                                        style="height: 40px; font-size: 15px; margin-bottom: 16px;"
                                         type="password"
                                         placeholder="비밀번호"
                                         >
@@ -46,12 +44,11 @@
 
                                 <!-- 보여지는 비밀번호 영역 -->
                                 <el-col :span="24" :hidden="state.isHidden.ViewIcon">
-                                    <el-form-item/>
                                     <el-input
                                         v-model="state.ivo.userPasswd"
                                         ref="passwd"
                                         @keyup.enter="onClickLogin"
-                                        style="height: 40px; font-size: 15px;"
+                                        style="height: 40px; font-size: 15px; margin-bottom: 16px;"
                                         type="text"
                                         placeholder="비밀번호"
                                         :suffix-icon="View"
@@ -64,11 +61,8 @@
                                 </el-col>
 
                                 <el-col :span="24">
-                                    <el-form-item/>
-                                    <el-button color="#311B92" class="login" @click="onClickLogin">로그인</el-button>
+                                    <el-button color="#311B92" class="login" @click="onClickLogin" style=" margin-bottom: 16px;">로그인</el-button>
                                 </el-col>
-
-                                <el-form-item/>
 
                                 <el-col :span="24">
                                     <el-button type="info" link @click="onClickSearchId">아이디 찾기</el-button>
@@ -83,7 +77,7 @@
             <el-col :span="24">
                 <el-form-item/>
                 <div class="container">
-                    <el-card shadow="never" style="width: 20%; height: 60px;">
+                    <el-card shadow="never" style="width: 19%; height: 60px;">
                         <el-button type="primary" style="font-weight: bold; color: #9575CD;" link @click="onClickGoJoinPage">회원가입</el-button>
                     </el-card>
                 </div>
@@ -112,6 +106,8 @@ const userStoreObj  = userStore()
 
 const id        = ref()
 const passwd    = ref()
+
+const projectDetailView = ref(true)
 
 // 유저정보
 interface userState {
@@ -269,6 +265,11 @@ const onClickSearchPw = () => {
     --el-input-clear-hover-color: var(--el-text-color-secondary);
     --el-input-focus-border-color: #9575CD;
     --el-input-width: 100%;
+}
+
+.el-switch {
+    --el-switch-on-color: #9575CD;
+    --el-switch-off-color: var(--el-border-color);
 }
 
 </style>

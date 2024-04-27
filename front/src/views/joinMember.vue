@@ -221,6 +221,7 @@
                                 <el-col :span="4" style="margin-bottom: 4px">
                                     <el-input
                                         ref="ph1"
+                                        maxlength="3"
                                         v-model="state.ph1"
                                         placeholder="010"
                                     />
@@ -228,6 +229,7 @@
                                 <el-col :span="13" style="margin-bottom: 4px; text-align: right">
                                     <el-input
                                         ref="ph2"
+                                        maxlength="9"
                                         v-model="state.ph2"
                                         style="width: 98%;"
                                         placeholder="휴대폰 뒷자리"
@@ -432,15 +434,33 @@
                                             <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
                                             알림창
                                         </h4>
-                                    <el-text>회원가입을 진행하시겠습니까?</el-text>
+                                        <el-text>회원가입을 진행하시겠습니까?</el-text>
                                     </div>
-                                    <div style="text-align: left; margin-top: 20px">
-                                        <el-button type="primary" color="#7E57C2" @click="onClickjoinComfirm">확인</el-button>
+                                    <div style="text-align: center; margin-top: 20px">
+                                        <el-button style="margin-left: 16px;" type="primary" color="#7E57C2" @click="onClickjoinComfirm">확인</el-button>
                                         <el-button style="margin-left: 4px;" @click="state.isOpen.confirm = false">취소</el-button>
                                     </div>
                                 </template>
                             </el-dialog>
                             <!-- 회원가입진행여부 확인창 Dialog -->
+
+                            <!-- 가입이력이 있을 경우 진행여부 확인창 Dialog -->
+                            <el-dialog v-model="state.isOpen.confirm2" align-center style="width: 400px; height: 140px; border-radius: 8px;">
+                                <template #header>
+                                    <div style="text-align: left;">
+                                        <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
+                                            <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
+                                            알림창
+                                        </h4>
+                                        <el-text>가입한 이력이 있습니다. 아이디를 찾으시겠습니까?</el-text>
+                                    </div>
+                                    <div style="text-align: center; margin-top: 20px">
+                                        <el-button style="margin-left: 16px;" type="primary" color="#7E57C2" @click="onClickSearchId">확인</el-button>
+                                        <el-button style="margin-left: 4px;" @click="state.isOpen.confirm2 = false">취소</el-button>
+                                    </div>
+                                </template>
+                            </el-dialog>
+                            <!-- 가입이력이 있을 경우 진행여부 확인창 Dialog -->
 
                         </el-form>
                     </el-form>
@@ -456,7 +476,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeft, InfoFilled, Select, Search } from '@element-plus/icons-vue'
+import { ArrowLeft, InfoFilled, Search, Select } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
@@ -490,8 +510,9 @@ const state = reactive({
     ivo: new joinMemberIvo(),       // 입력 ivo
     ivoParam: new joinMemberIvo(),  // 저장 ivo
     isOpen: {
-        confirm: false, // 확인창
-        detail: false,  // 약관 상세보기
+        confirm: false,     // 확인창
+        confirm2: false,    // 가입한 내역이 있을 시 확인창
+        detail: false,      // 약관 상세보기
     },
     joinYn: false,
     ph1: '',
@@ -1024,7 +1045,11 @@ const onClickjoinComfirm = async () => {
     state.ivoParam.userName         = state.ivo.userName                        // 사용자명
     state.ivoParam.email            = state.ivo.email + mail.value              // 이메일
     state.ivoParam.birthDate        = state.ivo.birthDate.replaceAll('.', '')   // 생년월일
-    state.ivoParam.genderCode       = gender.value                              // 성별코드
+    if(gender.value == '남') {
+        state.ivoParam.genderCode = 'M'
+    } else if(gender.value == '여') {
+        state.ivoParam.genderCode = 'W'
+    }                                                                           // 성별코드
     state.ivoParam.phoneNumber      = state.ph1 + state.ph2.replaceAll('-', '') // 핸드폰번호
     state.ivoParam.userPasswd       = Common.encypt(state.ivo.userPasswd)       // 패스워드(암호화)
     state.ivoParam.termsAgreYn      = 'Y'                                       // 약관동의여부
@@ -1034,15 +1059,8 @@ const onClickjoinComfirm = async () => {
     // 공통코드 테이블 만들기
     const retData = await Api.post("/api/join/joinUser", state.ivoParam)
     if(retData.data.userDupYn == 'Y') {
-        Common.confirm('가입한 이력이 있습니다. 비밀번호를 찾으시겠습니까?', 
-            {
-                callback: (params: any) => {
-                    if(params == 'confirm') {
-                        alert('추후')
-                    }
-                }
-            }
-        )
+        state.isOpen.confirm = false
+        state.isOpen.confirm2 = true
     }
     if(retData.data.joinResult == 1) {
         ElMessage({
@@ -1052,6 +1070,11 @@ const onClickjoinComfirm = async () => {
         router.push('/')
     }
 
+}
+
+// 아이디 찾기 페이지로 이동
+const onClickSearchId = () => {
+    router.push('/login/idSearch')
 }
 
 // 로그인 페이지로 이동

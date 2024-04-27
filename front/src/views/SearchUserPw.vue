@@ -379,7 +379,7 @@
                                         <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
                                         알림창
                                     </h4>
-                                <el-text>다음에 변경하시겠습니까?</el-text>
+                                    <el-text>다음에 변경하시겠습니까?</el-text>
                                 </div>
                                 <div style="text-align: center; margin-top: 20px">
                                     <el-button style="margin-left: 16px;" type="primary" color="#7E57C2" @click="onClickConfirm">확인</el-button>
