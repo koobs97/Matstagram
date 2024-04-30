@@ -14,7 +14,48 @@
                                     <p class="title">Matstagram</p>
                                 </el-col>
                                 <el-col :span="24" style="margin-bottom: 4px; text-align: right;">
-                                    <el-switch v-model="projectDetailView"></el-switch>
+                                    <el-popover
+                                        ref="popover"
+                                        placement="right"
+                                        :width="400"
+                                        :visible="projectDetailView"
+                                    >
+                                        <template #reference>
+                                            <el-switch v-model="projectDetailView"></el-switch>
+                                        </template>
+                                        <div>
+                                            <el-text style="font-weight: bold;">
+                                                <el-icon style="margin-right: 1px;">
+                                                    <Memo />
+                                                </el-icon>
+                                                [개인 프로젝트]
+                                            </el-text>
+                                            <el-divider style="margin-bottom: 0px; margin-top: 0px;"></el-divider>
+                                            <el-text style="font-size: 12px; font-weight: bold;">주제 : </el-text> <el-text>개인 공부를 위한 맛집 플랫폼 웹서비스 구현</el-text>
+                                            <div>
+                                                <el-row>
+                                                    <el-col :span="4" style="height: 20px;">
+                                                        <el-text style="font-size: 12px; font-weight: bold;">사용기술 : </el-text>
+                                                    </el-col>
+                                                    <el-col :span="19" style="height: 20px; margin-left: 4px;">
+                                                        <el-checkbox style="height: 22px;" label="Vue3" />
+                                                    </el-col>
+                                                    <el-col :span="4" />
+                                                    <el-col :span="19" style="height: 20px; margin-left: 4px;">
+                                                        <el-checkbox style="height: 22px;" label="Spring-Boot3"/>
+                                                    </el-col>
+                                                    <el-col :span="4" />
+                                                    <el-col :span="19" style="height: 20px; margin-left: 4px;">
+                                                        <el-checkbox style="height: 22px;" label="Oracle21"/>
+                                                    </el-col>
+                                                </el-row>
+                                                
+                                                
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </el-popover>
                                 </el-col>
                                 <el-col :span="24">
                                     <el-input
@@ -93,7 +134,7 @@
 
 <script lang="ts" setup>
 
-import { Hide, View } from '@element-plus/icons-vue'
+import { Hide, Memo, View } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -107,7 +148,7 @@ const userStoreObj  = userStore()
 const id        = ref()
 const passwd    = ref()
 
-const projectDetailView = ref(true)
+const projectDetailView = ref(false)
 
 // 유저정보
 interface userState {
@@ -131,6 +172,8 @@ const state = reactive({
 // 화면진입 시
 onMounted(() => {
     id.value.focus()
+
+    setTimeout(()=>{ projectDetailView.value = true }, 300)
 })
 
 // 패스워드 숨기기 아이콘 클릭
