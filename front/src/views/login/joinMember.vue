@@ -480,8 +480,8 @@ import { ArrowLeft, InfoFilled, Search, Select } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { Api, Common } from '../common/common'
-import { joinMemberIvo } from '../vo/ivo/joinMemberIvo'
+import { Api, Common } from '../../common/common'
+import { joinMemberIvo } from '../../vo/ivo/joinMemberIvo'
 
 const router = useRouter()
 

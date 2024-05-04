@@ -1,3 +1,13 @@
+<!--
+ * [로그인 화면]
+ * 
+ * @Class   userLogin.vue
+ * @Author  Koo Bon Sang
+ * @Date    2024.03.29
+ * @Version 1.1.0
+ * 
+-->
+
 <template>
     <el-form label-width="120px">
         <el-form-item>
@@ -30,24 +40,66 @@
                                                 </el-icon>
                                                 [개인 프로젝트]
                                             </el-text>
-                                            <el-divider style="margin-bottom: 0px; margin-top: 0px;"></el-divider>
-                                            <el-text style="font-size: 12px; font-weight: bold;">주제 : </el-text> <el-text>개인 공부를 위한 맛집 플랫폼 웹서비스 구현</el-text>
+                                            <el-divider style="margin-bottom: 4px; margin-top: 4px;"></el-divider>
+                                            <el-text style="font-size: 12px; font-weight: bold;">주제 : </el-text><el-text style="font-size: 12px;">개인 공부를 위한 맛집 플랫폼 웹서비스 구현</el-text>
                                             <div>
                                                 <el-row>
-                                                    <el-col :span="4" style="height: 20px;">
-                                                        <el-text style="font-size: 12px; font-weight: bold;">사용기술 : </el-text>
+                                                    <el-col :span="4" style="height: 20px; margin-top: 4px;">
+                                                        <el-text style="font-size: 12px; font-weight: bold;">구성환경 : </el-text>
                                                     </el-col>
-                                                    <el-col :span="19" style="height: 20px; margin-left: 4px;">
-                                                        <el-checkbox style="height: 22px;" label="Vue3" />
+                                                    <el-col :span="9" style="height: 20px; margin-left: 4px; margin-top: 4px;">
+                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="Vue3" />
+                                                    </el-col>
+                                                    <el-col :span="9" style="height: 20px; margin-left: 4px; margin-top: 4px;">
+                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="TypeScript" />
                                                     </el-col>
                                                     <el-col :span="4" />
-                                                    <el-col :span="19" style="height: 20px; margin-left: 4px;">
-                                                        <el-checkbox style="height: 22px;" label="Spring-Boot3"/>
+                                                    <el-col :span="9" style="height: 20px; margin-left: 4px;">
+                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="Spring-Boot3"/>
+                                                    </el-col>
+                                                    <el-col :span="9" style="height: 20px; margin-left: 4px;">
+                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="jdk 17" />
                                                     </el-col>
                                                     <el-col :span="4" />
-                                                    <el-col :span="19" style="height: 20px; margin-left: 4px;">
-                                                        <el-checkbox style="height: 22px;" label="Oracle21"/>
+                                                    <el-col :span="9" style="height: 20px; margin-left: 4px;">
+                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="Oracle21"/>
                                                     </el-col>
+                                                    <el-col :span="9" style="height: 20px; margin-left: 4px;">
+                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="MariaDb"/>
+                                                    </el-col>
+                                                    <el-col :span="4" style="height: 20px; margin-top: 4px;">
+                                                        <el-text style="font-size: 12px; font-weight: bold;">목표 : </el-text>
+                                                    </el-col>
+                                                    <el-tag style="margin-bottom: 4px; margin-top: 4px; padding: 0 2px; width: 310px; justify-content: left; color: #4527A0;">
+                                                        <el-icon style="margin-right: 1px;"><CaretRight /></el-icon>각종 오픈소스 API 적용해보기</el-tag>
+                                                    <el-col :span="4" /><el-tag style="margin-bottom: 4px; padding: 0 2px; width: 310px; justify-content: left; color: #4527A0;">
+                                                        <el-icon style="margin-right: 1px;"><CaretRight /></el-icon>프론트, 백엔드, 배치 서버를 분리/병합한 소스 구현</el-tag>
+                                                    <el-col :span="4" /><el-tag style="margin-bottom: 4px; padding: 0 2px; width: 310px; justify-content: left; color: #4527A0;">
+                                                        <el-icon style="margin-right: 1px;"><CaretRight /></el-icon>업무에서 해보지 못하는 기능 구현</el-tag>
+                                                    <el-col :span="4" /><el-tag style="margin-bottom: 4px; padding: 0 2px; width: 310px; justify-content: left; color: #4527A0;">
+                                                        <el-icon style="margin-right: 1px;"><CaretRight /></el-icon>프로젝트 개발에 재미 키우기</el-tag>
+                                                    <el-col :span="4" style="height: 20px; margin-top: 4px; margin-bottom: 4px;">
+                                                        <el-text style="font-size: 12px; font-weight: bold;">[특이사항]</el-text>
+                                                    </el-col>
+                                                    <div style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
+                                                        <el-card shadow="never" class="custom-card">
+                                                            <el-tag type="info" effect="plain" style="font-size: 12px; margin-bottom: 4px;">
+                                                                {{ '이메일 인증' }}
+                                                            </el-tag><br>
+                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 구글의 이메일 인증 API 사용</el-text><br>
+                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 휴대폰 인증은 유료로 개발하지 않음</el-text><br>
+                                                            <el-tag type="info" effect="plain" style="font-size: 12px; margin-top: 10px; margin-bottom: 4px;">
+                                                                {{ 'DB 이중화' }}
+                                                            </el-tag><br>
+                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 두 가지 DB에 데이터 적재</el-text><br>
+                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 배치를 통한 데이터 이중관리</el-text><br>
+                                                            <el-tag type="info" effect="plain" style="font-size: 12px; margin-top: 10px; margin-bottom: 4px;">
+                                                                {{ 'UI Framework' }}
+                                                            </el-tag><br>
+                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- Element Plus 사용</el-text><br>
+                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 구글 색상표의 보라색 계열 참조</el-text><br>
+                                                        </el-card>
+                                                    </div>
                                                 </el-row>
                                                 
                                                 
@@ -134,13 +186,13 @@
 
 <script lang="ts" setup>
 
-import { Hide, Memo, View } from '@element-plus/icons-vue'
+import { CaretRight, Hide, Memo, View } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Api, Common } from '../common/common'
-import { userStore } from '../store/userStore'
-import { UserLoginIvo } from '../vo/ivo/UserLoginIvo'
+import { Api, Common } from '../../common/common'
+import { userStore } from '../../store/userStore'
+import { UserLoginIvo } from '../../vo/ivo/UserLoginIvo'
 
 const router        = useRouter()
 const userStoreObj  = userStore()
@@ -262,7 +314,7 @@ const onClickSearchPw = () => {
 
 @font-face {
     font-family: 'dancing';
-    src:url('../../public/fonts/DancingScript-VariableFont_wght.ttf')
+    src:url('../../../public/fonts/DancingScript-VariableFont_wght.ttf')
 }
 
 .title {
@@ -313,6 +365,24 @@ const onClickSearchPw = () => {
 .el-switch {
     --el-switch-on-color: #9575CD;
     --el-switch-off-color: var(--el-border-color);
+}
+/* 체크박스 색상 */
+.el-checkbox {
+    --el-checkbox-checked-text-color: #7C4DFF;
+    --el-checkbox-checked-input-border-color: #70039b;
+    --el-checkbox-checked-bg-color: #70039b;
+}
+
+/* 체크박스 색상 */
+.el-checkbox.is-bordered.is-checked {
+    border-color: #7C4DFF;
+}
+
+.custom-card {
+    --el-card-border-color: var(--el-border-color-light);
+    --el-card-border-radius: 4px;
+    --el-card-padding: 12px;
+    --el-card-bg-color: var(--el-fill-color-blank);
 }
 
 </style>

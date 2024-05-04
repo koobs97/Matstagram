@@ -95,13 +95,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowRight, InfoFilled, UserFilled, User, Phone, CopyDocument } from '@element-plus/icons-vue';
+import { ArrowRight, CopyDocument, InfoFilled, Phone, User, UserFilled } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, watch } from 'vue';
 import { onBeforeRouteLeave, useRouter } from 'vue-router';
-import { Api } from '../common/common';
-import { userStore } from '../store/userStore';
-import { SearchUserId } from '../vo/ivo/SearchUserId';
+import { Api } from '../../common/common';
+import { userStore } from '../../store/userStore';
+import { SearchUserId } from '../../vo/ivo/SearchUserId';
 
 const router        = useRouter()
 const userStoreObj  = userStore()

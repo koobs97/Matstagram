@@ -119,13 +119,13 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, Message, QuestionFilled, Timer, InfoFilled } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, InfoFilled, Message, QuestionFilled, Timer } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref, watch } from 'vue';
 import { onBeforeRouteLeave, useRouter } from 'vue-router';
-import { Api } from '../common/common';
-import { userStore } from '../store/userStore';
-import { SearchUserId } from '../vo/ivo/SearchUserId';
+import { Api } from '../../common/common';
+import { userStore } from '../../store/userStore';
+import { SearchUserId } from '../../vo/ivo/SearchUserId';
 
 const router        = useRouter()   // router
 const userStoreObj  = userStore()   // 유저스토어

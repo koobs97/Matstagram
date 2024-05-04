@@ -409,13 +409,13 @@
 
 </template>
 <script lang="ts" setup>
-import { ArrowRight, Calendar, CaretRight, ChatLineSquare, Checked, Hide, InfoFilled, QuestionFilled, Phone, Unlock, User, UserFilled, Lock, Message } from '@element-plus/icons-vue';
+import { ArrowRight, Calendar, CaretRight, ChatLineSquare, Checked, Hide, InfoFilled, Lock, Message, Phone, QuestionFilled, Unlock, User, UserFilled } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { Api, Common } from '../common/common'
-import { ChgUserPwIvo } from '../vo/ivo/ChgUserPwIvo';
-import { SearchUserPwIvo } from '../vo/ivo/SearchUserPwIvo';
+import { Api, Common } from '../../common/common';
+import { ChgUserPwIvo } from '../../vo/ivo/ChgUserPwIvo';
+import { SearchUserPwIvo } from '../../vo/ivo/SearchUserPwIvo';
 
 const router        = useRouter()   // router
 
@@ -708,12 +708,13 @@ watch(
                 /* 숫자를 연달아 세번 사용한 경우 */
                 if(state.pop2.pwChgIvo1.userPasswd.match(/\d{3,}/g) != null) {
 
-                    for(let i in state.pop2.pwChgIvo1.userPasswd.match(/\d{3,}/g)) {
+                    let i: any
+                    for(i in state.pop2.pwChgIvo1.userPasswd.match(/\d{3,}/g)) {
 
                         /**
                          * ex: number = ['123', '456']
                          */
-                        const number = state.pop2.pwChgIvo1.userPasswd.match(/\d{3,}/g)[i] as string
+                        const number = state.pop2.pwChgIvo1?.userPasswd?.match(/\d{3,}/g)?.[i] as string
                         let numberList = []
 
                         for(let i = 0; i < number.length; i++) {
