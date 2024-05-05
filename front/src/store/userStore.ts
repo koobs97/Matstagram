@@ -41,13 +41,8 @@ export const userStore = defineStore("userStore", {
     },
     actions: {
         /* 유저 정보 세팅 */
-        setUserInfo(userInfo: userState) {
-            this.userInfo.userId        = userInfo.userId;
-            this.userInfo.userName      = userInfo.userName;
-            this.userInfo.email         = userInfo.email;
-            this.userInfo.phoneNumber   = userInfo.phoneNumber;
-            this.userInfo.birthDate     = userInfo.birthDate;
-            this.userInfo.genderCode    = userInfo.genderCode;
+        setUserInfo(userInfo: userState): void {
+            this.userInfo = userInfo
         },
         authentication(username: string, email: string, authenticated: boolean) {
             this.authInfo.username = username;
@@ -59,5 +54,11 @@ export const userStore = defineStore("userStore", {
             this.authInfo.email = '';
             this.authInfo.authenticated = false;
         },
+    },
+    persist: {
+        enabled: true,                                              // 전체 state 대상, SessionStorage가 default 저장
+        strategies: [
+          { storage: sessionStorage, paths: ["userInfo"] },         // SessionStorage 저장
+        ],
     },
 })

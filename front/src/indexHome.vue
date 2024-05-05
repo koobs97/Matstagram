@@ -1,3 +1,5 @@
 <template>
-    <p> 로그인 성공 페이지 </p>
+    <div>
+    <router-view></router-view>
+    </div>
 </template>

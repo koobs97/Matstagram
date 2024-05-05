@@ -41,35 +41,57 @@
                                                 [개인 프로젝트]
                                             </el-text>
                                             <el-divider style="margin-bottom: 4px; margin-top: 4px;"></el-divider>
-                                            <el-text style="font-size: 12px; font-weight: bold;">주제 : </el-text><el-text style="font-size: 12px;">개인 공부를 위한 맛집 플랫폼 웹서비스 구현</el-text>
-                                            <div>
-                                                <el-row>
-                                                    <el-col :span="4" style="height: 20px; margin-top: 4px;">
-                                                        <el-text style="font-size: 12px; font-weight: bold;">구성환경 : </el-text>
-                                                    </el-col>
-                                                    <el-col :span="9" style="height: 20px; margin-left: 4px; margin-top: 4px;">
-                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="Vue3" />
-                                                    </el-col>
-                                                    <el-col :span="9" style="height: 20px; margin-left: 4px; margin-top: 4px;">
-                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="TypeScript" />
-                                                    </el-col>
-                                                    <el-col :span="4" />
-                                                    <el-col :span="9" style="height: 20px; margin-left: 4px;">
-                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="Spring-Boot3"/>
-                                                    </el-col>
-                                                    <el-col :span="9" style="height: 20px; margin-left: 4px;">
-                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="jdk 17" />
-                                                    </el-col>
-                                                    <el-col :span="4" />
-                                                    <el-col :span="9" style="height: 20px; margin-left: 4px;">
-                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="Oracle21"/>
-                                                    </el-col>
-                                                    <el-col :span="9" style="height: 20px; margin-left: 4px;">
-                                                        <el-checkbox checked style="height: 22px; font-size: 12px;" label="MariaDb"/>
-                                                    </el-col>
-                                                    <el-col :span="4" style="height: 20px; margin-top: 4px;">
-                                                        <el-text style="font-size: 12px; font-weight: bold;">목표 : </el-text>
-                                                    </el-col>
+                                            <el-descriptions :column="1" size="small" border>
+                                                <el-descriptions-item label-align="left" align="left">
+                                                    <template #label>
+                                                        <div class="cell-item">
+                                                            주제
+                                                        </div>
+                                                    </template>
+                                                    <el-text style="font-size: 12px;">개인 공부를 위한 맛집 플랫폼 웹서비스 구현</el-text>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item label-align="left" align="left">
+                                                    <template #label>
+                                                        <div class="cell-item">
+                                                            GitHub
+                                                        </div>
+                                                    </template>
+                                                    <div style="display: flex;">
+                                                        <div style="width: 92%;">
+                                                            <el-link type="info" style="font-size: 12px;" href="https://github.com/koobs97/Matstagram">https://github.com/koobs97/Matstagram</el-link>
+                                                        </div>
+                                                        <div style="width: 8%;">
+                                                            <el-button :icon="CopyDocument" style="width: 8px; height: 23px; font-size: 11px; padding-left: 12px; padding-right: 12px;" type="primary" @click="onClickCopyUrl" />
+                                                        </div>
+                                                    </div>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item label-align="left" align="left">
+                                                    <template #label>
+                                                        <div class="cell-item">
+                                                            환경
+                                                        </div>
+                                                    </template>
+                                                    <div style="display: flex;">
+                                                        <div style="width: 50%; text-align: left;">
+                                                            <el-checkbox checked style="height: 22px; font-size: 12px;" label="Vue3" />
+                                                            <el-checkbox checked style="height: 22px; font-size: 12px;" label="jdk 17" />
+                                                        </div>
+                                                        <div style="width: 50%; text-align: left;">
+                                                            <el-checkbox checked style="height: 22px; font-size: 12px;" label="TypeScript" />
+                                                            <el-checkbox checked style="height: 22px; font-size: 12px;" label="Spring-Boot3"/>
+                                                        </div>
+                                                        <div style="width: 50%; text-align: left;">
+                                                            <el-checkbox checked style="height: 22px; font-size: 12px;" label="Oracle21"/>
+                                                            <el-checkbox checked style="height: 22px; font-size: 12px;" label="MariaDb"/>
+                                                        </div>
+                                                    </div>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item label-align="left" align="left">
+                                                    <template #label>
+                                                        <div class="cell-item">
+                                                            목표
+                                                        </div>
+                                                    </template>
                                                     <el-tag style="margin-bottom: 4px; margin-top: 4px; padding: 0 2px; width: 310px; justify-content: left; color: #4527A0;">
                                                         <el-icon style="margin-right: 1px;"><CaretRight /></el-icon>각종 오픈소스 API 적용해보기</el-tag>
                                                     <el-col :span="4" /><el-tag style="margin-bottom: 4px; padding: 0 2px; width: 310px; justify-content: left; color: #4527A0;">
@@ -78,33 +100,31 @@
                                                         <el-icon style="margin-right: 1px;"><CaretRight /></el-icon>업무에서 해보지 못하는 기능 구현</el-tag>
                                                     <el-col :span="4" /><el-tag style="margin-bottom: 4px; padding: 0 2px; width: 310px; justify-content: left; color: #4527A0;">
                                                         <el-icon style="margin-right: 1px;"><CaretRight /></el-icon>프로젝트 개발에 재미 키우기</el-tag>
-                                                    <el-col :span="4" style="height: 20px; margin-top: 4px; margin-bottom: 4px;">
-                                                        <el-text style="font-size: 12px; font-weight: bold;">[특이사항]</el-text>
-                                                    </el-col>
-                                                    <div style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
-                                                        <el-card shadow="never" class="custom-card">
-                                                            <el-tag type="info" effect="plain" style="font-size: 12px; margin-bottom: 4px;">
-                                                                {{ '이메일 인증' }}
-                                                            </el-tag><br>
-                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 구글의 이메일 인증 API 사용</el-text><br>
-                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 휴대폰 인증은 유료로 개발하지 않음</el-text><br>
-                                                            <el-tag type="info" effect="plain" style="font-size: 12px; margin-top: 10px; margin-bottom: 4px;">
-                                                                {{ 'DB 이중화' }}
-                                                            </el-tag><br>
-                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 두 가지 DB에 데이터 적재</el-text><br>
-                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 배치를 통한 데이터 이중관리</el-text><br>
-                                                            <el-tag type="info" effect="plain" style="font-size: 12px; margin-top: 10px; margin-bottom: 4px;">
-                                                                {{ 'UI Framework' }}
-                                                            </el-tag><br>
-                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- Element Plus 사용</el-text><br>
-                                                            <el-text style="font-size: 12px; margin-bottom: 4px;">- 구글 색상표의 보라색 계열 참조</el-text><br>
-                                                        </el-card>
-                                                    </div>
-                                                </el-row>
-                                                
-                                                
-                                                
-                                                
+                                                </el-descriptions-item>
+                                            </el-descriptions>
+                                            <div>
+                                                <el-col :span="4" style="height: 20px; margin-top: 4px; margin-bottom: 4px;">
+                                                    <el-text style="font-size: 12px; font-weight: bold;">[특이사항]</el-text>
+                                                </el-col>
+                                                <div style="height: 100%; width: 100%; text-align: left; margin-bottom: 5px">
+                                                    <el-card shadow="never" class="custom-card">
+                                                        <el-tag type="info" effect="plain" style="font-size: 12px; margin-bottom: 4px;">
+                                                            {{ '이메일 인증' }}
+                                                        </el-tag><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- 구글의 이메일 인증 API 사용</el-text><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- 휴대폰 인증은 유료로 개발하지 않음</el-text><br>
+                                                        <el-tag type="info" effect="plain" style="font-size: 12px; margin-top: 10px; margin-bottom: 4px;">
+                                                            {{ 'DB 이중화' }}
+                                                        </el-tag><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- 두 가지 DB에 데이터 적재</el-text><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- 배치를 통한 데이터 이중관리</el-text><br>
+                                                        <el-tag type="info" effect="plain" style="font-size: 12px; margin-top: 10px; margin-bottom: 4px;">
+                                                            {{ 'UI Framework' }}
+                                                        </el-tag><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- Element Plus 사용</el-text><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- 구글 색상표의 보라색 계열 참조</el-text><br>
+                                                    </el-card>
+                                                </div>
                                             </div>
                                         </div>
                                     </el-popover>
@@ -186,7 +206,7 @@
 
 <script lang="ts" setup>
 
-import { CaretRight, Hide, Memo, View } from '@element-plus/icons-vue'
+import { CaretRight, CopyDocument, Hide, Memo, View } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -307,6 +327,21 @@ const onClickSearchPw = () => {
     router.push('/login/pwSearch')
 }
 
+/* 깃 url 복사 */
+const onClickCopyUrl = () => {
+    navigator.clipboard.writeText('https://github.com/koobs97/Matstagram')
+        .then(() => {
+            ElMessage({
+                type: 'success',
+                grouping: true,
+                message: 'url이 클립보드에 복사되었습니다',
+            })
+        })
+        .catch(err => {
+            console.error('클립보드 복사 실패:', err);
+        })
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -383,6 +418,24 @@ const onClickSearchPw = () => {
     --el-card-border-radius: 4px;
     --el-card-padding: 12px;
     --el-card-bg-color: var(--el-fill-color-blank);
+}
+
+/* 버튼 색상 */
+.el-button--primary {
+    --el-button-text-color: var(--el-color-white);
+    --el-button-bg-color: #673AB7;
+    --el-button-border-color: #673AB7;
+    --el-button-outline-color: var(--el-color-primary-light-5);
+    --el-button-active-color: var(--el-color-primary-dark-2);
+    --el-button-hover-text-color: var(--el-color-white);
+    --el-button-hover-link-text-color: var(--el-color-primary-light-5);
+    --el-button-hover-bg-color: #7C4DFF;
+    --el-button-hover-border-color: #B388FF;
+    --el-button-active-bg-color: var(--el-color-primary-dark-2);
+    --el-button-active-border-color: var(--el-color-primary-dark-2);
+    --el-button-disabled-text-color: var(--el-color-white);
+    --el-button-disabled-bg-color: var(--el-color-primary-light-5);
+    --el-button-disabled-border-color: var(--el-color-primary-light-5);
 }
 
 </style>

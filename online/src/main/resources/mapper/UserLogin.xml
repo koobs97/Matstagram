@@ -8,17 +8,17 @@
     <select id="selectUser" resultType="String" parameterType="com.hotple.online.login.ivo.UserLoginIvo">
         <![CDATA[ 
              SELECT /* com.hotple.online.mapper.UserLoginMapper - selectUser */
-                    CASE WHEN COUNT(1) = 1 THEN '1'
-                         WHEN COUNT(1) = 0 THEN '2'
-                    ELSE '0' END       AS LOGIN_RSLT            /* 1.성공 2.실패 */
-               FROM TB_USER
-              WHERE (
-                        USER_ID        =   #{userId}
-                     OR EMAIL          =   #{userId}
-                  )
-                AND USE_YN          =   'Y'
-                AND USER_PASSWD     =   #{userPasswd}
-                AND PASSWD_CHG_DT   >=  SYSDATE - 90
+                    CASE WHEN COUNT(1) = 1 THEN '1'                                             /* 1 */
+                         WHEN COUNT(1) = 0 THEN '2'                                             /* 2 */
+                    ELSE '0' END       AS LOGIN_RSLT                                            /* 1.성공 2.실패 */
+               FROM TB_USER                                                                     /* TB_유저 */
+              WHERE (                                                                           /* */
+                        USER_ID        =   #{userId}                                            /* 사용자ID */
+                     OR EMAIL          =   #{userId}                                            /* 사용자ID */
+                    )
+                AND USE_YN          =   'Y'                                                     /* 사용여부 */
+                AND USER_PASSWD     =   #{userPasswd}                                           /* 비밀번호 */
+                AND PASSWD_CHG_DT   >=  SYSDATE - 90                                            /* 비밀번호 변경기한 */
         ]]>
     </select>
 
@@ -32,7 +32,10 @@
                   , BIRTH_DATE                                                                  /* 생년월일 */
                   , GENDER_CODE                                                                 /* 성별코드 */
                FROM TB_USER                                                                     /* TB_유저 */
-              WHERE USER_ID     =   #{userId}                                                   /* 사용자ID */
+              WHERE (                                                                           /* */
+                        USER_ID        =   #{userId}                                            /* 사용자ID */
+                     OR EMAIL          =   #{userId}                                            /* 사용자ID */
+                    )
                 AND USE_YN      =   'Y'                                                         /* 사용여부 */
         ]]>
     </select>

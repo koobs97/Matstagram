@@ -2,12 +2,33 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import indexHome from './indexHome.vue';
 import { userStore } from './store/userStore';
-import userLogin from './views/login/userLogin.vue';
 
-import SearchUserId from './views/login/SearchUserId.vue';
-import SearchUserPw from './views/login/SearchUserPw.vue';
-import ShowUserId from './views/login/ShowUserId.vue';
-import joinMember from './views/login/joinMember.vue';
+// pages 폴더 내의 모든 파일을 import
+const requirePages = require.context(
+  // 페이지 디렉토리의 상대 경로
+  './views/login',
+  // 하위 디렉토리 포함 여부
+  true,
+  // 파일 이름을 확인하는 정규식
+  /\.vue$/
+);
+
+// 페이지 경로를 저장할 배열
+const routes = [];
+
+// requirePages로 가져온 페이지 파일들을 순회하여 라우터 경로 등록
+requirePages.keys().forEach(fileName => {
+  // 파일 경로를 기반으로 페이지 컴포넌트 가져오기
+  const component = requirePages(fileName).default;
+  // 파일 경로에서 경로명 추출
+  const path = fileName.replace(/^\.\//, '').replace(/\.vue$/, '');
+
+  // 라우터 경로 객체 생성 및 배열에 추가
+  routes.push({
+    path: '/' + path,
+    component: component
+  });
+});
 
 const router = createRouter({
     history: createWebHistory(),
@@ -16,7 +37,7 @@ const router = createRouter({
             path: '/',
             component: indexHome,
             beforeEnter: async (to, from, next) => {
-
+              await console.log(requirePages)
                 const isLoggedIn = await userStore().isLoggedIn
 
                 if (isLoggedIn) {
@@ -28,23 +49,23 @@ const router = createRouter({
         },
         {
             path: '/login',
-            component: userLogin,
+            component: requirePages('./userLogin.vue').default,
         },
         {
             path: '/login/join',
-            component: joinMember,
+            component: requirePages('./joinMember.vue').default
         },
         {
           path: '/login/idSearch',
-            component: SearchUserId,
+            component: requirePages('./SearchUserId.vue').default
         },
         {
           path: '/login/pwSearch',
-          component: SearchUserPw,
+          component: requirePages('./SearchUserPw.vue').default
         },
         {
           path: '/login/showId',
-            component: ShowUserId,
+            component: requirePages('./ShowUserId.vue').default,
             beforeEnter: async (to, from, next) => {
 
               const isAuthenticated = await userStore().isAuthenticated
