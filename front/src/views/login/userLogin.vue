@@ -58,7 +58,7 @@
                                                     </template>
                                                     <div style="display: flex;">
                                                         <div style="width: 92%;">
-                                                            <el-link type="info" style="font-size: 12px;" href="https://github.com/koobs97/Matstagram">https://github.com/koobs97/Matstagram</el-link>
+                                                            <el-link type="info" style="font-size: 12px;" href="https://github.com/koobs97/Matstagram" target="_blank">https://github.com/koobs97/Matstagram</el-link>
                                                         </div>
                                                         <div style="width: 8%;">
                                                             <el-button :icon="CopyDocument" style="width: 8px; height: 23px; font-size: 11px; padding-left: 12px; padding-right: 12px;" type="primary" @click="onClickCopyUrl" />
@@ -164,7 +164,6 @@
                                         style="height: 40px; font-size: 15px; margin-bottom: 16px;"
                                         type="text"
                                         placeholder="비밀번호"
-                                        :suffix-icon="View"
                                         @click="onClickViewIcon"
                                         >
                                         <template #append>

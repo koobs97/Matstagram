@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import indexHome from './indexHome.vue';
 import { userStore } from './store/userStore';
 
-// pages 폴더 내의 모든 파일을 import
+// views/login 폴더 내의 모든 파일을 import
 const requirePages = require.context(
   // 페이지 디렉토리의 상대 경로
   './views/login',
