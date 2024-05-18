@@ -38,6 +38,9 @@ export const userStore = defineStore("userStore", {
         getAuthenticated: (state) => {
             return state.authInfo
         },
+        getUserInfo: (state) => {
+            return state.userInfo
+        },
     },
     actions: {
         /* 유저 정보 세팅 */

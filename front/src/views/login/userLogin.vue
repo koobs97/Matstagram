@@ -21,7 +21,7 @@
                             <el-row :gutter="0">
 
                                 <el-col :span="24">
-                                    <p class="title">Matstagram</p>
+                                    <p class="title">FoodingStore</p>
                                 </el-col>
                                 <el-col :span="24" style="margin-bottom: 4px; text-align: right;">
                                     <el-popover

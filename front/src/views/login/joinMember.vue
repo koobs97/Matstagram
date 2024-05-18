@@ -23,7 +23,7 @@
                             <el-button :icon="ArrowLeft" @click="onClickToLogin">로그인페이지</el-button>
                         </div>
                         <el-form label-width="120px" style="height: 50px;">
-                            <p class="title">Matstagram</p>
+                            <p class="title">FoodingStore</p>
                         </el-form>
                         <el-form label-width="120px">
                             <el-row :gutter="0">
