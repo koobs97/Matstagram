@@ -23,6 +23,7 @@
         <el-col :span="3">
             <el-menu
                 default-active="1"
+                
             >
                 <el-menu-item index="1">
                     <el-icon><HomeFilled /></el-icon>
@@ -154,5 +155,40 @@ onMounted(() => {
     padding-left: 0;
     background-color: var(--el-menu-bg-color);
     box-sizing: border-box;
+}
+/* 좌측메뉴 활성화 */
+.el-menu-item.is-active {
+    color: #7C4DFF;
+}
+/* 좌측상단 로고 */
+.el-link {
+    --el-link-font-size: var(--el-font-size-base);
+    --el-link-font-weight: var(--el-font-weight-primary);
+    --el-link-text-color: var(--el-text-color-regular);
+    --el-link-hover-text-color: #7C4DFF;
+    --el-link-disabled-text-color: var(--el-text-color-placeholder);
+}
+.el-link:hover {
+    color: #7C4DFF;
+}
+/* 버튼 색상 */
+.el-button {
+    --el-button-font-weight: var(--el-font-weight-primary);
+    --el-button-border-color: var(--el-border-color);
+    --el-button-bg-color: var(--el-fill-color-blank);
+    --el-button-text-color: var(--el-text-color-regular);
+    --el-button-disabled-text-color: var(--el-disabled-text-color);
+    --el-button-disabled-bg-color: var(--el-fill-color-blank);
+    --el-button-disabled-border-color: var(--el-border-color-light);
+    --el-button-divide-border-color: rgba(255, 255, 255, 0.5);
+    --el-button-hover-text-color: #4527A0;                              /* 마우스 올렸을 때 글씨 색 */
+    --el-button-hover-bg-color: #EDE7F6;                                /* 마우스 올렸을 때 배경 색 */
+    --el-button-hover-border-color: #7C4DFF;                            /* 마우스 올렸을 때 테두리 색 */
+    --el-button-active-text-color: var(--el-button-hover-text-color);
+    --el-button-active-border-color: #9575CD;
+    --el-button-active-bg-color: var(--el-button-hover-bg-color);
+    --el-button-outline-color: var(--el-color-primary-light-5);
+    --el-button-hover-link-text-color: var(--el-color-info);
+    --el-button-active-color: var(--el-text-color-primary);
 }
 </style>

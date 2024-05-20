@@ -37,7 +37,6 @@ const router = createRouter({
             path: '/',
             component: indexHome,
             beforeEnter: async (to, from, next) => {
-              await console.log(requirePages)
                 const isLoggedIn = await userStore().isLoggedIn
 
                 if (isLoggedIn) {
