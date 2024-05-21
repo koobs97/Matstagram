@@ -1,28 +1,32 @@
 <template>
     <el-row>
-        <el-col :span="4" style="text-align: left;">
-            <el-text style="font-weight: bold; font-size: 16px;">날씨</el-text>
+        <el-col :span="3" style="text-align: left;">
+            <el-text style="font-weight: bold; font-size: 14px;">날씨</el-text>
         </el-col>
-        <el-col :span="14" />
+        <el-col :span="1" style="text-align: left;">
+            <el-button :icon="RefreshRight" style="font-size: 14px;" link @click="onClickGetWeather"></el-button>
+        </el-col>
+        <el-col :span="13" />
         <el-col :span="6" style="text-align: right;">
             <el-text>{{ state.city }}</el-text>
         </el-col>
     </el-row>
     <el-divider class="divider"></el-divider>
     <el-row>
-        <el-col :span="5">
+        <el-col :span="9">
             <el-icon style="font-size: 70px;"><Cloudy /></el-icon>
         </el-col>
-        <el-col :span="11">
-            <el-text style="font-size: 40px;">{{ state.weather.main.temp }}°</el-text><br>
-            <el-text>{{ state.weather.main.temp_min }}°</el-text> / 
-            <el-text>{{ state.weather.main.temp_max }}°</el-text>
+        <el-col :span="8" style="display: flex; align-items: center; margin-bottom: 10px;">
+            <el-text style="font-size: 40px;">{{ state.weather.main.temp }}°</el-text>
+        </el-col>
+        <el-col :span="7" style="display: flex; flex-direction: column; align-items: center; margin-top: 5px;">
+            <el-tag type="primary" effect="plain" round style="margin-bottom: 4px;">{{ state.weather.main.temp_max }}°</el-tag>
+            <el-tag type="danger" effect="plain" round>{{ state.weather.main.temp_min }}°</el-tag>
         </el-col>
     </el-row>
-    <el-button @click="onClickGetWeather">날씨불러오기</el-button>
 </template>
 <script lang="ts" setup>
-import { Cloudy } from '@element-plus/icons-vue';
+import { Cloudy, RefreshRight } from '@element-plus/icons-vue';
 import axios from "axios";
 import { onMounted, reactive } from 'vue';
 import city from '../../json/city.json';
@@ -36,7 +40,7 @@ interface weatherInfo {
 }
 
 const state = reactive({
-    city: 'Anyang' as string,
+    city: 'Anyang-si' as string,
     cityList: [] as any,
     weather: {
         main : {
@@ -50,8 +54,7 @@ const state = reactive({
 // 화면진입 시
 onMounted( async () => {
 
-    const response = await axios.get('https://api.openweathermap.org/data/2.5/weather?q=' + state.city + '&appid=d9b852258ea16c6066275068c02d72aa');
-    console.log(response)
+    const response = await axios.get('https://api.openweathermap.org/data/2.5/weather?q=' + state.city + ', kr&appid=d9b852258ea16c6066275068c02d72aa');
 
     /* 켈빈 온도를 섭씨 온도로 변환 */
     state.weather.main.temp     = Math.round(((response.data.main.temp     * (9 / 5) - 459.67) - 32) * (5 / 9) * 10) / 10
@@ -70,16 +73,19 @@ onMounted( async () => {
 
 /* 날씨 API 호출 */
 const onClickGetWeather = async () => {
-    const response = await axios.get('https://api.openweathermap.org/data/2.5/weather?q=' + state.city + '&appid=d9b852258ea16c6066275068c02d72aa');
+    const response = await axios.get('https://api.openweathermap.org/data/2.5/weather?q=' + state.city + ', kr&appid=d9b852258ea16c6066275068c02d72aa');
     console.log(response)
 
-    state.weather.main.temp = (response.data.main.temp * (5 / 9) - 459.67) * (5 / 9) - 32
+    /* 켈빈 온도를 섭씨 온도로 변환 */
+    state.weather.main.temp     = Math.round(((response.data.main.temp     * (9 / 5) - 459.67) - 32) * (5 / 9) * 10) / 10
+    state.weather.main.temp_min = Math.round(((response.data.main.temp_min * (9 / 5) - 459.67) - 32) * (5 / 9) * 10) / 10
+    state.weather.main.temp_max = Math.round(((response.data.main.temp_max * (9 / 5) - 459.67) - 32) * (5 / 9) * 10) / 10
 }
 </script>
 <style>
 .divider {
-    margin-top: 12px;
-    margin-bottom: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     width: 100%;
 }
 </style>
