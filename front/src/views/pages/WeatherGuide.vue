@@ -23,10 +23,38 @@
             <el-tag type="primary" effect="plain" round style="margin-bottom: 4px;">{{ state.weather.main.temp_max }}°</el-tag>
             <el-tag type="danger" effect="plain" round>{{ state.weather.main.temp_min }}°</el-tag>
         </el-col>
+        <el-col :span="24">
+            <el-row style="justify-content: center; align-items: center;">
+                <el-col :span="12" style="padding-right: 4px;">
+                    <el-card shadow="never" class="custom-card">
+                        <el-row>
+                            <el-col :span="8" style="display: flex; align-items: center;">
+                                <el-text>일출</el-text>
+                            </el-col>
+                            <el-col :span="8" style="display: flex; align-items: center;">
+                                <el-icon><Sunrise /></el-icon>
+                            </el-col>
+                        </el-row>
+                    </el-card>
+                </el-col>
+                <el-col :span="12" style="padding-left: 4px;">
+                    <el-card shadow="never" class="custom-card">
+                        <el-row>
+                            <el-col :span="8" style="display: flex; align-items: center;">
+                                <el-text>일몰</el-text>
+                            </el-col>
+                            <el-col :span="8" style="display: flex; align-items: center;">
+                                <el-icon><Sunset /></el-icon>
+                            </el-col>
+                        </el-row>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-col>
     </el-row>
 </template>
 <script lang="ts" setup>
-import { Cloudy, RefreshRight } from '@element-plus/icons-vue';
+import { Cloudy, RefreshRight, Sunrise, Sunset } from '@element-plus/icons-vue';
 import axios from "axios";
 import { onMounted, reactive } from 'vue';
 import city from '../../json/city.json';
@@ -87,6 +115,12 @@ const onClickGetWeather = async () => {
     margin-top: 8px;
     margin-bottom: 8px;
     width: 100%;
+}
+.custom-card {
+    --el-card-border-color: var(--el-border-color-light);
+    --el-card-border-radius: 4px;
+    --el-card-padding: 12px;
+    --el-card-bg-color: var(--el-fill-color-blank);
 }
 </style>
 <!-- 
