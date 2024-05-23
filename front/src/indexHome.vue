@@ -4,14 +4,14 @@
             <el-col :span="2">
                 <el-link class="title">FoodingStore</el-link>
             </el-col>
-            <el-col :span="16" />
+            <el-col :span="17" />
             <el-col :span="3">
                 <el-button :icon="Search" class="UserFilled2" link />
                 <el-button :icon="Bell" class="UserFilled2" link />
                 <el-button :icon="Avatar" class="UserFilled1" circle />
             </el-col>
             <el-col :span="2" />
-            <el-col :span="21">
+            <el-col :span="22">
                 <el-divider class="divider1" />
             </el-col>
             <el-col :span="2" />
@@ -70,7 +70,7 @@
             <el-card shadow="never" style="height: 850px; margin-left: 20px;">
             </el-card>
         </el-col>
-        <el-col :span="5">
+        <el-col :span="6">
             <el-card shadow="never" style="height: 300px; width: calc(100% - 47px); margin-left: 20px;">
                 <WeatherGuide />
             </el-card>
