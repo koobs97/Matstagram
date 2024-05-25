@@ -66,12 +66,13 @@
                 </div>
             </el-menu>
         </el-col>
-        <el-col :span="13">
+        <el-col :span="14">
             <el-card shadow="never" style="height: 850px; margin-left: 20px;">
+                <MainCenter />
             </el-card>
         </el-col>
-        <el-col :span="6">
-            <el-card shadow="never" style="height: 300px; width: calc(100% - 47px); margin-left: 20px;">
+        <el-col :span="5">
+            <el-card shadow="never" style="height: 200px; width: calc(100% - 47px); margin-left: 20px;">
                 <WeatherGuide />
             </el-card>
         </el-col>
@@ -82,6 +83,7 @@
 <script lang="ts" setup>
 import { Aim, Avatar, Bell, HomeFilled, InfoFilled, Opportunity, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
 import { onMounted, reactive } from 'vue';
+import MainCenter from '../src/views/pages/MainCenter.vue';
 import WeatherGuide from '../src/views/pages/WeatherGuide.vue';
 import { userStore } from './store/userStore';
 
