@@ -68,7 +68,9 @@
         </el-col>
         <el-col :span="14">
             <el-card shadow="never" style="height: 850px; margin-left: 20px;">
-                <MainCenter />
+                <div>
+                    <MainCenter />
+                </div>
             </el-card>
         </el-col>
         <el-col :span="5">
