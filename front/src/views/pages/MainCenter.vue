@@ -1,84 +1,438 @@
 <template>
     <el-row>
-        <el-col :span="4">
-            
+        <!-- 좌측 -->
+        <el-col :span="14">
+            <el-row>
+                <el-col :span="24" style="height: 790px;">
+                    <el-row>
+                        <el-col :span="9" style="text-align: left; height: 790px">
+                            <el-divider style="margin-top: 0px; margin-bottom: 0px; width: 70px; border-top: 4px solid; border-bottom: 4px solid; color: #263c96; border-radius: 2px;">
+                                <el-tag 
+                                    style="
+                                    font-size: 14px; 
+                                    font-weight: bold; 
+                                    color: #263c96; 
+                                    background-color: rgba(38, 60, 150, 0.2); 
+                                    border-color: #263c96;">1호선</el-tag>
+                            </el-divider>
+                        </el-col>
+                        <el-col :span="12" style="height: 790px;">
+                            <el-timeline style="max-width: 100px; margin-top: 20px; height: 500px;">
+                                <el-timeline-item
+                                    v-for="(activity, index) in subway[0]"
+                                    v-model="currentPage"
+                                    v-model:page-size="pageSize"
+                                    :key="index"
+                                    :icon="activity.icon"
+                                    :type="activity.type"
+                                    :color="activity.color"
+                                    :size="activity.size"
+                                    style="text-align: left;"
+                                >
+                                <el-button link style="font-size: 14px;">{{ activity.station }}</el-button><br>
+                                <el-text :style="activity.style1">{{ activity.transfer1 }}</el-text><br>
+                                <el-text :style="activity.style2">{{ activity.transfer2 }}</el-text>
+                                <el-text :style="activity.style3">{{ activity.transfer3 }}</el-text>
+                                </el-timeline-item>
+                            </el-timeline>
+                        </el-col>
+                        <el-col :span="3" style="text-align: left; height: 790px" />
+                        <el-col :span="5" />
+                        <el-col :span="11">
+                            <el-pagination
+                                small
+                                background
+                                layout="prev, pager, next"
+                                :total="90"
+                                class="mt-4"
+                            />
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
         </el-col>
-        <el-col :span="12" style="height: 790px;">
-        </el-col>
-        <el-col :span="8" style="height: 790px; text-align: left;">
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #263c96; border-color: #263c96; margin-bottom: 4px;">1</el-button><el-text style="margin-left: 4px; font-weight: bold;">1호선</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #3cb44a; border-color: #3cb44a; margin-bottom: 4px; margin-left: 4px;">2</el-button><el-text style="margin-left: 4px; font-weight: bold;">2호선</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #ff7300; border-color: #ff7300; margin-bottom: 4px; margin-left: 4px;">3</el-button><el-text style="margin-left: 4px; font-weight: bold;">3호선</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #2c9ede; border-color: #2c9ede; margin-bottom: 4px; margin-left: 4px;">4</el-button><el-text style="margin-left: 4px; font-weight: bold;">4호선</el-text><br>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #8936e0; border-color: #8936e0; margin-bottom: 4px;">5</el-button><el-text style="margin-left: 4px; font-weight: bold;">5호선</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #b5500b; border-color: #b5500b; margin-bottom: 4px; margin-left: 4px;">6</el-button><el-text style="margin-left: 4px; font-weight: bold;">6호선</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #697215; border-color: #697215; margin-bottom: 4px; margin-left: 4px;">7</el-button><el-text style="margin-left: 4px; font-weight: bold;">7호선</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #e51e6e; border-color: #e51e6e; margin-bottom: 4px; margin-left: 4px;">8</el-button><el-text style="margin-left: 4px; font-weight: bold;">8호선</el-text><br>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #d1a62c; border-color: #d1a62c; margin-bottom: 4px;">9</el-button><el-text style="margin-left: 4px; font-weight: bold;">9호선</el-text>
-
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #73b6e4; border-color: #73b6e4; margin-bottom: 4px; margin-left: 4px;">A</el-button><el-text style="margin-left: 4px; font-weight: bold;">공항선</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #7cc4a5; border-color: #7cc4a5; margin-bottom: 4px; margin-left: 4px;">G</el-button><el-text style="margin-left: 4px; font-weight: bold;">경의중앙</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #08af7b; border-color: #08af7b; margin-bottom: 4px; margin-left: 4px;">G</el-button><el-text style="margin-left: 4px; font-weight: bold;">경춘</el-text><br>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #eba900; border-color: #eba900; margin-bottom: 4px;">S</el-button><el-text style="margin-left: 4px; font-weight: bold;">수인분당</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #a71e31; border-color: #a71e31; margin-bottom: 4px; margin-left: 4px;">S</el-button><el-text style="margin-left: 4px; font-weight: bold;">신분당</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #2673f2; border-color: #2673f2; margin-bottom: 4px; margin-left: 4px;">G</el-button><el-text style="margin-left: 4px; font-weight: bold;">경강</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #8bc53f; border-color: #8bc53f; margin-bottom: 4px; margin-left: 4px;">S</el-button><el-text style="margin-left: 4px; font-weight: bold;">서해</el-text><br>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #6f99d0; border-color: #6f99d0; margin-bottom: 4px;">I</el-button><el-text style="margin-left: 4px; font-weight: bold;">인천1</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #f4ab3e; border-color: #f4ab3e; margin-bottom: 4px; margin-left: 4px;">I</el-button><el-text style="margin-left: 4px; font-weight: bold;">인천2</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #77c371; border-color: #77c371; margin-bottom: 4px; margin-left: 4px;">E</el-button><el-text style="margin-left: 4px; font-weight: bold;">에버라인</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #ff9d27; border-color: #ff9d27; margin-bottom: 4px; margin-left: 4px;">U</el-button><el-text style="margin-left: 4px; font-weight: bold;">의정부</el-text><br>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #c6c100; border-color: #c6c100; margin-bottom: 4px;">U</el-button><el-text style="margin-left: 4px; font-weight: bold;">우이신설</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #96710a; border-color: #96710a; margin-bottom: 4px; margin-left: 4px;">K</el-button><el-text style="margin-left: 4px; font-weight: bold;">김포골드</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #4e67a5; border-color: #4e67a5; margin-bottom: 4px; margin-left: 4px;">S</el-button><el-text style="margin-left: 4px; font-weight: bold;">신림</el-text>
-            <el-button style="height: 29px; width: 29px; font-weight: bold; color: #ffffff; background-color: #905a89; border-color: #905a89; margin-bottom: 4px; margin-left: 4px;">G</el-button><el-text style="margin-left: 4px; font-weight: bold;">GTX-A</el-text><br>
-        </el-col>
-
-        <el-col :span="8">
-        </el-col>
-        <el-col :span="8">
-                <el-pagination
-                    small
-                    background
-                    layout="prev, pager, next"
-                    :total="50"
-                    class="mt-4"
-                />
-        </el-col>
-        <el-col :span="8">
+        <!-- 우측 -->
+        <el-col :span="10">
+            <el-row>
+                <el-col :span="24" style="height: 545px;">
+                    <el-card shadow="never" style="height: 500px;">
+                        <div style="text-align: left;">
+                            <el-text style="font-weight: bold;"><el-icon><Place /></el-icon> 연천</el-text>
+                            <el-divider style="margin-top: 6px; margin-bottom: 6px;" />
+                            
+                            <!-- <div class="demo-image__lazy">
+                                <el-image v-for="url in urls" :key="url" :src="url" lazy />
+                            </div> -->
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="24" style="text-align: left;">
+                    <el-tag 
+                        style="
+                            margin-bottom: 4px; 
+                            background-color: #f0f2f5; 
+                            color: #303133; 
+                            border-color: #e4e7ed;">지하철 노선</el-tag>
+                    <el-card shadow="never" style="background-color: #f0f2f5;">
+                        <el-row>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #263c96; 
+                                        border-color: #263c96; 
+                                        margin-bottom: 4px;">1</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">1호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #3cb44a; 
+                                        border-color: #3cb44a; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">2</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">2호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #ff7300; 
+                                        border-color: #ff7300; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">3</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">3호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #2c9ede; 
+                                        border-color: #2c9ede; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">4</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">4호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #8936e0; 
+                                        border-color: #8936e0; 
+                                        margin-bottom: 4px;">5</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">5호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #b5500b; 
+                                        border-color: #b5500b; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">6</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">6호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #697215; 
+                                        border-color: #697215; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">7</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">7호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #e51e6e; 
+                                        border-color: #e51e6e; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">8</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">8호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #d1a62c; 
+                                        border-color: #d1a62c; 
+                                        margin-bottom: 4px;">9</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">9호선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #73b6e4; 
+                                        border-color: #73b6e4; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">A</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">공항선</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #7cc4a5; 
+                                        border-color: #7cc4a5; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">G</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">경의중앙</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #08af7b; 
+                                        border-color: #08af7b; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">G</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">경춘</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #eba900; 
+                                        border-color: #eba900; 
+                                        margin-bottom: 4px;">S</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">수인분당</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #a71e31; 
+                                        border-color: #a71e31; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">S</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">신분당</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #2673f2; 
+                                        border-color: #2673f2; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">G</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">경강</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #8bc53f; 
+                                        border-color: #8bc53f; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">S</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">서해</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #6f99d0; 
+                                        border-color: #6f99d0; 
+                                        margin-bottom: 4px;">I</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">인천1</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #f4ab3e; 
+                                        border-color: #f4ab3e; 
+                                        margin-bottom: 4px; margin-left: 4px;">I</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">인천2</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #77c371; 
+                                        border-color: #77c371; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">E</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">에버라인</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #ff9d27; 
+                                        border-color: #ff9d27; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">U</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">의정부</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #c6c100; 
+                                        border-color: #c6c100; 
+                                        margin-bottom: 4px;">U</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">우이신설</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #96710a; 
+                                        border-color: #96710a; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">K</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">김포골드</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #4e67a5; 
+                                        border-color: #4e67a5; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">S</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">신림</el-text>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button 
+                                    style="
+                                        height: 29px; 
+                                        width: 29px; 
+                                        font-weight: bold; 
+                                        color: #ffffff; 
+                                        background-color: #905a89; 
+                                        border-color: #905a89; 
+                                        margin-bottom: 4px; 
+                                        margin-left: 4px;">G</el-button>
+                                        <el-text style="margin-left: 4px; font-weight: bold;">GTX-A</el-text>
+                            </el-col>
+                        </el-row>
+                    </el-card>
+                </el-col>
+            </el-row>
         </el-col>
     </el-row>
 </template>
 <script lang="ts" setup>
+import { MoreFilled, Place } from '@element-plus/icons-vue';
+import { ref } from 'vue';
+const currentPage = ref(4)
+const pageSize = ref(100)
+const subway = [
+    [
+        { station: '연천', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '전곡', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '청산', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '소요산', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '동두천', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '보산', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '동두천중앙', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '지행', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '덕정', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '덕계', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '양주', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '녹양', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '가능', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '의정부', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '회룡', size: 'large', type: 'primary', icon: MoreFilled, color: '#263c96', transfer1: '의정부선', style1: 'font-size: 12px; color: #ff9d27; font-weight: bold; margin-left: 3px;' },
+        { station: '망월사', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+    ],
+    [
+        { station: '도봉산', size: 'large', type: 'primary', icon: MoreFilled, color: '#263c96', transfer1: '7호선', style1: 'font-size: 12px; color: #697215; font-weight: bold; margin-left: 4px;' },
+        { station: '도봉', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '방학', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '창동', size: 'large', type: 'primary', icon: MoreFilled, color: '#263c96', transfer1: '4호선', style1: 'font-size: 12px; color: #2c9ede; font-weight: bold; margin-left: 4px;' },
+        { station: '녹천', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '월계', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '광운대', size: 'large', type: 'primary', icon: MoreFilled, color: '#263c96', transfer1: '경춘선', style1: 'font-size: 12px; color: #08af7b; font-weight: bold; margin-left: 4px;' },
+        { station: '석계', size: 'large', type: 'primary', icon: MoreFilled, color: '#263c96', transfer1: '6호선', style1: 'font-size: 12px; color: #b5500b; font-weight: bold; margin-left: 4px;' },
+        { station: '신이문', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '외대앞', size: 'large', type: 'primary', icon: '', color: '#263c96' },
+        { station: '회기', size: 'large', type: 'primary', icon: MoreFilled, color: '#263c96', transfer1: '경춘선', style1: 'font-size: 12px; color: #08af7b; font-weight: bold; margin-left: 4px;', transfer2: '경의중앙', style2: 'font-size: 12px; color: #7cc4a5; font-weight: bold; margin-left: 4px;' },
+        { station: '청량리', size: 'large', type: 'primary', icon: MoreFilled, color: '#263c96', transfer1: '경춘선', style1: 'font-size: 12px; color: #08af7b; font-weight: bold; margin-left: 4px;', transfer2: '경의중앙', style2: 'font-size: 12px; color: #7cc4a5; font-weight: bold; margin-left: 4px;', transfer3: '수인분당', style3: 'font-size: 12px; color: #ffce33; font-weight: bold; margin-left: 4px;' },
+    ],
+]
+
+// const urls = [
+//     '/images/main/line1/1_Yean.jpg'
+// ]
 
 </script>
 <style>
-.el-button1 {
-    --el-button-font-weight: var(--el-font-weight-primary);
-    --el-button-border-color: var(--el-border-color);
-    --el-button-bg-color: var(--el-fill-color-blank);
-    --el-button-text-color: var(--el-text-color-regular);
-    --el-button-disabled-text-color: var(--el-disabled-text-color);
-    --el-button-disabled-bg-color: rgb(189 189 189);
-    --el-button-disabled-border-color: rgb(167 167 167);
-    --el-button-divide-border-color: rgba(255, 255, 255, 0.5);
-    --el-button-hover-text-color: #4527A0;                              /* 마우스 올렸을 때 글씨 색 */
-    --el-button-hover-bg-color: #EDE7F6;                                /* 마우스 올렸을 때 배경 색 */
-    --el-button-hover-border-color: #7C4DFF;                            /* 마우스 올렸을 때 테두리 색 */
-    --el-button-active-text-color: var(--el-button-hover-text-color);
-    --el-button-active-border-color: #9575CD;
-    --el-button-active-bg-color: var(--el-button-hover-bg-color);
-    --el-button-outline-color: var(--el-color-primary-light-5);
-    --el-button-hover-link-text-color: var(--el-color-info);
-    --el-button-active-color: var(--el-text-color-primary);
-
-    --el-icon-size: 14px;
-    font-size: 12px; 
-    height: 22px; 
-    color: #ffffff; 
-    background-color: #263c96;
-    border-color: #263c96; 
-    font-weight: bold; 
-}
 .el-button.is-round {
     padding: 8px 15px;
 }
@@ -93,6 +447,41 @@
 }
 .custom_el-card__body {
     padding: 0px;
+}
+.el-pagination {
+    --el-pagination-font-size: 14px;
+    --el-pagination-bg-color: var(--el-fill-color-blank);
+    --el-pagination-text-color: var(--el-text-color-primary);
+    --el-pagination-border-radius: 2px;
+    --el-pagination-button-color: var(--el-text-color-primary);
+    --el-pagination-button-width: 32px;
+    --el-pagination-button-height: 32px;
+    --el-pagination-button-disabled-color: var(--el-text-color-placeholder);
+    --el-pagination-button-disabled-bg-color: var(--el-fill-color-blank);
+    --el-pagination-button-bg-color: var(--el-fill-color);
+    --el-pagination-hover-color: #B388FF;
+    --el-pagination-font-size-small: 12px;
+    --el-pagination-button-width-small: 24px;
+    --el-pagination-button-height-small: 24px;
+    --el-pagination-item-gap: 16px;
+    white-space: nowrap;
+    color: var(--el-pagination-text-color);
+    font-size: var(--el-pagination-font-size);
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+}
+.el-pagination.is-background .btn-next.is-active, .el-pagination.is-background .btn-prev.is-active, .el-pagination.is-background .el-pager li.is-active {
+    background-color: #673AB7;
+    color: var(--el-color-white);
+}
+.el-divider__text {
+    position: absolute;
+    background-color: var(--el-bg-color);
+    padding: 0 0px;
+    font-weight: 500;
+    color: var(--el-text-color-primary);
+    font-size: 14px;
 }
 
 </style>
