@@ -55,14 +55,86 @@
         <el-col :span="10">
             <el-row>
                 <el-col :span="24" style="height: 545px;">
-                    <el-card shadow="never" style="height: 500px;">
+                    <el-card shadow="never" style="height: 520px;">
                         <div style="text-align: left;">
-                            <el-text style="font-weight: bold;"><el-icon><Place /></el-icon> 연천</el-text>
-                            <el-divider style="margin-top: 6px; margin-bottom: 6px;" />
-                            
-                            <!-- <div class="demo-image__lazy">
-                                <el-image v-for="url in urls" :key="url" :src="url" lazy />
-                            </div> -->
+                            <el-row>
+                                <el-col :span="12">
+                                    <el-text style="font-weight: bold;"><el-icon><Place /></el-icon> 연천</el-text>
+                                </el-col>
+                                <el-col :span="12" style="text-align: right;">
+                                    <el-button :icon="Star"     link style="font-size: 16px;" />
+                                    <el-button :icon="Position" link style="font-size: 16px;" />
+                                    <el-button :icon="More"     link style="font-size: 16px;" />
+                                </el-col>
+                            </el-row>
+                            <el-divider style="margin-top: 6px; margin-bottom: 18px;" />
+
+                            <el-card shadow="never" style="height: 140px;">
+                                <el-row>
+                                    <el-col :span="17">
+                                        <el-row>
+                                            <el-col :span="24">
+                                                <el-text style="font-size: 16px; font-weight: bold;">망향비빔국수본점</el-text>
+                                            </el-col>
+                                            <el-col :span="24" style="margin-top: 4px;">
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; ">가벼운식사</el-tag>
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">국수</el-tag>
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">가족외식</el-tag>
+                                            </el-col>
+                                            <el-col :span="24" style="margin-top: 30px;">
+                                                <el-text style="font-size: 13px;">"저렴한 가격의 비빔국수 맛집"</el-text>
+                                            </el-col>
+                                        </el-row>
+                                    </el-col>
+                                    <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                        <el-image v-for="url in urls" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                    </el-col>
+                                </el-row>
+                            </el-card>
+                            <el-card shadow="never" style="height: 140px; margin-top: 6px;">
+                                <el-row>
+                                    <el-col :span="17">
+                                        <el-row>
+                                            <el-col :span="24">
+                                                <el-text style="font-size: 16px; font-weight: bold;">동막골 숯불닭갈비</el-text>
+                                            </el-col>
+                                            <el-col :span="24" style="margin-top: 4px;">
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">저녁식사</el-tag>
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">단체모임</el-tag>
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">서민적인</el-tag>
+                                            </el-col>
+                                            <el-col :span="24" style="margin-top: 30px;">
+                                                <el-text style="font-size: 13px;">"모임장소로 적합한 닭갈비 맛집"</el-text>
+                                            </el-col>
+                                        </el-row>
+                                    </el-col>
+                                    <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                        <el-image v-for="url in urls2" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                    </el-col>
+                                </el-row>
+                            </el-card>
+                            <el-card shadow="never" style="height: 140px; margin-top: 6px;">
+                                <el-row>
+                                    <el-col :span="17">
+                                        <el-row>
+                                            <el-col :span="24">
+                                                <el-text style="font-size: 16px; font-weight: bold;">연천회관</el-text>
+                                            </el-col>
+                                            <el-col :span="24" style="margin-top: 4px;">
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">데이트</el-tag>
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">좌식테이블</el-tag>
+                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">예쁜</el-tag>
+                                            </el-col>
+                                            <el-col :span="24" style="margin-top: 30px;">
+                                                <el-text style="font-size: 13px;">"고즈넉한 분위기의 카페"</el-text>
+                                            </el-col>
+                                        </el-row>
+                                    </el-col>
+                                    <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                        <el-image v-for="url in urls3" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                    </el-col>
+                                </el-row>
+                            </el-card>
                         </div>
                     </el-card>
                 </el-col>
@@ -81,8 +153,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #263c96; 
+                                        color: #263c96; 
+                                        background-color: rgba(38, 60, 150, 0.2);
                                         border-color: #263c96; 
                                         margin-bottom: 4px;">1</el-button>
                                         <el-text style="margin-left: 4px; font-weight: bold;">1호선</el-text>
@@ -93,8 +165,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #3cb44a; 
+                                        color: #3cb44a; 
+                                        background-color: rgba(60, 180, 74, 0.2); 
                                         border-color: #3cb44a; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">2</el-button>
@@ -106,8 +178,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #ff7300; 
+                                        color: #ff7300; 
+                                        background-color: rgba(255, 115, 0, 0.2); 
                                         border-color: #ff7300; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">3</el-button>
@@ -119,8 +191,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #2c9ede; 
+                                        color: #2c9ede; 
+                                        background-color: rgba(44, 158, 222, 0.2); 
                                         border-color: #2c9ede; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">4</el-button>
@@ -132,8 +204,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #8936e0; 
+                                        color: #8936e0; 
+                                        background-color: rgba(137, 54, 224, 0.2); 
                                         border-color: #8936e0; 
                                         margin-bottom: 4px;">5</el-button>
                                         <el-text style="margin-left: 4px; font-weight: bold;">5호선</el-text>
@@ -144,8 +216,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #b5500b; 
+                                        color: #b5500b; 
+                                        background-color: rgba(181, 80, 11, 0.2); 
                                         border-color: #b5500b; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">6</el-button>
@@ -157,8 +229,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #697215; 
+                                        color: #697215; 
+                                        background-color: rgba(105, 114, 21, 0.2); 
                                         border-color: #697215; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">7</el-button>
@@ -170,8 +242,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #e51e6e; 
+                                        color: #e51e6e; 
+                                        background-color: rgba(229, 30, 110, 0.2); 
                                         border-color: #e51e6e; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">8</el-button>
@@ -183,8 +255,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #d1a62c; 
+                                        color: #d1a62c; 
+                                        background-color: rgba(209, 166, 44, 0.2); 
                                         border-color: #d1a62c; 
                                         margin-bottom: 4px;">9</el-button>
                                         <el-text style="margin-left: 4px; font-weight: bold;">9호선</el-text>
@@ -195,8 +267,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #73b6e4; 
+                                        color: #73b6e4; 
+                                        background-color: rgba(115, 182, 228, 0.2); 
                                         border-color: #73b6e4; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">A</el-button>
@@ -208,8 +280,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #7cc4a5; 
+                                        color: #7cc4a5; 
+                                        background-color: rgba(124, 196, 165, 0.2); 
                                         border-color: #7cc4a5; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">G</el-button>
@@ -221,8 +293,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #08af7b; 
+                                        color: #08af7b; 
+                                        background-color: rgba(8, 175, 123, 0.2); 
                                         border-color: #08af7b; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">G</el-button>
@@ -234,8 +306,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #eba900; 
+                                        color: #eba900; 
+                                        background-color: rgba(235, 169, 0, 0.2); 
                                         border-color: #eba900; 
                                         margin-bottom: 4px;">S</el-button>
                                         <el-text style="margin-left: 4px; font-weight: bold;">수인분당</el-text>
@@ -246,8 +318,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #a71e31; 
+                                        color: #a71e31; 
+                                        background-color: rgba(167, 30, 49, 0.2); 
                                         border-color: #a71e31; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">S</el-button>
@@ -259,8 +331,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #2673f2; 
+                                        color: #2673f2; 
+                                        background-color: rgba(38, 115, 242, 0.2); 
                                         border-color: #2673f2; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">G</el-button>
@@ -272,8 +344,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #8bc53f; 
+                                        color: #8bc53f; 
+                                        background-color: rgba(139, 197, 63, 0.2); 
                                         border-color: #8bc53f; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">S</el-button>
@@ -285,8 +357,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #6f99d0; 
+                                        color: #6f99d0; 
+                                        background-color: rgba(111, 153, 208, 0.2); 
                                         border-color: #6f99d0; 
                                         margin-bottom: 4px;">I</el-button>
                                         <el-text style="margin-left: 4px; font-weight: bold;">인천1</el-text>
@@ -297,8 +369,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #f4ab3e; 
+                                        color: #f4ab3e; 
+                                        background-color: rgba(244, 171, 62, 0.2); 
                                         border-color: #f4ab3e; 
                                         margin-bottom: 4px; margin-left: 4px;">I</el-button>
                                         <el-text style="margin-left: 4px; font-weight: bold;">인천2</el-text>
@@ -309,8 +381,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #77c371; 
+                                        color: #77c371; 
+                                        background-color: rgba(119, 195, 113, 0.2); 
                                         border-color: #77c371; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">E</el-button>
@@ -322,8 +394,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #ff9d27; 
+                                        color: #ff9d27; 
+                                        background-color: rgba(255, 157, 39, 0.2); 
                                         border-color: #ff9d27; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">U</el-button>
@@ -335,8 +407,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #c6c100; 
+                                        color: #c6c100; 
+                                        background-color: rgba(198, 193, 0, 0.2); 
                                         border-color: #c6c100; 
                                         margin-bottom: 4px;">U</el-button>
                                         <el-text style="margin-left: 4px; font-weight: bold;">우이신설</el-text>
@@ -347,8 +419,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #96710a; 
+                                        color: #96710a; 
+                                        background-color: rgba(150, 113, 10, 0.2); 
                                         border-color: #96710a; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">K</el-button>
@@ -360,8 +432,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #4e67a5; 
+                                        color: #4e67a5; 
+                                        background-color: rgba(78, 103, 165, 0.2); 
                                         border-color: #4e67a5; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">S</el-button>
@@ -373,8 +445,8 @@
                                         height: 29px; 
                                         width: 29px; 
                                         font-weight: bold; 
-                                        color: #ffffff; 
-                                        background-color: #905a89; 
+                                        color: #905a89; 
+                                        background-color: rgba(144, 90, 137, 0.2); 
                                         border-color: #905a89; 
                                         margin-bottom: 4px; 
                                         margin-left: 4px;">G</el-button>
@@ -388,7 +460,7 @@
     </el-row>
 </template>
 <script lang="ts" setup>
-import { MoreFilled, Place } from '@element-plus/icons-vue';
+import { More, MoreFilled, Place, Position, Star } from '@element-plus/icons-vue';
 import { ref } from 'vue';
 const currentPage = ref(4)
 const pageSize = ref(100)
@@ -427,9 +499,15 @@ const subway = [
     ],
 ]
 
-// const urls = [
-//     '/images/main/line1/1_Yean.jpg'
-// ]
+const urls = [
+    '/images/main/line1/1_Yean.jpg'
+]
+const urls2 = [
+    '/images/main/line1/2_Yean.jpg'
+]
+const urls3 = [
+    '/images/main/line1/3_Yean.jpg'
+]
 
 </script>
 <style>
