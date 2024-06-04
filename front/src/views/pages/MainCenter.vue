@@ -1,7 +1,7 @@
 <template>
     <el-row>
         <!-- 좌측 -->
-        <el-col :span="14">
+        <el-col :span="8">
             <el-row>
                 <el-col :span="24" style="height: 790px;">
                     <el-row>
@@ -52,7 +52,7 @@
             </el-row>
         </el-col>
         <!-- 우측 -->
-        <el-col :span="10">
+        <el-col :span="16">
             <el-row>
                 <el-col :span="24" style="height: 545px;">
                     <el-card shadow="never" style="height: 520px;">
@@ -66,79 +66,111 @@
                                     <el-button :icon="Position" link style="font-size: 16px;" />
                                     <el-button :icon="More"     link style="font-size: 16px;" />
                                 </el-col>
+                                <el-col :span="24">
+                                    <el-divider style="margin-top: 6px; margin-bottom: 18px;" />
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-card shadow="never" style="height: 140px; width: 380px;">
+                                        <el-row>
+                                            <el-col :span="17">
+                                                <el-row>
+                                                    <el-col :span="24">
+                                                        <el-text style="font-size: 16px; font-weight: bold;">망향비빔국수본점</el-text>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 4px;">
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; ">가벼운식사</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">국수</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">가족외식</el-tag>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 30px;">
+                                                        <el-text style="font-size: 13px;">"저렴한 가격의 비빔국수 맛집"</el-text>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                                <el-image v-for="url in urls" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-card shadow="never" style="height: 140px; margin-left: 6px; width: 380px;">
+                                        <el-row>
+                                            <el-col :span="17">
+                                                <el-row>
+                                                    <el-col :span="24">
+                                                        <el-text style="font-size: 16px; font-weight: bold;">동막골 숯불닭갈비</el-text>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 4px;">
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">저녁식사</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">단체모임</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">서민적인</el-tag>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 30px;">
+                                                        <el-text style="font-size: 13px;">"모임장소로 적합한 닭갈비 맛집"</el-text>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                                <el-image v-for="url in urls2" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-card shadow="never" style="height: 140px; margin-top: 6px; width: 380px;">
+                                        <el-row>
+                                            <el-col :span="17">
+                                                <el-row>
+                                                    <el-col :span="24">
+                                                        <el-text style="font-size: 16px; font-weight: bold;">연천회관</el-text>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 4px;">
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">데이트</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">좌식테이블</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">예쁜</el-tag>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 30px;">
+                                                        <el-text style="font-size: 13px;">"고즈넉한 분위기의 카페"</el-text>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                                <el-image v-for="url in urls3" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-card shadow="never" style="height: 140px; margin-top: 6px; margin-left: 6px; width: 380px;">
+                                        <el-row>
+                                            <el-col :span="17">
+                                                <el-row>
+                                                    <el-col :span="24">
+                                                        <el-text style="font-size: 16px; font-weight: bold;">황해냉면</el-text>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 4px;">
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">아침식사</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">꿩만두</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">건강식</el-tag>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 30px;">
+                                                        <el-text style="font-size: 13px;">"개성있는 냉면맛집"</el-text>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                                <el-image v-for="url in urls4" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                </el-col>
                             </el-row>
-                            <el-divider style="margin-top: 6px; margin-bottom: 18px;" />
-
-                            <el-card shadow="never" style="height: 140px;">
-                                <el-row>
-                                    <el-col :span="17">
-                                        <el-row>
-                                            <el-col :span="24">
-                                                <el-text style="font-size: 16px; font-weight: bold;">망향비빔국수본점</el-text>
-                                            </el-col>
-                                            <el-col :span="24" style="margin-top: 4px;">
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; ">가벼운식사</el-tag>
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">국수</el-tag>
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">가족외식</el-tag>
-                                            </el-col>
-                                            <el-col :span="24" style="margin-top: 30px;">
-                                                <el-text style="font-size: 13px;">"저렴한 가격의 비빔국수 맛집"</el-text>
-                                            </el-col>
-                                        </el-row>
-                                    </el-col>
-                                    <el-col :span="6" style="text-align: right; margin-left: 4px;">
-                                        <el-image v-for="url in urls" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
-                                    </el-col>
-                                </el-row>
-                            </el-card>
-                            <el-card shadow="never" style="height: 140px; margin-top: 6px;">
-                                <el-row>
-                                    <el-col :span="17">
-                                        <el-row>
-                                            <el-col :span="24">
-                                                <el-text style="font-size: 16px; font-weight: bold;">동막골 숯불닭갈비</el-text>
-                                            </el-col>
-                                            <el-col :span="24" style="margin-top: 4px;">
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">저녁식사</el-tag>
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">단체모임</el-tag>
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">서민적인</el-tag>
-                                            </el-col>
-                                            <el-col :span="24" style="margin-top: 30px;">
-                                                <el-text style="font-size: 13px;">"모임장소로 적합한 닭갈비 맛집"</el-text>
-                                            </el-col>
-                                        </el-row>
-                                    </el-col>
-                                    <el-col :span="6" style="text-align: right; margin-left: 4px;">
-                                        <el-image v-for="url in urls2" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
-                                    </el-col>
-                                </el-row>
-                            </el-card>
-                            <el-card shadow="never" style="height: 140px; margin-top: 6px;">
-                                <el-row>
-                                    <el-col :span="17">
-                                        <el-row>
-                                            <el-col :span="24">
-                                                <el-text style="font-size: 16px; font-weight: bold;">연천회관</el-text>
-                                            </el-col>
-                                            <el-col :span="24" style="margin-top: 4px;">
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">데이트</el-tag>
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">좌식테이블</el-tag>
-                                                <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">예쁜</el-tag>
-                                            </el-col>
-                                            <el-col :span="24" style="margin-top: 30px;">
-                                                <el-text style="font-size: 13px;">"고즈넉한 분위기의 카페"</el-text>
-                                            </el-col>
-                                        </el-row>
-                                    </el-col>
-                                    <el-col :span="6" style="text-align: right; margin-left: 4px;">
-                                        <el-image v-for="url in urls3" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
-                                    </el-col>
-                                </el-row>
-                            </el-card>
                         </div>
                     </el-card>
                 </el-col>
-                <el-col :span="24" style="text-align: left;">
+                <el-col :span="9" />
+                <el-col :span="15" style="text-align: left;">
                     <el-tag 
                         style="
                             margin-bottom: 4px; 
@@ -507,6 +539,9 @@ const urls2 = [
 ]
 const urls3 = [
     '/images/main/line1/3_Yean.jpg'
+]
+const urls4 = [
+    '/images/main/line1/4_Yean.jpg'
 ]
 
 </script>

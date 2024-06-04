@@ -4,17 +4,15 @@
             <el-col :span="2">
                 <el-link class="title">FoodingStore</el-link>
             </el-col>
-            <el-col :span="17" />
+            <el-col :span="19" />
             <el-col :span="3">
                 <el-button :icon="Search" class="UserFilled2" link />
                 <el-button :icon="Bell" class="UserFilled2" link />
                 <el-button :icon="Avatar" class="UserFilled1" circle />
             </el-col>
-            <el-col :span="2" />
-            <el-col :span="22">
+            <el-col :span="24">
                 <el-divider class="divider1" />
             </el-col>
-            <el-col :span="2" />
         </el-row>
     </div>
 
@@ -66,7 +64,7 @@
                 </div>
             </el-menu>
         </el-col>
-        <el-col :span="14">
+        <el-col :span="16">
             <el-card shadow="never" style="height: 850px; margin-left: 20px;">
                 <div>
                     <MainCenter />
@@ -78,7 +76,6 @@
                 <WeatherGuide />
             </el-card>
         </el-col>
-        <el-col :span="2" />
     </el-row>
 </template>
 
