@@ -288,10 +288,10 @@ const onChangeWeather = () => {
 .el-loading-mask.is-fullscreen {
     /* position: fixed; */
     position: relative;
-    width: 345px;
+    width: 330px;
     height: 200px;
     top: -851px;
-    left: 72%;
+    left: 81%;
 }
 .el-loading-mask {
     position: absolute;

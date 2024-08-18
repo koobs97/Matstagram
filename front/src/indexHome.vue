@@ -7,8 +7,12 @@
             <el-col :span="19" />
             <el-col :span="3">
                 <el-button :icon="Search" class="UserFilled2" link />
-                <el-button :icon="Bell" class="UserFilled2" link />
-                <el-button :icon="Avatar" class="UserFilled1" circle />
+                    <el-button class="UserFilled2" link>
+                        <el-badge :value="1">
+                            <el-icon><Bell /></el-icon>
+                        </el-badge>
+                    </el-button>
+                <UserInfo :userInfo="userInfo" />
             </el-col>
             <el-col :span="24">
                 <el-divider class="divider1" />
@@ -21,9 +25,8 @@
         <el-col :span="3">
             <el-menu
                 default-active="1"
-                
             >
-                <el-menu-item index="1">
+                <el-menu-item index="1"  @click="onClickMyStorage('MainCenter')">
                     <el-icon><HomeFilled /></el-icon>
                     <span>Home</span>
                 </el-menu-item>
@@ -36,7 +39,7 @@
                     <span>유용한 정보</span>
                 </el-menu-item>
                 <el-divider class="divider2" />
-                <el-menu-item index="7">
+                <el-menu-item index="7" @click="onClickMyStorage('MyStorage')">
                     <el-icon><UserFilled /></el-icon>
                     <span>내 저장소</span>
                 </el-menu-item>
@@ -67,7 +70,7 @@
         <el-col :span="16">
             <el-card shadow="never" style="height: 850px; margin-left: 20px;">
                 <div>
-                    <MainCenter />
+                    <component :is="state.page.component"></component>
                 </div>
             </el-card>
         </el-col>
@@ -80,9 +83,9 @@
 </template>
 
 <script lang="ts" setup>
-import { Aim, Avatar, Bell, HomeFilled, InfoFilled, Opportunity, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
-import { onMounted, reactive } from 'vue';
-import MainCenter from '../src/views/pages/MainCenter.vue';
+import { Aim, Bell, HomeFilled, InfoFilled, Opportunity, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
+import { defineAsyncComponent, onMounted, reactive } from 'vue';
+import UserInfo from '../src/components/UserInfo.vue';
 import WeatherGuide from '../src/views/pages/WeatherGuide.vue';
 import { userStore } from './store/userStore';
 
@@ -107,11 +110,23 @@ const userInfo = reactive({
             genderCode  : '' as string,
     } as userState,
 })
+const state = reactive({
+    page: {
+        menuId      : '' as string,
+        menuNm      : '' as string,
+        component   : '' as any,
+    }
+})
 
 // 화면진입 시
 onMounted(() => {
     userInfo.user = userStoreObj.getUserInfo
+    state.page.component = defineAsyncComponent(() => import (`../src/views/pages/MainCenter.vue`))
 })
+
+const onClickMyStorage = (componentName: string) => {
+    state.page.component = defineAsyncComponent(() => import (`../src/views/pages/${componentName}.vue`))
+}
 
 </script>
 
@@ -135,6 +150,8 @@ onMounted(() => {
     width: 35px; 
     height: 35px;
     font-size: 23px;
+    margin-left: 1px;
+    padding-top: 4px;
 }
 /* 구분선 css1 */
 .divider1 {
@@ -185,11 +202,11 @@ onMounted(() => {
     --el-button-hover-text-color: #4527A0;                              /* 마우스 올렸을 때 글씨 색 */
     --el-button-hover-bg-color: #EDE7F6;                                /* 마우스 올렸을 때 배경 색 */
     --el-button-hover-border-color: #7C4DFF;                            /* 마우스 올렸을 때 테두리 색 */
-    --el-button-active-text-color: var(--el-button-hover-text-color);
+    --el-button-active-text-color: #9575CD;
     --el-button-active-border-color: #9575CD;
     --el-button-active-bg-color: var(--el-button-hover-bg-color);
     --el-button-outline-color: var(--el-color-primary-light-5);
-    --el-button-hover-link-text-color: var(--el-color-info);
-    --el-button-active-color: var(--el-text-color-primary);
+    --el-button-hover-link-text-color: #9575CD;
+    --el-button-active-color: #9575CD;
 }
 </style>

@@ -37,7 +37,7 @@
                             </el-timeline>
                         </el-col>
                         <el-col :span="3" style="text-align: left; height: 790px" />
-                        <el-col :span="5" />
+                        <el-col :span="2" />
                         <el-col :span="11">
                             <el-pagination
                                 small
@@ -165,11 +165,64 @@
                                         </el-row>
                                     </el-card>
                                 </el-col>
+                                <el-col :span="12">
+                                    <el-card shadow="never" style="height: 140px; margin-top: 6px; width: 380px;">
+                                        <el-row>
+                                            <el-col :span="17">
+                                                <el-row>
+                                                    <el-col :span="24">
+                                                        <el-text style="font-size: 16px; font-weight: bold;">삼월애</el-text>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 4px;">
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">돼지갈비</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">인테리어</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">단체모임</el-tag>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 30px;">
+                                                        <el-text style="font-size: 13px;">"수제돼지갈비 전문 맛집"</el-text>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                                <el-image v-for="url in urls5" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-card shadow="never" style="height: 140px; margin-top: 6px; margin-left: 6px; width: 380px;">
+                                        <el-row>
+                                            <el-col :span="17">
+                                                <el-row>
+                                                    <el-col :span="24">
+                                                        <el-text style="font-size: 16px; font-weight: bold;">크리미에</el-text>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 4px;">
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px;">애견동반</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">감성</el-tag>
+                                                        <el-tag round effect="plain" style="color: #B388FF; border-color: #B388FF; font-size: 11px; margin-left: 3px;">브런치</el-tag>
+                                                    </el-col>
+                                                    <el-col :span="24" style="margin-top: 30px;">
+                                                        <el-text style="font-size: 13px;">"예쁜 정원이 있는 감성카페"</el-text>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span="6" style="text-align: right; margin-left: 4px;">
+                                                <el-image v-for="url in urls6" :key="url" :src="url" lazy style="width: 100px; height: 100px; border-radius: 6px;" />
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                </el-col>
                             </el-row>
                         </div>
                     </el-card>
                 </el-col>
-                <el-col :span="9" />
+                <el-col :span="9">
+                    <el-table :data="tableData" style="width: 95%">
+                        <el-table-column label="오늘의 맛집 추천" prop="name">
+                        </el-table-column>
+                    </el-table>
+                </el-col>
                 <el-col :span="15" style="text-align: left;">
                     <el-tag 
                         style="
@@ -543,7 +596,30 @@ const urls3 = [
 const urls4 = [
     '/images/main/line1/4_Yean.jpg'
 ]
+const urls5 = [
+    '/images/main/line1/5_Yean.jpg'
+]
+const urls6 = [
+    '/images/main/line1/6_Yean.jpg'
+]
 
+const tableData = [
+    {
+        name: '1. 영등포',
+    },
+    {
+        name: '2. 안양',
+    },
+    {
+        name: '3. 신도림',
+    },
+    {
+        name: '4. 광운대',
+    },
+    {
+        name: '5. 인천',
+    },
+]
 </script>
 <style>
 .el-button.is-round {
@@ -595,6 +671,27 @@ const urls4 = [
     font-weight: 500;
     color: var(--el-text-color-primary);
     font-size: 14px;
+}
+.el-image__inner {
+    vertical-align: top;
+    opacity: 1;
+    object-fit: cover;
+}
+.el-table {
+    --el-table-border-color: var(--el-border-color-lighter);
+    --el-table-border: 1px solid var(--el-table-border-color);
+    --el-table-text-color: var(--el-text-color-regular);
+    --el-table-header-text-color: var(--el-text-color-secondary);
+    --el-table-row-hover-bg-color: var(--el-fill-color-light);
+    --el-table-current-row-bg-color: var(--el-color-primary-light-9);
+    --el-table-header-bg-color: #f0f2f5;
+    --el-table-fixed-box-shadow: var(--el-box-shadow-light);
+    --el-table-bg-color: var(--el-fill-color-blank);
+    --el-table-tr-bg-color: var(--el-bg-color);
+    --el-table-expanded-cell-bg-color: var(--el-fill-color-blank);
+    --el-table-fixed-left-column: inset 10px 0 10px -10px rgba(0, 0, 0, 0.15);
+    --el-table-fixed-right-column: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
+    --el-table-index: var(--el-index-normal);
 }
 
 </style>

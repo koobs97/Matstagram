@@ -57,6 +57,16 @@ export const userStore = defineStore("userStore", {
             this.authInfo.email = '';
             this.authInfo.authenticated = false;
         },
+        delUserInfo() {
+            this.userInfo = {
+                userId      : '' as string,
+                userName    : '' as string,
+                email       : '' as string,
+                phoneNumber : '' as string,
+                birthDate   : '' as string,
+                genderCode  : '' as string,
+            }
+        }
     },
     persist: {
         enabled: true,                                              // 전체 state 대상, SessionStorage가 default 저장
