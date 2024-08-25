@@ -16,7 +16,7 @@ module.exports = defineConfig({
         pathRewrite: { 
           '^/api': ''
         } 
-      } 
+      },
     } 
   },
   configureWebpack: {

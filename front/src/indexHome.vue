@@ -26,7 +26,7 @@
             <el-menu
                 default-active="1"
             >
-                <el-menu-item index="1"  @click="onClickMyStorage('MainCenter')">
+                <el-menu-item index="1"  @click="onClickMyStorage('')">
                     <el-icon><HomeFilled /></el-icon>
                     <span>Home</span>
                 </el-menu-item>
@@ -76,7 +76,10 @@
         </el-col>
         <el-col :span="5">
             <el-card shadow="never" style="height: 200px; width: calc(100% - 47px); margin-left: 20px;">
-                <WeatherGuide />
+                <WeatherGuide />  
+            </el-card>
+            <el-card shadow="never" style="height: 600px; width: calc(100% - 47px); margin-left: 20px; margin-top: 20px">
+                <SugAlgorithm />
             </el-card>
         </el-col>
     </el-row>
@@ -85,6 +88,7 @@
 <script lang="ts" setup>
 import { Aim, Bell, HomeFilled, InfoFilled, Opportunity, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
 import { defineAsyncComponent, onMounted, reactive } from 'vue';
+import SugAlgorithm from '../src/components/SugAlgorithm.vue';
 import UserInfo from '../src/components/UserInfo.vue';
 import WeatherGuide from '../src/views/pages/WeatherGuide.vue';
 import { userStore } from './store/userStore';
@@ -121,7 +125,8 @@ const state = reactive({
 // 화면진입 시
 onMounted(() => {
     userInfo.user = userStoreObj.getUserInfo
-    state.page.component = defineAsyncComponent(() => import (`../src/views/pages/MainCenter.vue`))
+    // state.page.component = defineAsyncComponent(() => import (`../src/views/pages/MainCenter.vue`))
+    state.page.component = ''
 })
 
 const onClickMyStorage = (componentName: string) => {
