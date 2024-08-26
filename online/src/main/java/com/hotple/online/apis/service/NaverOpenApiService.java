@@ -1,4 +1,4 @@
-package com.hotple.online.login.service;
+package com.hotple.online.apis.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.hotple.online.apis.ivo.NaverOpenApiIvo;
+
 @Service
 public class NaverOpenApiService {
 
@@ -23,13 +25,15 @@ public class NaverOpenApiService {
      * @param String(날씨)
      * @return
      */
-    public Object searchBlog(String weather) {
+    public Object searchBlog(NaverOpenApiIvo ivo) {
         String clientId = "jhrP2QRQRbGwLcco4nJD"; //애플리케이션 클라이언트 아이디
         String clientSecret = "fSCGM7BICy"; //애플리케이션 클라이언트 시크릿
 
         String text = null;
+        System.out.println( "input : " + ivo.toString());
         try {
-            text = URLEncoder.encode("비오는날 음식추천", "UTF-8");
+            text = URLEncoder.encode(ivo.getInput(), "UTF-8");
+            System.out.println( "text : " + text);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }

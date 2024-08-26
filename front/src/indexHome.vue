@@ -67,19 +67,19 @@
                 </div>
             </el-menu>
         </el-col>
-        <el-col :span="16">
+        <el-col :span="15">
             <el-card shadow="never" style="height: 850px; margin-left: 20px;">
                 <div>
                     <component :is="state.page.component"></component>
                 </div>
             </el-card>
         </el-col>
-        <el-col :span="5">
-            <el-card shadow="never" style="height: 200px; width: calc(100% - 47px); margin-left: 20px;">
-                <WeatherGuide />  
+        <el-col :span="6">
+            <el-card shadow="never" style="height: 200px; width: 380px; margin-left: 20px;">
+                <WeatherGuide @weather="handleWeatherReceive" />  
             </el-card>
-            <el-card shadow="never" style="height: 600px; width: calc(100% - 47px); margin-left: 20px; margin-top: 20px">
-                <SugAlgorithm />
+            <el-card shadow="never" style="height: 628px; width: 380px; margin-left: 20px; margin-top: 20px">
+                <SugAlgorithm :weather="state.weather" />
             </el-card>
         </el-col>
     </el-row>
@@ -119,7 +119,8 @@ const state = reactive({
         menuId      : '' as string,
         menuNm      : '' as string,
         component   : '' as any,
-    }
+    },
+    weather : '' as string,
 })
 
 // 화면진입 시
@@ -132,6 +133,11 @@ onMounted(() => {
 const onClickMyStorage = (componentName: string) => {
     state.page.component = defineAsyncComponent(() => import (`../src/views/pages/${componentName}.vue`))
 }
+
+// WeatherGuide에서 데이터를 받는 함수
+const handleWeatherReceive = (data: string) => {
+    state.weather = data;
+};
 
 </script>
 
