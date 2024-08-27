@@ -75,10 +75,10 @@
             </el-card>
         </el-col>
         <el-col :span="6">
-            <el-card shadow="never" style="height: 200px; width: 380px; margin-left: 20px;">
+            <el-card shadow="never" style="height: 226px; width: 380px; margin-left: 20px;">
                 <WeatherGuide @weather="handleWeatherReceive" />  
             </el-card>
-            <el-card shadow="never" style="height: 628px; width: 380px; margin-left: 20px; margin-top: 20px">
+            <el-card shadow="never" style="height: 515px; width: 380px; margin-left: 20px; margin-top: 20px">
                 <SugAlgorithm :weather="state.weather" />
             </el-card>
         </el-col>

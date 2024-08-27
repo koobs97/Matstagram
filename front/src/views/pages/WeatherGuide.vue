@@ -1,99 +1,108 @@
 <template>
-    <el-row>
-        <el-col :span="3" style="text-align: left;">
-            <el-text style="font-weight: bold; font-size: 14px;">날씨</el-text>
-        </el-col>
-        <el-col :span="1" style="text-align: left;">
-            <el-button :icon="RefreshRight" style="font-size: 14px;" link @click="onClickGetWeather"></el-button>
-        </el-col>
-        <el-col :span="8" />
-        <el-col :span="12" style="text-align: right;">
-            <el-select
-                v-model="state.city"
-                size="small"
-                :style="state.style"
-                @change="onChangeWeather"
-            >
-            <el-option
-                v-for="item in state.cityList"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-            />
-            </el-select>
-        </el-col>
-    </el-row>
-    <el-divider class="divider"></el-divider>
-    <el-row>
-        <el-col :span="6">
-            <el-icon v-show="state.weather.info=='Clouds'"          style="font-size: 50px;"><Cloudy        /></el-icon>
-            <el-icon v-show="state.weather.info=='PartlyCloudy'"    style="font-size: 50px;"><PartlyCloudy  /></el-icon>
-            <el-icon v-show="state.weather.info=='Clear'"           style="font-size: 50px;"><Sunny         /></el-icon>
-            <el-icon v-show="state.weather.info=='ClearNight'"      style="font-size: 50px;"><Moon          /></el-icon>
-            <el-icon v-show="state.weather.info=='Rain'"            style="font-size: 50px;"><Pouring       /></el-icon>
-            <el-icon v-show="state.weather.info=='Snow'"            style="font-size: 50px;"><Drizzling     /></el-icon>
-        </el-col>
-        <el-col :span="6" style="display: flex; align-items: center; margin-bottom: 10px; margin-right: 24px;">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <el-text style="font-size: 40px; margin-right: 8px;">{{ state.weather.main.temp }}°</el-text>
-                <el-text>{{ state.weather.info_kor }}</el-text>
-            </div>
-        </el-col>
-        <el-col :span="8" style="margin-top: 5px; margin-left: 8px; text-align: left;">
-            <el-row>
-                <el-col :span="12">
-                    <el-tag type="primary" effect="plain" round style="margin-bottom: 4px;">{{ state.weather.main.temp_max }}°</el-tag>
-                    <el-tag type="danger" effect="plain" round style="margin-bottom: 4px;">{{ state.weather.main.temp_min }}°</el-tag>
-                </el-col>
-                <el-col :span="12">
-                    <el-tag :type="state.weather.pm10_type" round style="margin-bottom: 4px;">{{ state.weather.pm10_text }}</el-tag>
-                    <el-tag :type="state.weather.pm2_5_type" round style="margin-bottom: 4px;">{{ state.weather.pm2_5_text }}</el-tag>
-                </el-col>
-            </el-row>
-        </el-col>
-        <el-col :span="24" style="margin-top: 4px;">
-            <el-row style="justify-content: center; align-items: center;">
-                <el-col :span="12" style="padding-right: 4px;">
-                    <el-card shadow="never" class="custom-card">
-                        <el-row>
-                            <el-col :span="8" style="display: flex; align-items: center;">
-                                <el-text>일출</el-text>
-                            </el-col>
-                            <el-col :span="8" style="display: flex; align-items: center;">
-                                <el-icon><Sunrise /></el-icon>
-                            </el-col>
-                            <el-col :span="8" style="display: flex; align-items: right;">
-                                <el-text>{{ state.weather.sys.sunrise }}</el-text>
-                            </el-col>
-                        </el-row>
-                    </el-card>
-                </el-col>
-                <el-col :span="12" style="padding-left: 4px;">
-                    <el-card shadow="never" class="custom-card">
-                        <el-row>
-                            <el-col :span="8" style="display: flex; align-items: center;">
-                                <el-text>일몰</el-text>
-                            </el-col>
-                            <el-col :span="8" style="display: flex; align-items: center;">
-                                <el-icon><Sunset /></el-icon>
-                            </el-col>
-                            <el-col :span="8" style="display: flex; align-items: center;">
-                                <el-text>{{ state.weather.sys.sunset }}</el-text>
-                            </el-col>
-                        </el-row>
-                    </el-card>
-                </el-col>
-            </el-row>
-        </el-col>
-    </el-row>
+    <div v-loading="loading" element-loading-background="rgba(255, 255, 255, 0.8)">
+        <el-row>
+            <el-col :span="3" style="text-align: left;">
+                <el-text style="font-weight: bold; font-size: 14px;">날씨</el-text>
+            </el-col>
+            <el-col :span="1" style="text-align: left;">
+                <el-button :icon="RefreshRight" style="font-size: 14px;" link @click="onClickGetWeather"></el-button>
+            </el-col>
+            <el-col :span="8" />
+            <el-col :span="12" style="text-align: right;">
+                <el-select
+                    v-model="state.city"
+                    size="small"
+                    :style="state.style"
+                    @change="onChangeWeather"
+                >
+                <el-option
+                    v-for="item in state.cityList"
+                    :key="item.name"
+                    :label="item.name"
+                    :value="item.name"
+                />
+                </el-select>
+            </el-col>
+        </el-row>
+        <el-divider class="divider"></el-divider>
+        <el-row>
+            <el-col :span="6">
+                <el-icon v-show="state.weather.info=='Clouds'"          style="font-size: 50px;"><Cloudy        /></el-icon>
+                <el-icon v-show="state.weather.info=='PartlyCloudy'"    style="font-size: 50px;"><PartlyCloudy  /></el-icon>
+                <el-icon v-show="state.weather.info=='Clear'"           style="font-size: 50px;"><Sunny         /></el-icon>
+                <el-icon v-show="state.weather.info=='ClearNight'"      style="font-size: 50px;"><Moon          /></el-icon>
+                <el-icon v-show="state.weather.info=='Rain'"            style="font-size: 50px;"><Pouring       /></el-icon>
+                <el-icon v-show="state.weather.info=='Snow'"            style="font-size: 50px;"><Drizzling     /></el-icon>
+            </el-col>
+            <el-col :span="6" style="display: flex; align-items: center; margin-bottom: 10px; margin-right: 24px;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <el-text style="font-size: 40px; margin-right: 8px;">{{ state.weather.main.temp }}°</el-text>
+                    <el-text>{{ state.weather.info_kor }}</el-text>
+                </div>
+            </el-col>
+            <el-col :span="8" style="margin-top: 5px; margin-left: 8px; text-align: left;">
+                <el-row>
+                    <el-col :span="12">
+                        <el-tag type="primary" effect="plain" round style="margin-bottom: 4px;">{{ state.weather.main.temp_max }}°</el-tag>
+                        <el-tag type="danger" effect="plain" round style="margin-bottom: 4px;">{{ state.weather.main.temp_min }}°</el-tag>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-tag :type="state.weather.pm10_type" round style="margin-bottom: 4px;">{{ state.weather.pm10_text }}</el-tag>
+                        <el-tag :type="state.weather.pm2_5_type" round style="margin-bottom: 4px;">{{ state.weather.pm2_5_text }}</el-tag>
+                    </el-col>
+                </el-row>
+            </el-col>
+            <el-col :span="24" style="margin-top: 4px;">
+                <el-row style="justify-content: center; align-items: center;">
+                    <el-col :span="12" style="padding-right: 4px;">
+                        <el-card shadow="never" class="custom-card">
+                            <el-row>
+                                <el-col :span="8" style="display: flex; align-items: center;">
+                                    <el-text>일출</el-text>
+                                </el-col>
+                                <el-col :span="8" style="display: flex; align-items: center;">
+                                    <el-icon><Sunrise /></el-icon>
+                                </el-col>
+                                <el-col :span="8" style="display: flex; align-items: right;">
+                                    <el-text>{{ state.weather.sys.sunrise }}</el-text>
+                                </el-col>
+                            </el-row>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="12" style="padding-left: 4px;">
+                        <el-card shadow="never" class="custom-card">
+                            <el-row>
+                                <el-col :span="8" style="display: flex; align-items: center;">
+                                    <el-text>일몰</el-text>
+                                </el-col>
+                                <el-col :span="8" style="display: flex; align-items: center;">
+                                    <el-icon><Sunset /></el-icon>
+                                </el-col>
+                                <el-col :span="8" style="display: flex; align-items: center;">
+                                    <el-text>{{ state.weather.sys.sunset }}</el-text>
+                                </el-col>
+                            </el-row>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-col>
+            <el-col :span="24" style="text-align: right; margin-top: 12px;">
+                <el-button style="background-color: #eb6e4b; width: 20px; height: 20px; padding: 0px; font-size: 12px; color: #f1f3f2; border-color: #eb6e4b;">W</el-button>
+                <el-link :underline="false" href="https://www.naver.com/" target="_blank" style="font-size: 12px; margin-left: 3px; margin-top: 1px; font-weight: bold;">
+                    OpenWeather
+                </el-link>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 <script lang="ts" setup>
 import { Cloudy, Drizzling, Moon, PartlyCloudy, Pouring, RefreshRight, Sunny, Sunrise, Sunset } from '@element-plus/icons-vue';
 import axios from "axios";
-import { ElLoading } from 'element-plus';
 import translate from 'translate';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import city from '../../json/city.json';
+
+const loading = ref(true)
 
 interface weatherInfo {
     main : {
@@ -157,11 +166,7 @@ onMounted( async () => {
 /* 날씨 API 호출 */
 const onClickGetWeather = async () => {
 
-    const loading = ElLoading.service({
-        lock: true,
-        text: 'Loading',
-        background: 'rgba(255, 255, 255, 0.8)',
-    })
+    loading.value = true
     const response = await axios.get('https://api.openweathermap.org/data/2.5/weather?q=' + state.city + ', kr&appid=d9b852258ea16c6066275068c02d72aa&');
 
     /* 켈빈 온도를 섭씨 온도로 변환 */
@@ -196,7 +201,6 @@ const onClickGetWeather = async () => {
 
     /* 대기질 데이터 가져오기 */
     const payload = await axios.get('https://api.openweathermap.org/data/2.5/air_pollution?lat=' + response.data.coord.lat + '&lon=' + response.data.coord.lon + '&appid=d9b852258ea16c6066275068c02d72aa')
-    loading.close()
 
     /* 미세먼지 */
     if(payload.data.list['0'].components.pm10 >= 0 && payload.data.list['0'].components.pm10 < 20) {
@@ -248,6 +252,8 @@ const onClickGetWeather = async () => {
     /* select box 넓이 조정 */
     state.style = 'width: ' + String((state.city.length) * 30) + 'px; text-align: right;'
 
+    loading.value = false
+
 }
 
 /* 도시 변경 시 날씨 api 호출 */
@@ -284,25 +290,6 @@ const onChangeWeather = () => {
     background-color: var(--el-fill-color-blank);
     transition: var(--el-transition-duration);
     box-shadow: 0 0 0 0px var(--el-border-color) inset;
-}
-.el-loading-mask.is-fullscreen {
-    /* position: fixed; */
-    position: relative;
-    width: 330px;
-    height: 200px;
-    top: -851px;
-    left: 81%;
-}
-.el-loading-mask {
-    position: absolute;
-    z-index: 2000;
-    background-color: #ffffff;
-    margin: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    transition: opacity var(--el-transition-duration);
 }
 </style>
 <!-- 

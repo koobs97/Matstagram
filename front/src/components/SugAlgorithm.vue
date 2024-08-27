@@ -1,7 +1,7 @@
 <template>
     <el-row>
         <el-col :span="24" style="margin-bottom: 0px;">
-            <el-form-item label="검색어" style="font-size: 12px; margin-bottom: 4px;">
+            <el-form-item style="margin-bottom: 4px;">
                 <el-input v-model="state.ivo.input" style="font-size: 12px; height: 32px;" @keyup.enter="getApiBlogData()">
                     <template #append>
                         <el-button :icon="Search" @click="getApiBlogData()" />
@@ -9,18 +9,31 @@
                 </el-input>
             </el-form-item>
         </el-col>
+        <el-col :span="8" style="margin-bottom: 4px; text-align: left;">
+            <el-button style="font-size: 11px; width: 80px; height: 20px; margin-left: 2px;" :icon="RefreshRight">옵션초기화</el-button>
+        </el-col>
+        <el-col :span="16" style="margin-bottom: 4px; text-align: right;">
+            <el-button style="font-size: 11px; width: 70px; height: 20px; margin-left: 2px;" :icon="Tools">표시개수</el-button>
+            <el-button style="font-size: 11px; width: 70px; height: 20px; margin-left: 2px;" :icon="Tools">시작위치</el-button>
+            <el-button style="font-size: 11px; width: 70px; height: 20px; margin-left: 2px;" :icon="Tools">정렬방법</el-button>
+        </el-col>
 
-        <el-scrollbar always height="520px" style="width: 360px;" v-loading="loading" element-loading-background="rgba(255, 255, 255, 0.8)">
+        <el-scrollbar always height="390px" style="width: 360px;" v-loading="loading" element-loading-background="rgba(255, 255, 255, 0.8)">
             <div v-for="(item, index) in state.apiItems" :key="index" style="width: 330px;">
                 <el-divider class="divider" />
-                <el-col :span="24" style="margin-bottom: 4px; margin-top: 0px; text-align: left;">
-                    <el-text style="font-size: 11px;">
-                    <el-icon style="font-size: 11px;">
-                        <User />
-                    </el-icon>
-                    {{ item.bloggername }} : {{ item.postdate }}
-                    </el-text>
-                </el-col>
+                <el-row>
+                    <el-col :span="23" style="margin-bottom: 4px; margin-top: 0px; text-align: left;">
+                        <el-text style="font-size: 11px;">
+                        <el-icon style="font-size: 11px;">
+                            <User />
+                        </el-icon>
+                        {{ item.bloggername }} : {{ item.postdate }}
+                        </el-text>
+                    </el-col>
+                    <el-col :span="1">
+                        <el-icon style="font-size: 8px;"><MoreFilled /></el-icon>
+                    </el-col>
+                </el-row>
                 <el-col :span="24" style="margin-bottom: 4px; margin-top: 0px; text-align: left;">
                     <el-link style="font-size: 12px; font-weight: bold; color: #7C4DFF;" :href="item.link">{{ item.title }}</el-link>
                 </el-col>
@@ -30,7 +43,7 @@
             </div>
         </el-scrollbar>
 
-        <el-col :span="24" style="text-align: right; margin-top: 16px;">
+        <el-col :span="24" style="text-align: right; margin-top: 12px;">
             <el-button style="background-color: #03c85f; width: 20px; height: 20px; padding: 0px; font-size: 12px; color: #ffffff; border-color: #03c85f;">N</el-button>
             <el-link :underline="false" href="https://www.naver.com/" target="_blank" style="font-size: 12px; margin-left: 3px; font-weight: bold;">
                 Naver
@@ -42,7 +55,7 @@
     </el-row>
 </template>
 <script lang="ts" setup>
-import { Search, User } from '@element-plus/icons-vue';
+import { MoreFilled, RefreshRight, Search, Tools, User } from '@element-plus/icons-vue';
 import { onMounted, reactive, ref } from 'vue';
 import { Api } from '../common/common';
 import { NaverOpenApiIvo } from '../vo/ivo/NaverOpenApiIvo';
