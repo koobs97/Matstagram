@@ -31,7 +31,7 @@
                         </el-text>
                     </el-col>
                     <el-col :span="1">
-                        <el-icon style="font-size: 8px;"><MoreFilled /></el-icon>
+                        <el-button link :icon="MoreFilled" style="font-size: 10px;"></el-button>
                     </el-col>
                 </el-row>
                 <el-col :span="24" style="margin-bottom: 4px; margin-top: 0px; text-align: left;">

@@ -26,7 +26,7 @@
             <el-menu
                 default-active="1"
             >
-                <el-menu-item index="1"  @click="onClickMyStorage('')">
+                <el-menu-item index="1"  @click="onClickMyStorage('MainHome')">
                     <el-icon><HomeFilled /></el-icon>
                     <span>Home</span>
                 </el-menu-item>
@@ -81,6 +81,8 @@
             <el-card shadow="never" style="height: 515px; width: 380px; margin-left: 20px; margin-top: 20px">
                 <SugAlgorithm :weather="state.weather" />
             </el-card>
+            <el-card shadow="never" style="height: 65px; width: 380px; margin-left: 20px; margin-top: 20px">
+            </el-card>
         </el-col>
     </el-row>
 </template>
@@ -126,8 +128,7 @@ const state = reactive({
 // 화면진입 시
 onMounted(() => {
     userInfo.user = userStoreObj.getUserInfo
-    // state.page.component = defineAsyncComponent(() => import (`../src/views/pages/MainCenter.vue`))
-    state.page.component = ''
+    state.page.component = defineAsyncComponent(() => import (`../src/views/pages/MainHome.vue`))
 })
 
 const onClickMyStorage = (componentName: string) => {
