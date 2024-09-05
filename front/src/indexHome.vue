@@ -82,6 +82,7 @@
                 <SugAlgorithm :weather="state.weather" />
             </el-card>
             <el-card shadow="never" style="height: 65px; width: 380px; margin-left: 20px; margin-top: 20px">
+                <GoToFindApi />
             </el-card>
         </el-col>
     </el-row>
@@ -90,6 +91,7 @@
 <script lang="ts" setup>
 import { Aim, Bell, HomeFilled, InfoFilled, Opportunity, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
 import { defineAsyncComponent, onMounted, reactive } from 'vue';
+import GoToFindApi from '../src/components/GoToFindApi.vue';
 import SugAlgorithm from '../src/components/SugAlgorithm.vue';
 import UserInfo from '../src/components/UserInfo.vue';
 import WeatherGuide from '../src/views/pages/WeatherGuide.vue';

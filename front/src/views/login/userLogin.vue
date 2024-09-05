@@ -123,6 +123,12 @@
                                                         </el-tag><br>
                                                         <el-text style="font-size: 12px; margin-bottom: 4px;">- Element Plus 사용</el-text><br>
                                                         <el-text style="font-size: 12px; margin-bottom: 4px;">- 구글 색상표의 보라색 계열 참조</el-text><br>
+                                                        <el-tag type="info" effect="plain" style="font-size: 12px; margin-top: 10px; margin-bottom: 4px;">
+                                                            {{ '여러 Open Api 사용' }}
+                                                        </el-tag><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- KaKao 지도 Api</el-text><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- Naver 검색 Api</el-text><br>
+                                                        <el-text style="font-size: 12px; margin-bottom: 4px;">- Open Weather Api</el-text><br>
                                                     </el-card>
                                                 </div>
                                             </div>
