@@ -11,8 +11,29 @@
     
     <el-divider class="divider" />
 
-    <div id="map" style="width: 100%; height: 500px;" ><div id="centerAddr"></div></div>
-    
+    <div class="map_wrap">
+        <el-row>
+            <el-col :span="24">
+                <div id="map" :style="state.mapStyle"></div>
+                <div class="hAddr">
+                    <span class="title">지도중심기준 행정동 주소정보</span>
+                    <span id="centerAddr"></span>
+                </div>
+                <div id="roadviewControl" @click="setRoadviewRoad()"></div>
+            </el-col>
+        </el-row>
+        <el-popover
+            ref="popover"
+            placement="right"
+            :width="400"
+            :visible="state.viewLoadMap"
+        >   
+            <div id="rvWrapper" style="width:100%; height: 300px; position:relative; overflow:hidden;" :hidden="state.loadViewHidden">
+                <div id="roadview" style="width:100%;height:100%;"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+                <div id="close" title="로드뷰닫기" @click="closeRoadview()"><span class="img"></span></div>
+            </div>
+        </el-popover>
+    </div>
 
     <el-row>
         <el-col :span="24" style="text-align: right; margin-top: 18px;">
@@ -44,11 +65,33 @@
 
 <script lang="ts" setup>
 import { Location } from '@element-plus/icons-vue';
-import { nextTick, onMounted } from 'vue';
+import { onMounted, reactive } from 'vue';
 
 // Vue의 onMounted 라이프사이클 훅에서 카카오맵 로딩 함수 호출
 onMounted(() => {
     loadKakaoMap();
+})
+
+const state = reactive({
+    map: '' as any,
+    mapStyle: 'width:100%; height:500px; position:relative;overflow:hidden;',
+    loadViewHidden: true,
+    viewLoadMap: false,
+    mapCenter: '' as any,
+    overlayOn: false,                                       // 지도 위에 로드뷰 오버레이가 추가된 상태를 가지고 있을 변수
+    marker: '' as any,
+    div: {
+        container: document.getElementById('container') as any,    // 지도와 로드뷰를 감싸고 있는 div 입니다
+        mapWrapper: document.getElementById('mapWrapper') as any,  // 지도를 감싸고 있는 div 입니다
+        mapContainer: document.getElementById('map') as any,       // 지도를 표시할 div 입니다
+        rvContainer: document.getElementById('roadview') as any,    //로드뷰를 표시할 div 입니다
+    },
+    loadView: {
+        control: {} as any,
+        rv: '' as any,
+        rvClient: '' as any,
+        marker: '' as any,
+    } as any,
 })
 
 // 카카오맵 API 로드 및 지도 초기화 함수
@@ -81,7 +124,12 @@ const initMap = () => {
                 const lat = position.coords.latitude; // 위도
                 const lng = position.coords.longitude; // 경도
 
-                const container = document.getElementById('map'); // 지도를 표시할 div 엘리먼트
+                /* div 영역 초기화 */
+                state.div.mapContainer = document.getElementById('map')
+                state.div.mapWrapper = document.getElementById('mapWrapper')
+                state.div.container = document.getElementById('container')
+                state.div.rvContainer = document.getElementById('roadview')
+
                 const options = {
                     // @ts-ignore
                     center: new window.kakao.maps.LatLng(lat, lng), // 지도의 중심 좌표
@@ -89,126 +137,300 @@ const initMap = () => {
                 };
 
                 // @ts-ignore
-                const map = new window.kakao.maps.Map(container, options); // 지도 객체 생성
-                console.log(map)
-
-                zoomControl(map)        // 줌 컨트롤 이벤트 등록
-                mapTypeControl(map)     // 지도에 컨트롤 올리기
-                addMarker(map)          // 지도에 마커 표시
-
-                nextTick(()=>{
-                    // @ts-ignore
-                const geocoder = new window.kakao.maps.services.Geocoder()
-                console.log(geocoder)
+                state.map = new window.kakao.maps.Map(state.div.mapContainer, options); // 지도 객체 생성
 
                 // @ts-ignore
-                const marker = new window.kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-                    // @ts-ignore
-                    infowindow = new window.kakao.maps.InfoWindow({zindex:1})
+                state.mapCenter = new window.kakao.maps.LatLng(lat, lng)
 
-                // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
-                searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-
-                // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
                 // @ts-ignore
-                window.kakao.maps.event.addListener(map, 'click', function(mouseEvent: any) {
-                    searchDetailAddrFromCoords(mouseEvent.latLng, function(result: any, status: any) {
-                        // @ts-ignore
-                        if (status === window.kakao.maps.services.Status.OK) {
-                            var detailAddr = result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-                            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-                            
-                            var content = '<div class="bAddr">' +
-                                            '<span class="title">법정동 주소정보</span>' + 
-                                            detailAddr + 
-                                        '</div>';
+                state.loadView.rv = new window.kakao.maps.Roadview(state.div.rvContainer)
 
-                            // 마커를 클릭한 위치에 표시합니다 
-                            marker.setPosition(mouseEvent.latLng);
-                            marker.setMap(map);
-
-                            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-                            infowindow.setContent(content);
-                            infowindow.open(map, marker);
-                        }   
-                    });
-                });
-
-                // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
                 // @ts-ignore
-                window.kakao.maps.event.addListener(map, 'idle', function() {
-                    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-                });
-                function searchAddrFromCoords(coords: any, callback: any) {
-                    // 좌표로 행정동 주소 정보를 요청합니다
-                    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
-                }
-                function searchDetailAddrFromCoords(coords: any, callback: any) {
-                    // 좌표로 법정동 상세 주소 정보를 요청합니다
-                    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-                }
-                // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
-                function displayCenterInfo(result: any, status: any) {
-                    // @ts-ignore
-                    if (status === window.kakao.maps.services.Status.OK) {
-                        var infoDiv = document.getElementById('centerAddr');
+                state.loadView.rvClient = new window.kakao.maps.RoadviewClient()
 
-                        for(var i = 0; i < result.length; i++) {
-                            // 행정동의 region_type 값은 'H' 이므로
-                            if (result[i].region_type === 'H') {
-                                // @ts-ignore
-                                infoDiv.innerHTML = result[i].address_name;
-                                break;
-                            }
-                        }
-                    }    
-                }
-                })
+
+                setCssStyle()       // css 세팅하기
+                zoomControl()       // 줌 컨트롤 이벤트 등록
+                mapTypeControl()    // 지도에 컨트롤 올리기
+                addMarker()         // 지도에 마커 표시
+                viewMarkerAddr()    // 마커에 행정동 주소정보 표시
+                loadMarker()
 
             }
         )
     }    
 }
 
-// 지도 확대-축소 줌 컨트롤
-const zoomControl = (map: any) => {
+/* css 세팅하기 */
+const setCssStyle = () => {
+
+    // CSS를 동적으로 추가하는 코드
+    const style = document.createElement('style');
+    style.textContent = `
+    .map_wrap {position:relative;width:100%;height:350px;}
+    .title {font-weight:bold;display:block;font-size 12px;text-align:left;padding-bottom:4px;}
+    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;font-size:12px;text-align:left;}
+    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
+    .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;font-size:11px;text-align:left;}
+
+    #container {overflow:hidden;height:300px;position:relative;}
+    #mapWrapper {width:100%;height:300px;z-index:1;}
+    #rvWrapper {width:50%;height:300px;top:0;right:0;position:relative;z-index:0;}
+    #container.view_roadview #mapWrapper {width: 50%;}
+    #roadviewControl {position:absolute;top:5px;right:5px;width:42px;height:33px;margin-right:108px;z-index: 1;cursor: pointer; background: url(https://t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) 0 -450px no-repeat;}
+    #roadviewControl.active {background-position:0 -350px;}
+    #close {position: absolute;padding: 2px;top: 5px;left: 5px;cursor: pointer;background: #fff;border-radius: 4px;border: 1px solid #c8c8c8;box-shadow: 0px 1px #888;}
+    #close .img {display: block;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/rv_close.png) no-repeat;width: 12px;height: 12px;}
+    `;
+    document.head.appendChild(style)
+
+
+}
+
+/* 지도 확대-축소 줌 컨트롤 */
+const zoomControl = () => {
     // @ts-ignore
     const zoomControl = new window.kakao.maps.ZoomControl()
     // @ts-ignore
-    map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT)
+    state.map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT)
 }
 
-// 지도에 컨트롤 올리기
-const mapTypeControl = (map: any) => {
+/* 지도에 컨트롤 올리기 */
+const mapTypeControl = () => {
     // @ts-ignore
     const mapTypeControl = new window.kakao.maps.MapTypeControl()
     // @ts-ignore
-    map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPRIGHT)
+    state.map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPRIGHT)
 }
 
-// 지도에 마커 표시
-const addMarker = (map: any) => {
+/* 지도에 마커 표시 */
+const addMarker = () => {
     // @ts-ignore
-    const marker = new window.kakao.maps.Marker({ 
+    state.marker = new window.kakao.maps.Marker({ 
         // 지도 중심좌표에 마커를 생성합니다 
-        position: map.getCenter() 
+        position: state.map.getCenter() 
     })
 
     // 마커 생성
-    marker.setMap(map)
+    state.marker.setMap(state.map)
 
     // 마커가 드래그 설정
-    marker.setDraggable(true);
+    state.marker.setDraggable(true);
 
     // 지도에 클릭 이벤트 등록
     // @ts-ignore
-    window.kakao.maps.event.addListener(map, 'click', function (mouseEvent: window.kakao.maps.event.MouseEvent) {
+    window.kakao.maps.event.addListener(state.map, 'click', function (mouseEvent: window.kakao.maps.event.MouseEvent) {
         // 클릭한 위도, 경도 정보를 가져옵니다
         const latlng = mouseEvent.latLng;
 
         // 마커 위치를 클릭한 위치로 옮깁니다
-        marker.setPosition(latlng);
+        state.marker.setPosition(latlng);
     });
+}
+
+/* 마커에 행정동 주소정보 표시 */
+const viewMarkerAddr = () => {
+
+    // @ts-ignore
+    const geocoder = new window.kakao.maps.services.Geocoder()
+
+    // @ts-ignore
+    const marker = new window.kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
+    // @ts-ignore
+    infowindow = new window.kakao.maps.InfoWindow({zindex:1})
+
+    // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+    searchAddrFromCoords(state.map.getCenter(), displayCenterInfo);
+
+    // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+    // @ts-ignore
+    window.kakao.maps.event.addListener(state.map, 'click', function(mouseEvent: any) {
+        searchDetailAddrFromCoords(mouseEvent.latLng, function(result: any, status: any) {
+            // @ts-ignore
+            if (status === window.kakao.maps.services.Status.OK) {
+                var detailAddr = result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                
+                var content = '<div class="bAddr">' +
+                                '<span class="title">주소정보</span>' + 
+                                detailAddr + 
+                            '</div>';
+
+                // 마커를 클릭한 위치에 표시합니다 
+                marker.setPosition(mouseEvent.latLng);
+                marker.setMap(state.map);
+
+                // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+                infowindow.setContent(content);
+                infowindow.open(state.map, marker);
+            }   
+        });
+    });
+
+    // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+    // @ts-ignore
+    window.kakao.maps.event.addListener(state.map, 'idle', function() {
+        searchAddrFromCoords(state.map.getCenter(), displayCenterInfo);
+    });
+    function searchAddrFromCoords(coords: any, callback: any) {
+        // 좌표로 행정동 주소 정보를 요청합니다
+        geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+    }
+    function searchDetailAddrFromCoords(coords: any, callback: any) {
+        // 좌표로 법정동 상세 주소 정보를 요청합니다
+        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+    }
+    // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
+    function displayCenterInfo(result: any, status: any) {
+        // @ts-ignore
+        if (status === window.kakao.maps.services.Status.OK) {
+            var infoDiv = document.getElementById('centerAddr');
+
+            for(var i = 0; i < result.length; i++) {
+                // 행정동의 region_type 값은 'H' 이므로
+                if (result[i].region_type === 'H') {
+                    // @ts-ignore
+                    infoDiv.innerHTML = result[i].address_name;
+                    break;
+                }
+            }
+        }    
+    }
+
+}
+
+const setRoadviewRoad = () => {
+    state.loadView.control = document.getElementById('roadviewControl')
+    // 버튼이 눌린 상태가 아니면
+    if (state.loadView.control.className.indexOf('active') === -1) {
+        state.loadView.control.className = 'active';
+
+        state.loadViewHidden = false
+        state.viewLoadMap = true
+
+        // 로드뷰 도로 오버레이가 보이게 합니다
+        toggleOverlay(true);
+    } else {
+        state.loadView.control.className = '';
+
+        state.loadViewHidden = true
+        state.viewLoadMap = false
+
+        // 로드뷰 도로 오버레이를 제거합니다
+        toggleOverlay(false);
+        initMap()
+    }
+}
+
+/* 지도 위의 로드뷰 도로 오버레이를 추가,제거하는 함수입니다 */
+const toggleOverlay = (active: any) => {
+    if (active) {
+        state.overlayOn = true;
+
+        // @ts-ignore
+        state.map.addOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADVIEW);    // 지도 위에 로드뷰 도로 오버레이를 추가합니다
+
+        // 지도 위에 마커를 표시합니다
+        state.marker.setMap(state.map);
+
+        // 마커의 위치를 지도 중심으로 설정합니다 
+        state.marker.setPosition(state.map.getCenter());
+
+        // 로드뷰의 위치를 지도 중심으로 설정합니다
+        toggleRoadview(state.map.getCenter());
+    } else {
+        state.overlayOn = false;
+
+        // @ts-ignore
+        state.map.removeOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADVIEW); // 지도 위의 로드뷰 도로 오버레이를 제거합니다
+
+        // 지도 위의 마커를 제거합니다
+        state.marker.setMap(null);
+    }
+}
+
+/* 로드뷰를 설정하는 함수입니다 */
+const toggleRoadview = (position: any) => {
+    state.loadView.rvClient.getNearestPanoId(position, 50, function(panoId: any) {
+        // 파노라마 ID가 null 이면 로드뷰를 숨깁니다
+        if (panoId === null) {
+            toggleMapWrapper(true, position);
+        } else {
+            toggleMapWrapper(false, position);
+
+            // panoId로 로드뷰를 설정합니다
+            state.loadView.rv.setPanoId(panoId, position);
+        }
+    });
+}
+
+/* 지도를 감싸고 있는 div의 크기를 조정하는 함수입니다 */
+const toggleMapWrapper = (active: any, position: any) => {
+    if (active) {
+        // 지도의 크기가 변경되었기 때문에 relayout 함수를 호출합니다
+        state.map.relayout();
+
+        // 지도의 너비가 변경될 때 지도중심을 입력받은 위치(position)로 설정합니다
+        state.map.setCenter(position);
+    } else {
+
+        // 지도만 보여지고 있는 상태이면 지도의 너비가 50%가 되도록 class를 변경하여
+        // 로드뷰가 함께 표시되게 합니다
+        if (state.div.container != null && state.div.container.className.indexOf('view_roadview') === -1) {
+            state.div.container.className = 'view_roadview';
+
+            // 지도의 크기가 변경되었기 때문에 relayout 함수를 호출합니다
+            state.map.relayout();
+
+            // 지도의 너비가 변경될 때 지도중심을 입력받은 위치(position)로 설정합니다
+            state.map.setCenter(position);
+        }
+    }
+}
+
+const loadMarker = () => {
+    // @ts-ignore
+    const markImage = new window.kakao.maps.MarkerImage(
+        'https://t1.daumcdn.net/localimg/localimages/07/2018/pc/roadview_minimap_wk_2018.png',
+        // @ts-ignore
+        new window.kakao.maps.Size(26, 46),
+        {
+            // 스프라이트 이미지를 사용합니다.
+            // 스프라이트 이미지 전체의 크기를 지정하고
+            // @ts-ignore
+            spriteSize: new window.kakao.maps.Size(1666, 168),
+            // 사용하고 싶은 영역의 좌상단 좌표를 입력합니다.
+            // background-position으로 지정하는 값이며 부호는 반대입니다.
+            // @ts-ignore
+            spriteOrigin: new window.kakao.maps.Point(705, 114),
+            // @ts-ignore
+            offset: new window.kakao.maps.Point(13, 46)
+        }
+    );
+
+    // @ts-ignore
+    state.loadView.marker = new window.kakao.maps.Marker({
+        image : markImage,
+        position: state.mapCenter,
+        draggable: true
+    });
+
+    // 마커에 dragend 이벤트를 등록합니다
+    // @ts-ignore
+    window.kakao.maps.event.addListener(state.loadView.marker, 'dragend', function() {
+
+        // 현재 마커가 놓인 자리의 좌표입니다 
+        var position = state.loadView.marker.getPosition();
+
+        // 마커가 놓인 위치를 기준으로 로드뷰를 설정합니다
+        toggleRoadview(position);
+    });
+}
+
+const closeRoadview = () => {
+    state.mapStyle = 'width:100%; height:500px; position:relative;overflow:hidden;'
+    state.loadViewHidden = true
+    state.viewLoadMap = false
 }
 
 </script>
