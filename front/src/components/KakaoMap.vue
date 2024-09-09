@@ -1,42 +1,13 @@
 <template>
     
     <el-row>
-        <el-col :span="24" style="text-align: left;">
+        <el-col :span="12" style="text-align: left;">
             <el-text style="font-weight: bold; font-size: 14px;">
                 <el-icon><Location /></el-icon>
                 맛집 찾아보기
             </el-text>
         </el-col>
-    </el-row>
-    
-    <el-divider class="divider" />
-
-    <div class="map_wrap">
-        <el-row>
-            <el-col :span="24">
-                <div id="map" :style="state.mapStyle"></div>
-                <div class="hAddr">
-                    <span class="title">지도중심기준 행정동 주소정보</span>
-                    <span id="centerAddr"></span>
-                </div>
-                <div id="roadviewControl" @click="setRoadviewRoad()"></div>
-            </el-col>
-        </el-row>
-        <el-popover
-            ref="popover"
-            placement="right"
-            :width="400"
-            :visible="state.viewLoadMap"
-        >   
-            <div id="rvWrapper" style="width:100%; height: 300px; position:relative; overflow:hidden;" :hidden="state.loadViewHidden">
-                <div id="roadview" style="width:100%;height:100%;"></div> <!-- 로드뷰를 표시할 div 입니다 -->
-                <div id="close" title="로드뷰닫기" @click="closeRoadview()"><span class="img"></span></div>
-            </div>
-        </el-popover>
-    </div>
-
-    <el-row>
-        <el-col :span="24" style="text-align: right; margin-top: 18px;">
+        <el-col :span="12" style="text-align: right;">
             <el-button 
                 style="
                     background-color: #fee500; 
@@ -61,6 +32,32 @@
             </el-link>
         </el-col>
     </el-row>
+    
+    <el-divider class="divider" />
+
+    <div class="map_wrap">
+        <el-row>
+            <el-col :span="24">
+                <div id="map" :style="state.mapStyle"></div>
+                <div class="hAddr">
+                    <span class="title">지도중심기준 행정동 주소정보</span>
+                    <span id="centerAddr"></span>
+                </div>
+                <div id="roadviewControl" @click="setRoadviewRoad()"></div>
+            </el-col>
+        </el-row>
+        <el-popover
+            ref="popover"
+            placement="right"
+            :width="600"
+            :visible="state.viewLoadMap"
+        >   
+            <div id="rvWrapper" style="width:100%; height: 500px; position:relative; overflow:hidden;" :hidden="state.loadViewHidden">
+                <div id="roadview" style="width:100%;height:100%;"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+                <div id="close" title="로드뷰닫기" @click="closeRoadview()"><span class="img"></span></div>
+            </div>
+        </el-popover>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -80,6 +77,7 @@ const state = reactive({
     mapCenter: '' as any,
     overlayOn: false,                                       // 지도 위에 로드뷰 오버레이가 추가된 상태를 가지고 있을 변수
     marker: '' as any,
+    infowindow: '' as any,
     div: {
         container: document.getElementById('container') as any,    // 지도와 로드뷰를 감싸고 있는 div 입니다
         mapWrapper: document.getElementById('mapWrapper') as any,  // 지도를 감싸고 있는 div 입니다
@@ -151,14 +149,51 @@ const initMap = () => {
 
                 setCssStyle()       // css 세팅하기
                 zoomControl()       // 줌 컨트롤 이벤트 등록
-                mapTypeControl()    // 지도에 컨트롤 올리기
-                addMarker()         // 지도에 마커 표시
                 viewMarkerAddr()    // 마커에 행정동 주소정보 표시
+                addMarker()         // 지도에 마커 표시
                 loadMarker()
 
             }
         )
     }    
+}
+
+const clearLoadView = () => {
+
+    const lat = state.marker.getPosition().getLat();
+    const lng = state.marker.getPosition().getLng(); // 경도
+
+    /* div 영역 초기화 */
+    state.div.mapContainer = document.getElementById('map')
+    state.div.mapWrapper = document.getElementById('mapWrapper')
+    state.div.container = document.getElementById('container')
+    state.div.rvContainer = document.getElementById('roadview')
+
+    const options = {
+        // @ts-ignore
+        center: new window.kakao.maps.LatLng(lat, lng), // 지도의 중심 좌표
+        level: 3, // 지도의 확대 레벨
+    };
+
+    // @ts-ignore
+    state.map = new window.kakao.maps.Map(state.div.mapContainer, options); // 지도 객체 생성
+
+    // @ts-ignore
+    state.mapCenter = new window.kakao.maps.LatLng(lat, lng)
+
+    // @ts-ignore
+    state.loadView.rv = new window.kakao.maps.Roadview(state.div.rvContainer)
+
+    // @ts-ignore
+    state.loadView.rvClient = new window.kakao.maps.RoadviewClient()
+
+
+    setCssStyle()       // css 세팅하기
+    zoomControl()       // 줌 컨트롤 이벤트 등록
+    viewMarkerAddr()    // 마커에 행정동 주소정보 표시
+    addMarker()         // 지도에 마커 표시
+    loadMarker()
+
 }
 
 /* css 세팅하기 */
@@ -177,13 +212,12 @@ const setCssStyle = () => {
     #mapWrapper {width:100%;height:300px;z-index:1;}
     #rvWrapper {width:50%;height:300px;top:0;right:0;position:relative;z-index:0;}
     #container.view_roadview #mapWrapper {width: 50%;}
-    #roadviewControl {position:absolute;top:5px;right:5px;width:42px;height:33px;margin-right:108px;z-index: 1;cursor: pointer; background: url(https://t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) 0 -450px no-repeat;}
+    #roadviewControl {position:absolute;bottom:5px;right:5px;width:42px;height:42px;z-index: 1;cursor: pointer; background: url(https://t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) 0 -450px no-repeat;}
     #roadviewControl.active {background-position:0 -350px;}
     #close {position: absolute;padding: 2px;top: 5px;left: 5px;cursor: pointer;background: #fff;border-radius: 4px;border: 1px solid #c8c8c8;box-shadow: 0px 1px #888;}
     #close .img {display: block;background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/rv_close.png) no-repeat;width: 12px;height: 12px;}
     `;
     document.head.appendChild(style)
-
 
 }
 
@@ -195,20 +229,13 @@ const zoomControl = () => {
     state.map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT)
 }
 
-/* 지도에 컨트롤 올리기 */
-const mapTypeControl = () => {
-    // @ts-ignore
-    const mapTypeControl = new window.kakao.maps.MapTypeControl()
-    // @ts-ignore
-    state.map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPRIGHT)
-}
-
 /* 지도에 마커 표시 */
 const addMarker = () => {
     // @ts-ignore
     state.marker = new window.kakao.maps.Marker({ 
         // 지도 중심좌표에 마커를 생성합니다 
-        position: state.map.getCenter() 
+        position: state.map.getCenter(),
+        clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
     })
 
     // 마커 생성
@@ -226,6 +253,19 @@ const addMarker = () => {
         // 마커 위치를 클릭한 위치로 옮깁니다
         state.marker.setPosition(latlng);
     });
+
+    var iwContent = '<div style="font-weight:bold;display:block;font-size:12px;text-align:left;padding-top:4px;padding-bottom:4px;padding-left:4px;padding-right: 24px;">카카오맵을 통해 맛집을 검색해보세요!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+    // 인포윈도우를 생성합니다
+    // @ts-ignore
+    state.infowindow = new window.kakao.maps.InfoWindow({
+        content : iwContent,
+        removable : iwRemoveable
+    });
+
+    // 마커 위에 인포윈도우를 표시합니다
+    state.infowindow.open(state.map, state.marker);
 }
 
 /* 마커에 행정동 주소정보 표시 */
@@ -233,11 +273,6 @@ const viewMarkerAddr = () => {
 
     // @ts-ignore
     const geocoder = new window.kakao.maps.services.Geocoder()
-
-    // @ts-ignore
-    const marker = new window.kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-    // @ts-ignore
-    infowindow = new window.kakao.maps.InfoWindow({zindex:1})
 
     // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
     searchAddrFromCoords(state.map.getCenter(), displayCenterInfo);
@@ -256,13 +291,19 @@ const viewMarkerAddr = () => {
                                 detailAddr + 
                             '</div>';
 
+                state.infowindow.close()
+                state.infowindow = ''
+
+                // @ts-ignore
+                state.infowindow = new window.kakao.maps.InfoWindow({zindex:1})
+
                 // 마커를 클릭한 위치에 표시합니다 
-                marker.setPosition(mouseEvent.latLng);
-                marker.setMap(state.map);
+                state.marker.setPosition(mouseEvent.latLng);
+                state.marker.setMap(state.map);
 
                 // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-                infowindow.setContent(content);
-                infowindow.open(state.map, marker);
+                state.infowindow.setContent(content);
+                state.infowindow.open(state.map, state.marker);
             }   
         });
     });
@@ -308,8 +349,23 @@ const setRoadviewRoad = () => {
         state.loadViewHidden = false
         state.viewLoadMap = true
 
+        state.infowindow.close()
+
         // 로드뷰 도로 오버레이가 보이게 합니다
         toggleOverlay(true);
+
+        var iwContent = '<div style="font-weight:bold;display:block;font-size:12px;text-align:left;padding-top:4px;padding-bottom:4px;padding-left:4px;padding-right: 24px;">마커를 옮겨 로드뷰를 변경하세요!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+        // 인포윈도우를 생성합니다
+        // @ts-ignore
+        state.infowindow = new window.kakao.maps.InfoWindow({
+            content : iwContent,
+            removable : iwRemoveable
+        });
+
+        // 마커 위에 인포윈도우를 표시합니다
+        state.infowindow.open(state.map, state.marker);
     } else {
         state.loadView.control.className = '';
 
@@ -318,8 +374,28 @@ const setRoadviewRoad = () => {
 
         // 로드뷰 도로 오버레이를 제거합니다
         toggleOverlay(false);
-        initMap()
+
+        // 로드뷰 초기화
+        clearLoadView()
     }
+
+    // 로드뷰에 좌표가 바뀌었을 때 발생하는 이벤트를 등록합니다 
+    // @ts-ignore
+    window.kakao.maps.event.addListener(state.map, 'click', function(mouseEvent: any) {
+     // 지도 위에 로드뷰 도로 오버레이가 추가된 상태가 아니면 클릭이벤트를 무시합니다 
+        if(!state.overlayOn) {
+            return;
+        }
+
+        // 클릭한 위치의 좌표입니다 
+        var position = mouseEvent.latLng;
+
+        // 마커를 클릭한 위치로 옮깁니다
+        state.marker.setPosition(position);
+
+        // 클락한 위치를 기준으로 로드뷰를 설정합니다
+        toggleRoadview(position);
+    });
 }
 
 /* 지도 위의 로드뷰 도로 오버레이를 추가,제거하는 함수입니다 */
