@@ -58,10 +58,25 @@
             </div>
         </el-popover>
     </div>
+    <div>
+        <el-row>
+            <el-col :span="14" style="margin-top: 160px;">
+                <el-row>
+                    <el-col :span="24">
+                        <el-input style="font-size: 12px; height: 32px;" v-model="state.searchText">
+                            <template #append>
+                                <el-button :icon="Search" @click="onClickSearchArea" />
+                            </template>
+                        </el-input>
+                    </el-col>
+                </el-row>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script lang="ts" setup>
-import { Location } from '@element-plus/icons-vue';
+import { Location, Search } from '@element-plus/icons-vue';
 import { onMounted, reactive } from 'vue';
 
 // Vue의 onMounted 라이프사이클 훅에서 카카오맵 로딩 함수 호출
@@ -78,6 +93,7 @@ const state = reactive({
     overlayOn: false,                                       // 지도 위에 로드뷰 오버레이가 추가된 상태를 가지고 있을 변수
     marker: '' as any,
     infowindow: '' as any,
+    ps: '' as any,
     div: {
         container: document.getElementById('container') as any,    // 지도와 로드뷰를 감싸고 있는 div 입니다
         mapWrapper: document.getElementById('mapWrapper') as any,  // 지도를 감싸고 있는 div 입니다
@@ -90,6 +106,7 @@ const state = reactive({
         rvClient: '' as any,
         marker: '' as any,
     } as any,
+    searchText: '',
 })
 
 // 카카오맵 API 로드 및 지도 초기화 함수
@@ -503,10 +520,53 @@ const loadMarker = () => {
     });
 }
 
+/* 로드뷰 닫기 */
 const closeRoadview = () => {
     state.mapStyle = 'width:100%; height:500px; position:relative;overflow:hidden;'
     state.loadViewHidden = true
     state.viewLoadMap = false
+}
+
+/* 현재 지도에서 검색한 장소 찾기 */
+const onClickSearchArea = () => {
+
+    state.infowindow.close()
+    state.marker.setMap(null);
+
+    // @ts-ignore
+    state.ps = new window.kakao.maps.services.Places(state.map)
+
+    state.ps.keywordSearch(state.searchText, placesSearchCB, {useMapBounds:true})
+
+    function placesSearchCB (data: any, status: any) {
+        // @ts-ignore
+        if (status === window.kakao.maps.services.Status.OK) {
+            for (var i=0; i<data.length; i++) {
+                displayMarker(data[i]);
+            }
+
+            console.log(data)
+        }
+    }
+
+    // 지도에 마커를 표시하는 함수입니다
+    function displayMarker(place: any) {
+        // 마커를 생성하고 지도에 표시합니다
+        // @ts-ignore
+        const marker = new window.kakao.maps.Marker({
+            map: state.map,
+            // @ts-ignore
+            position: new window.kakao.maps.LatLng(place.y, place.x) 
+        });
+
+        // 마커에 클릭이벤트를 등록합니다
+        // @ts-ignore
+        window.kakao.maps.event.addListener(marker, 'click', function() {
+            // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+            state.infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+            state.infowindow.open(state.map, marker);
+        });
+    }
 }
 
 </script>
