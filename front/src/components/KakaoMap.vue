@@ -60,23 +60,72 @@
     </div>
     <div>
         <el-row>
-            <el-col :span="14" style="margin-top: 160px;">
+            <el-col :span="24" style="margin-top: 115px;">
                 <el-row>
-                    <el-col :span="24">
-                        <el-input style="font-size: 12px; height: 32px;" v-model="state.searchText">
+                    <el-col :span="22">
+                        <el-input style="font-size: 12px; height: 32px;" v-model="state.searchText" @keyup.enter="onClickSearchArea">
                             <template #append>
                                 <el-button :icon="Search" @click="onClickSearchArea" />
                             </template>
                         </el-input>
                     </el-col>
+                    <el-col :span="1" style="margin-left: 2px;" @click="onClickClearSearchArea">
+                        <el-button>
+                            <el-icon><RefreshRight /></el-icon>
+                        </el-button>
+                    </el-col>
                 </el-row>
             </el-col>
+            <el-col :span="24">
+                <el-table :data="state.searchData" style="width: 100%; margin-top: 8px;" height="250" empty-text="검색결과 없음">
+                    <el-table-column prop="place_name" label="장소" width="345" height="20">
+                        <template #default="scope">
+                            <el-text style="font-size: 14px; font-weight: bold;">
+                                <el-icon><LocationInformation /></el-icon>
+                                {{ scope.row.place_name }}
+                            </el-text>
+                            <br>
+                            <el-text style="font-size: 12px;">
+                                {{ scope.row.address_name }}
+                            </el-text>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="category_group_name" label="카테고리" width="100" height="20">
+                        <template #default="scope">
+                            <el-tag style="color: #4527A0;">
+                                {{ scope.row.category_group_name }}
+                            </el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="place_url" label="정보" width="55" height="20">
+                        <template #default="scope">
+                            <el-link style="font-size: 24px;" :icon="Position" @click="openDialog(scope.row.place_url)">
+                            </el-link>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-col>
         </el-row>
+        <el-dialog
+            v-model="state.dialogVisible"
+            width="1100"
+            style="height: 720px;"
+        >
+            <iframe
+                id="iframeExample"
+                width="100%"
+                style="height: 600px;"
+                :src="state.placeUrl"
+            />
+            <div style="text-align: center; margin-top: 10px">
+                <el-button @click="state.dialogVisible=false">닫기</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { Location, Search } from '@element-plus/icons-vue';
+import { Location, LocationInformation, Position, RefreshRight, Search } from '@element-plus/icons-vue';
 import { onMounted, reactive } from 'vue';
 
 // Vue의 onMounted 라이프사이클 훅에서 카카오맵 로딩 함수 호출
@@ -86,7 +135,7 @@ onMounted(() => {
 
 const state = reactive({
     map: '' as any,
-    mapStyle: 'width:100%; height:500px; position:relative;overflow:hidden;',
+    mapStyle: 'width:100%; height:450px; position:relative;overflow:hidden;',
     loadViewHidden: true,
     viewLoadMap: false,
     mapCenter: '' as any,
@@ -107,6 +156,10 @@ const state = reactive({
         marker: '' as any,
     } as any,
     searchText: '',
+    searchData: '' as any,
+    arrMarker: [] as any,
+    dialogVisible: false,
+    placeUrl: '' as any,
 })
 
 // 카카오맵 API 로드 및 지도 초기화 함수
@@ -129,6 +182,11 @@ const loadKakaoMap = () => {
         document.head.appendChild(script); // 스크립트를 head에 추가하여 로드 시작
 
     }
+}
+
+const openDialog = (url: any) => {
+    state.placeUrl = url
+    state.dialogVisible = true
 }
 
 // 지도를 초기화하는 함수
@@ -522,7 +580,7 @@ const loadMarker = () => {
 
 /* 로드뷰 닫기 */
 const closeRoadview = () => {
-    state.mapStyle = 'width:100%; height:500px; position:relative;overflow:hidden;'
+    state.mapStyle = 'width:100%; height:450px; position:relative;overflow:hidden;'
     state.loadViewHidden = true
     state.viewLoadMap = false
 }
@@ -530,6 +588,18 @@ const closeRoadview = () => {
 /* 현재 지도에서 검색한 장소 찾기 */
 const onClickSearchArea = () => {
 
+    /* 검색 input 이 없으면 return */
+    if(state.searchText.trim() == '') {
+        return
+    }
+
+    /* 검색결과로 표시된 마커 전체 제거 */
+    for (var i = 0; i < state.arrMarker.length; i++) {
+        state.arrMarker[i].setMap(null);  // 마커를 지도에서 제거
+    }
+    state.arrMarker = []
+
+    /* info 제거 */
     state.infowindow.close()
     state.marker.setMap(null);
 
@@ -546,27 +616,59 @@ const onClickSearchArea = () => {
             }
 
             console.log(data)
+            state.searchData = data
         }
+        // @ts-ignore
+        if(status === window.kakao.maps.services.Status.ZERO_RESULT) {
+            state.searchData = []
+            for (var idx = 0; idx < state.arrMarker.length; idx++) {
+                state.arrMarker[idx].setMap(null);  // 마커를 지도에서 제거
+            }
+            state.arrMarker = []
+        }
+        console.log(status)
     }
 
     // 지도에 마커를 표시하는 함수입니다
     function displayMarker(place: any) {
-        // 마커를 생성하고 지도에 표시합니다
-        // @ts-ignore
-        const marker = new window.kakao.maps.Marker({
-            map: state.map,
+
+        state.arrMarker.push(
             // @ts-ignore
-            position: new window.kakao.maps.LatLng(place.y, place.x) 
-        });
+            new window.kakao.maps.Marker({
+                map: state.map,
+                // @ts-ignore
+                position: new window.kakao.maps.LatLng(place.y, place.x) 
+            })
+        )
+
+        const idx = state.arrMarker.length - 1 as number
 
         // 마커에 클릭이벤트를 등록합니다
         // @ts-ignore
-        window.kakao.maps.event.addListener(marker, 'click', function() {
+        window.kakao.maps.event.addListener(state.arrMarker[idx], 'click', function() {
             // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
             state.infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-            state.infowindow.open(state.map, marker);
+            state.infowindow.open(state.map, state.arrMarker[idx]);
         });
     }
+}
+
+/* 검색과 관련된 것들 초기화 */
+const onClickClearSearchArea = () => {
+
+    /* 검색결과로 표시된 마커 전체 제거 */
+    for (var i = 0; i < state.arrMarker.length; i++) {
+        state.arrMarker[i].setMap(null);  // 마커를 지도에서 제거
+    }
+    state.arrMarker = []
+
+    /* info 제거 */
+    state.infowindow.close()
+    state.marker.setMap(null);
+
+    state.searchText = ''
+    state.searchData = []
+
 }
 
 </script>
@@ -575,7 +677,7 @@ const onClickSearchArea = () => {
 /* 지도 크기 조정 */
 #map {
     width: 100%;
-    height: 500px;
+    height: 300px;
 }
 .divider {
     margin-top: 8px;
