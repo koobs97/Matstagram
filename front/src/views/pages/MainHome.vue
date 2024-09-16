@@ -5,6 +5,7 @@
                 <FullCalendar />
             </el-card>
             <el-card shadow="never" style="height: 280px; margin-top: 20px;">
+                <YouTubeSearch />
             </el-card>
         </el-col>
         <el-col :span="12">
@@ -17,6 +18,7 @@
 <script lang="ts" setup>
 import FullCalendar from '../../components/FullCalendar.vue';
 import KakaoMap from '../../components/KakaoMap.vue';
+import YouTubeSearch from '../../components/YouTubeSearch.vue';
 </script>
 
 <style scoped>

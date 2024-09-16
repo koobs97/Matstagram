@@ -62,17 +62,21 @@
         <el-row>
             <el-col :span="24" style="margin-top: 115px;">
                 <el-row>
-                    <el-col :span="22">
-                        <el-input style="font-size: 12px; height: 32px;" v-model="state.searchText" @keyup.enter="onClickSearchArea">
-                            <template #append>
-                                <el-button :icon="Search" @click="onClickSearchArea" />
-                            </template>
-                        </el-input>
-                    </el-col>
-                    <el-col :span="1" style="margin-left: 2px;" @click="onClickClearSearchArea">
-                        <el-button>
-                            <el-icon><RefreshRight /></el-icon>
-                        </el-button>
+                    <el-col :span="24">
+                        <el-row>
+                            <el-col :span="22">
+                                <el-input style="font-size: 12px; height: 32px;" v-model="state.searchText" @keyup.enter="onClickSearchArea">
+                                    <template #append>
+                                        <el-button :icon="Search" @click="onClickSearchArea" />
+                                    </template>
+                                </el-input>
+                            </el-col>
+                            <el-col :span="1">
+                                <el-button style="width: 18px; margin-left: 2px;" @click="onClickClearSearchArea">
+                                    <el-icon><RefreshRight /></el-icon>
+                                </el-button>
+                            </el-col>
+                        </el-row>
                     </el-col>
                 </el-row>
             </el-col>

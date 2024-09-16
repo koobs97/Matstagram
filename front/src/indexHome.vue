@@ -30,14 +30,6 @@
                     <el-icon><HomeFilled /></el-icon>
                     <span>Home</span>
                 </el-menu-item>
-                <el-menu-item index="2">
-                    <el-icon><Aim /></el-icon>
-                    <span>맛집찾기</span>
-                </el-menu-item>
-                <el-menu-item index="3">
-                    <el-icon><Opportunity /></el-icon>
-                    <span>유용한 정보</span>
-                </el-menu-item>
                 <el-divider class="divider2" />
                 <el-menu-item index="7" @click="onClickMyStorage('MyStorage')">
                     <el-icon><UserFilled /></el-icon>
@@ -89,7 +81,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Aim, Bell, HomeFilled, InfoFilled, Opportunity, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
+import { Bell, HomeFilled, InfoFilled, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
 import { defineAsyncComponent, onMounted, reactive } from 'vue';
 import GoToFindApi from '../src/components/GoToFindApi.vue';
 import SugAlgorithm from '../src/components/SugAlgorithm.vue';
