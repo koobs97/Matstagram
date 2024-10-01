@@ -42,7 +42,7 @@
             <el-icon><Edit /></el-icon>
             <span>개인정보수정</span>
         </el-menu-item>
-        <el-menu-item index="2">
+        <el-menu-item index="2" @click="openChngPasswd">
             <el-icon><Lock /></el-icon>
             <span>비밀번호변경</span>
         </el-menu-item>
@@ -60,6 +60,7 @@
 <script lang="ts" setup>
 import { Avatar, Edit, Lock, SwitchButton, User } from '@element-plus/icons-vue';
 import { defineProps } from 'vue';
+import { eventBus } from '../common/common';
 import { userStore } from '../store/userStore';
 
 const userStoreObj  = userStore()
@@ -77,6 +78,9 @@ const onClickLogOut = () => {
     location.reload();
 }
 
+const openChngPasswd = () => {
+    eventBus.emit('openChngPasswd', { isOpen: true })
+}
 </script>
 <style>
 :root {

@@ -87,6 +87,7 @@
 <script lang="ts" setup>
 import { Bell, HomeFilled, InfoFilled, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
 import { defineAsyncComponent, onMounted, reactive } from 'vue';
+import { eventBus } from '../src/common/common';
 import ChangePassword from '../src/components/ChangePassword.vue';
 import GoToFindApi from '../src/components/GoToFindApi.vue';
 import SugAlgorithm from '../src/components/SugAlgorithm.vue';
@@ -129,7 +130,12 @@ const state = reactive({
 onMounted(() => {
     userInfo.user = userStoreObj.getUserInfo
     state.page.component = defineAsyncComponent(() => import (`../src/views/pages/MainHome.vue`))
+    eventBus.on('openChngPasswd', openChngPasswd)
 })
+
+const openChngPasswd = () => {
+    state.isOpen = true
+}
 
 const onClickMyStorage = (componentName: string) => {
     state.page.component = defineAsyncComponent(() => import (`../src/views/pages/${componentName}.vue`))
