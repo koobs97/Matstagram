@@ -51,11 +51,8 @@
                 <el-divider class="divider2" />
                 
                 <div style="text-align: left; margin-left: 20px;">
-                    <el-link>이용약관</el-link> &nbsp;
+                    <el-link @click="state.isOpen=true">이용약관</el-link> &nbsp;
                     <el-link>프로젝트</el-link> &nbsp; <br><br>
-                    <el-text>
-                        CopyRight © BONSANG. <br>koobs970729@gmail.com <br>All Rights Reserved
-                    </el-text>
                 </div>
             </el-menu>
         </el-col>
@@ -78,11 +75,19 @@
             </el-card>
         </el-col>
     </el-row>
+    <el-dialog
+        v-model="state.isOpen"
+        :title="'비밀번호 변경'"
+        style="width: 400px; height: 750px; border-radius: 8px; top: 0vh;"
+    >
+        <ChangePassword @close-dialog="closeDialog" />
+    </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import { Bell, HomeFilled, InfoFilled, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
 import { defineAsyncComponent, onMounted, reactive } from 'vue';
+import ChangePassword from '../src/components/ChangePassword.vue';
 import GoToFindApi from '../src/components/GoToFindApi.vue';
 import SugAlgorithm from '../src/components/SugAlgorithm.vue';
 import UserInfo from '../src/components/UserInfo.vue';
@@ -117,6 +122,7 @@ const state = reactive({
         component   : '' as any,
     },
     weather : '' as string,
+    isOpen: false,
 })
 
 // 화면진입 시
@@ -132,7 +138,11 @@ const onClickMyStorage = (componentName: string) => {
 // WeatherGuide에서 데이터를 받는 함수
 const handleWeatherReceive = (data: string) => {
     state.weather = data;
-};
+}
+
+const closeDialog = () => {
+    state.isOpen = false;
+}
 
 </script>
 
