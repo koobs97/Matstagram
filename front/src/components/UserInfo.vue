@@ -14,7 +14,10 @@
         :width="250"
         trigger="click"
     >
-        <el-menu>
+        <el-menu
+            :key="state.activeMenu" 
+            default-active=""
+        >
             <el-row>
                 <el-col :span="6">
                     <el-button 
@@ -59,7 +62,7 @@
 </template>
 <script lang="ts" setup>
 import { Avatar, Edit, Lock, SwitchButton, User } from '@element-plus/icons-vue';
-import { defineProps } from 'vue';
+import { defineProps, onMounted, reactive } from 'vue';
 import { eventBus } from '../common/common';
 import { userStore } from '../store/userStore';
 
@@ -72,6 +75,18 @@ const props = defineProps({
         default : null,
     }
 })
+
+const state = reactive({
+    activeMenu: 0
+})
+
+// 화면진입 시
+onMounted( () => {
+    eventBus.on('colseChngPasswd', colseChngPasswd)
+})
+const colseChngPasswd = () => {
+    state.activeMenu += 1
+}
 
 const onClickLogOut = () => {
     userStoreObj.delUserInfo()
@@ -106,5 +121,9 @@ const openChngPasswd = () => {
     --el-button-outline-color: var(--el-color-primary-light-5);
     --el-button-hover-link-text-color: #9575CD;
     --el-button-active-color: #9575CD;
+}
+
+.el-menu-item.is-active {
+    color: #7C4DFF;
 }
 </style>

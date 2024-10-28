@@ -131,7 +131,7 @@
 
     <div style="text-align: center; margin-top: 50px">
         <el-button type="primary" @click="onClickOpenCinfirm1" color="#7E57C2" :disabled="state.disableButton">비밀번호변경</el-button>
-        <el-button @click="onClickOpenCinfirm2" :disabled="state.disableButton">다음에하기</el-button>
+        <el-button style="margin-left: 4px;" @click="onClickOpenCinfirm2" :disabled="state.disableButton">다음에하기</el-button>
     </div>
 
     <!-- 비밀번호 변경하기 확인창  -->
@@ -158,37 +158,36 @@
     <!-- 비밀번호 변경하기 확인창  -->
 
     <!-- 다음에하기 확인창  -->
-    <el-dialog 
-        v-model="state.isOpen.confirm2" 
+    <el-dialog
+        v-model="state.isOpen.confirm2"
         :show-close="false" 
-        align-center 
-        style="width: 280px; height: 140px; border-radius: 8px;"
+        align-center
+        style="width: 350px; height: 205px; border-radius: 4px;"
     >
         <template #header>
-            <div style="text-align: left;">
-                <h4 style="margin-top: 0px; margin-bottom: 18px; font-size: 16px">
-                    <el-icon style="margin-right: 2px; font-size: 12px"><InfoFilled /></el-icon>
-                    알림창
+            <div style="margin-left: 20px;">
+                <el-icon style="font-size: 34px"><WarningFilled /></el-icon>
+                <h4 style="margin-top: 0px; margin-bottom: 0px; font-size: 14px">
+                    확인창
                 </h4>
-                <el-text>다음에 변경하시겠습니까?</el-text>
-            </div>
-            <div style="text-align: center; margin-top: 20px">
-                <el-button style="margin-left: 16px;" type="primary" color="#7E57C2" @click="onClickConfirm">확인</el-button>
-                <el-button style="margin-left: 4px;" @click="state.isOpen.confirm2 = false">취소</el-button>
             </div>
         </template>
+        <ConfirmDialog 
+            :bodyMessage="'다음에 변경하시겠습니까?'"
+            @close-dialog="onClickConfirm" />
     </el-dialog>
     <!-- 다음에하기 확인창  -->
 
 </template>
 <script lang="ts" setup>
-import { CaretRight, Hide, InfoFilled, Unlock } from '@element-plus/icons-vue';
+import { CaretRight, Hide, InfoFilled, Unlock, WarningFilled } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
 import { defineEmits, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { Api, Common } from '../common/common';
 import { userStore } from '../store/userStore';
 import { ChgUserPwIvo } from '../vo/ivo/ChgUserPwIvo';
+import ConfirmDialog from './ConfirmDialog.vue';
 
 const router        = useRouter()   // router
 const userStoreObj  = userStore()
@@ -318,12 +317,15 @@ const onClickOpenCinfirm2 = () => {
 }
 
 /* 다음에하기 확인창에서 확인 버튼 누를 시 팝업창 닫기 */
-const onClickConfirm = async () => {
+const onClickConfirm = async (ret : boolean) => {
     state.isOpen.confirm2 = false
-    close()
+    if(ret) {
+        close()
+    }
 }
 
 const emit = defineEmits(['close-dialog'])
+
 const close = () => {
     emit('close-dialog');
 };

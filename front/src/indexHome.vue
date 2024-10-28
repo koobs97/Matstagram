@@ -77,9 +77,14 @@
     </el-row>
     <el-dialog
         v-model="state.isOpen"
-        :title="'비밀번호 변경'"
-        style="width: 400px; height: 750px; border-radius: 8px; top: 0vh;"
+        style="width: 400px; height: 735px; border-radius: 4px; top: 0vh;"
+        :before-close="closeDialog"
     >
+        <template #header>
+            <h4 style="margin-top: 0px; margin-bottom: 0px; font-size: 16px">
+                비밀번호 변경
+            </h4>
+        </template>
         <ChangePassword @close-dialog="closeDialog" />
     </el-dialog>
 </template>
@@ -148,6 +153,7 @@ const handleWeatherReceive = (data: string) => {
 
 const closeDialog = () => {
     state.isOpen = false;
+    eventBus.emit('colseChngPasswd', { isClose: true })
 }
 
 </script>
