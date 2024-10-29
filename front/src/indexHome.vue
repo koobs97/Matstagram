@@ -75,6 +75,8 @@
             </el-card>
         </el-col>
     </el-row>
+
+    <!-- 비밀번호 변경 다이얼로그 -->
     <el-dialog
         v-model="state.isOpen"
         style="width: 400px; height: 735px; border-radius: 4px; top: 0vh;"
@@ -87,12 +89,30 @@
         </template>
         <ChangePassword @close-dialog="closeDialog" />
     </el-dialog>
+    <!-- 비밀번호 변경 다이얼로그 -->
+
+    <!-- 비밀번호 변경 다이얼로그 -->
+    <el-dialog
+        v-model="state.isOpenAreaSelect"
+        style="width: 550px; height: 150px; border-radius: 4px; top: 0vh;"
+        :before-close="closeDialogAreaSelect"
+    >
+        <template #header>
+            <h4 style="margin-top: 0px; margin-bottom: 0px; font-size: 16px">
+                사는지역 선택
+            </h4>
+        </template>
+        <AreaSelect @close-dialog="closeDialogAreaSelect" />
+    </el-dialog>
+    <!-- 비밀번호 변경 다이얼로그 -->
+
 </template>
 
 <script lang="ts" setup>
 import { Bell, HomeFilled, InfoFilled, Search, Share, Tools, UserFilled } from '@element-plus/icons-vue';
 import { defineAsyncComponent, onMounted, reactive } from 'vue';
 import { eventBus } from '../src/common/common';
+import AreaSelect from '../src/components/AreaSelect.vue';
 import ChangePassword from '../src/components/ChangePassword.vue';
 import GoToFindApi from '../src/components/GoToFindApi.vue';
 import SugAlgorithm from '../src/components/SugAlgorithm.vue';
@@ -129,6 +149,7 @@ const state = reactive({
     },
     weather : '' as string,
     isOpen: false,
+    isOpenAreaSelect: false,
 })
 
 // 화면진입 시
@@ -139,7 +160,8 @@ onMounted(() => {
 })
 
 const openChngPasswd = () => {
-    state.isOpen = true
+    // state.isOpen = true
+    state.isOpenAreaSelect = true
 }
 
 const onClickMyStorage = (componentName: string) => {
@@ -154,6 +176,10 @@ const handleWeatherReceive = (data: string) => {
 const closeDialog = () => {
     state.isOpen = false;
     eventBus.emit('colseChngPasswd', { isClose: true })
+}
+
+const closeDialogAreaSelect = () => {
+    state.isOpenAreaSelect = false;
 }
 
 </script>
