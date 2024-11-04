@@ -95,10 +95,12 @@
     <el-dialog
         v-model="state.isOpenAreaSelect"
         style="width: 550px; height: 150px; border-radius: 4px; top: 0vh;"
+        :show-close="false"
+        align-center
         :before-close="closeDialogAreaSelect"
     >
         <template #header>
-            <h4 style="margin-top: 0px; margin-bottom: 0px; font-size: 16px">
+            <h4 style="margin-top: 0px; margin-bottom: 0px; font-size: 16px; margin-left: 20px;">
                 사는지역 선택
             </h4>
         </template>
